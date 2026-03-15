@@ -1,0 +1,15 @@
+name: Crossplane
+description: Open source Kubernetes add-on that transforms your cluster into a universal
+  control plane, enabling you to manage cloud infrastructure, services, and applications
+  using Kubernetes-style declarative configuration
+url: https://www.crossplane.io/
+tags:
+- Infrastructure as Code
+- Kubernetes
+- Cloud Native
+- Multi-Cloud
+- Control Plane
+created: '2025'
+modified: '2025'
+apis: []
+common: []
