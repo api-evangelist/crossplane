@@ -1,0 +1,141 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "crossplane": "https://crossplane.io/docs/concepts/",
+    "k8s": "https://kubernetes.io/docs/reference/",
+    "iac": "https://w3id.org/infrastructure-as-code#",
+    "cncf": "https://www.cncf.io/projects/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "Composition": {
+      "@id": "crossplane:compositions",
+      "@type": "@id",
+      "rdfs:label": "Composition",
+      "rdfs:comment": "A Crossplane Composition defines how to transform a composite resource into one or more composed managed resources, including field mapping and patching.",
+      "skos:broader": "iac:ResourceTemplate",
+      "skos:related": ["k8s:custom-resources", "crossplane:composite-resources"]
+    },
+
+    "CompositeResourceDefinition": {
+      "@id": "crossplane:composite-resource-definitions",
+      "@type": "@id",
+      "rdfs:label": "CompositeResourceDefinition (XRD)",
+      "rdfs:comment": "Defines the schema and API surface for a composite resource, extending the Kubernetes API with a custom infrastructure abstraction.",
+      "skos:broader": "k8s:custom-resources",
+      "skos:related": ["crossplane:compositions", "crossplane:claims"]
+    },
+
+    "Provider": {
+      "@id": "crossplane:providers",
+      "@type": "@id",
+      "rdfs:label": "Provider",
+      "rdfs:comment": "A Crossplane Provider package that installs controllers and CRDs for managing resources on a specific infrastructure platform such as AWS, GCP, or Azure.",
+      "skos:broader": "k8s:operators",
+      "skos:related": ["crossplane:provider-configs", "crossplane:managed-resources"]
+    },
+
+    "ProviderConfig": {
+      "@id": "crossplane:provider-configs",
+      "@type": "@id",
+      "rdfs:label": "ProviderConfig",
+      "rdfs:comment": "Authentication and configuration for a Crossplane Provider, specifying how the provider connects to an infrastructure platform.",
+      "skos:broader": "iac:ProviderConfiguration",
+      "skos:related": "crossplane:providers"
+    },
+
+    "ManagedResource": {
+      "@id": "crossplane:managed-resources",
+      "@type": "@id",
+      "rdfs:label": "Managed Resource",
+      "rdfs:comment": "A Kubernetes custom resource representing a single piece of external infrastructure managed by a Crossplane Provider.",
+      "skos:broader": "iac:InfrastructureResource",
+      "skos:related": ["crossplane:providers", "crossplane:compositions"]
+    },
+
+    "Claim": {
+      "@id": "crossplane:claims",
+      "@type": "@id",
+      "rdfs:label": "Claim",
+      "rdfs:comment": "A namespace-scoped resource that requests a composite resource, providing a self-service interface for application teams.",
+      "skos:broader": "k8s:namespaced-resources",
+      "skos:related": "crossplane:composite-resource-definitions"
+    },
+
+    "CompositionFunction": {
+      "@id": "crossplane:composition-functions",
+      "@type": "@id",
+      "rdfs:label": "Composition Function",
+      "rdfs:comment": "A containerized function invoked during composition to perform advanced resource templating, transformation, or validation logic.",
+      "skos:broader": "iac:TransformFunction",
+      "skos:related": "crossplane:compositions"
+    },
+
+    "ControlPlane": {
+      "@id": "crossplane:control-planes",
+      "@type": "@id",
+      "rdfs:label": "Control Plane",
+      "rdfs:comment": "A Kubernetes cluster running Crossplane that serves as a universal control plane for managing infrastructure across multiple providers.",
+      "skos:broader": "k8s:clusters",
+      "skos:exactMatch": "cncf:crossplane"
+    },
+
+    "compositeTypeRef": {
+      "@id": "crossplane:compositeTypeRef",
+      "@type": "@id",
+      "rdfs:comment": "Reference linking a Composition to the CompositeResourceDefinition it satisfies."
+    },
+
+    "providerConfigRef": {
+      "@id": "crossplane:providerConfigRef",
+      "@type": "@id",
+      "rdfs:comment": "Reference from a managed resource to its ProviderConfig for authentication."
+    },
+
+    "patch": {
+      "@id": "crossplane:patches",
+      "rdfs:comment": "A field-level mapping that copies or transforms values between composite and composed resources."
+    },
+
+    "connectionSecret": {
+      "@id": "crossplane:connection-secrets",
+      "rdfs:comment": "A Kubernetes Secret containing connection details propagated from composed resources to the composite resource or claim."
+    },
+
+    "apiVersion": {
+      "@id": "k8s:api-version",
+      "@type": "xsd:string",
+      "rdfs:comment": "Kubernetes API group and version identifier."
+    },
+
+    "kind": {
+      "@id": "k8s:resource-kind",
+      "@type": "xsd:string",
+      "rdfs:comment": "Kubernetes resource type identifier."
+    },
+
+    "metadata": {
+      "@id": "k8s:object-metadata",
+      "rdfs:comment": "Standard Kubernetes object metadata including name, namespace, labels, and annotations."
+    },
+
+    "spec": {
+      "@id": "k8s:resource-spec",
+      "rdfs:comment": "Desired state specification for the Kubernetes resource."
+    },
+
+    "status": {
+      "@id": "k8s:resource-status",
+      "rdfs:comment": "Observed state and conditions of the Kubernetes resource."
+    },
+
+    "name": "dcterms:title",
+    "description": "dcterms:description",
+    "created": "dcterms:created",
+    "modified": "dcterms:modified",
+    "version": "dcterms:hasVersion",
+    "license": "dcterms:license"
+  }
+}

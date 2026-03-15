@@ -1,0 +1,300 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/api-evangelist/crossplane/blob/main/composition-schema.json",
+  "title": "Crossplane Composition",
+  "description": "Schema for a Crossplane Composition that defines how to compose infrastructure resources into higher-level composite resources by mapping patches and configuring managed resources.",
+  "type": "object",
+  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "properties": {
+    "apiVersion": {
+      "type": "string",
+      "const": "apiextensions.crossplane.io/v1",
+      "description": "API version for the Crossplane Composition resource."
+    },
+    "kind": {
+      "type": "string",
+      "const": "Composition",
+      "description": "Resource kind identifier."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Standard Kubernetes object metadata.",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Unique name for this Composition."
+        },
+        "labels": {
+          "type": "object",
+          "description": "Key-value pairs for organizing and selecting Compositions.",
+          "additionalProperties": { "type": "string" }
+        },
+        "annotations": {
+          "type": "object",
+          "description": "Non-identifying metadata for the Composition.",
+          "additionalProperties": { "type": "string" }
+        }
+      }
+    },
+    "spec": {
+      "type": "object",
+      "description": "Specification for the Composition defining resource templates and patches.",
+      "required": ["compositeTypeRef", "resources"],
+      "properties": {
+        "compositeTypeRef": {
+          "type": "object",
+          "description": "Reference to the CompositeResourceDefinition (XRD) this Composition satisfies.",
+          "required": ["apiVersion", "kind"],
+          "properties": {
+            "apiVersion": {
+              "type": "string",
+              "description": "API version of the composite resource type."
+            },
+            "kind": {
+              "type": "string",
+              "description": "Kind of the composite resource type."
+            }
+          }
+        },
+        "writeConnectionSecretsToNamespace": {
+          "type": "string",
+          "description": "Namespace where connection secrets for composed resources are written."
+        },
+        "patchSets": {
+          "type": "array",
+          "description": "Reusable sets of patches that can be referenced by composed resources.",
+          "items": {
+            "type": "object",
+            "required": ["name", "patches"],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name used to reference this patch set."
+              },
+              "patches": {
+                "type": "array",
+                "description": "Patches included in this set.",
+                "items": { "$ref": "#/$defs/patch" }
+              }
+            }
+          }
+        },
+        "resources": {
+          "type": "array",
+          "description": "List of composed resource templates that make up this Composition.",
+          "items": {
+            "type": "object",
+            "required": ["name", "base"],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Unique name identifying this composed resource within the Composition."
+              },
+              "base": {
+                "type": "object",
+                "description": "Base resource manifest used as a template for provisioning.",
+                "required": ["apiVersion", "kind"],
+                "properties": {
+                  "apiVersion": {
+                    "type": "string",
+                    "description": "API version of the managed resource."
+                  },
+                  "kind": {
+                    "type": "string",
+                    "description": "Kind of the managed resource."
+                  },
+                  "spec": {
+                    "type": "object",
+                    "description": "Specification for the base managed resource."
+                  },
+                  "metadata": {
+                    "type": "object",
+                    "description": "Metadata for the base managed resource."
+                  }
+                }
+              },
+              "patches": {
+                "type": "array",
+                "description": "Patches to apply from the composite resource to this composed resource.",
+                "items": { "$ref": "#/$defs/patch" }
+              },
+              "connectionDetails": {
+                "type": "array",
+                "description": "Connection details to expose from this composed resource.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "fromConnectionSecretKey": {
+                      "type": "string",
+                      "description": "Key in the composed resource connection secret."
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the connection detail in the composite resource."
+                    },
+                    "type": {
+                      "type": "string",
+                      "enum": ["FromConnectionSecretKey", "FromFieldPath", "FromValue"],
+                      "description": "Type of connection detail source."
+                    },
+                    "value": {
+                      "type": "string",
+                      "description": "Static value for the connection detail."
+                    }
+                  }
+                }
+              },
+              "readinessChecks": {
+                "type": "array",
+                "description": "Checks to determine if this composed resource is ready.",
+                "items": {
+                  "type": "object",
+                  "required": ["type"],
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": ["MatchString", "MatchInteger", "NonEmpty", "None", "MatchCondition", "MatchTrue", "MatchFalse"],
+                      "description": "Type of readiness check."
+                    },
+                    "fieldPath": {
+                      "type": "string",
+                      "description": "Path to the field to check for readiness."
+                    },
+                    "matchString": {
+                      "type": "string",
+                      "description": "Expected string value for MatchString checks."
+                    },
+                    "matchInteger": {
+                      "type": "integer",
+                      "description": "Expected integer value for MatchInteger checks."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "mode": {
+          "type": "string",
+          "enum": ["Resources", "Pipeline"],
+          "description": "Mode of the Composition, either Resources or Pipeline."
+        },
+        "pipeline": {
+          "type": "array",
+          "description": "Pipeline steps for Pipeline mode Compositions.",
+          "items": {
+            "type": "object",
+            "required": ["step", "functionRef"],
+            "properties": {
+              "step": {
+                "type": "string",
+                "description": "Name of this pipeline step."
+              },
+              "functionRef": {
+                "type": "object",
+                "description": "Reference to a Composition Function.",
+                "required": ["name"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the Composition Function to invoke."
+                  }
+                }
+              },
+              "input": {
+                "type": "object",
+                "description": "Input to pass to the Composition Function."
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "patch": {
+      "type": "object",
+      "description": "A patch that maps values between composite and composed resources.",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "FromCompositeFieldPath",
+            "ToCompositeFieldPath",
+            "CombineFromComposite",
+            "CombineToComposite",
+            "PatchSet"
+          ],
+          "description": "Type of patch operation."
+        },
+        "fromFieldPath": {
+          "type": "string",
+          "description": "Source field path in the composite or composed resource."
+        },
+        "toFieldPath": {
+          "type": "string",
+          "description": "Destination field path in the composed or composite resource."
+        },
+        "patchSetName": {
+          "type": "string",
+          "description": "Name of the PatchSet to apply (when type is PatchSet)."
+        },
+        "transforms": {
+          "type": "array",
+          "description": "Transforms to apply to the patched value.",
+          "items": {
+            "type": "object",
+            "required": ["type"],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["map", "match", "math", "string", "convert"],
+                "description": "Type of transform to apply."
+              },
+              "map": {
+                "type": "object",
+                "description": "Map transform key-value pairs.",
+                "additionalProperties": { "type": "string" }
+              },
+              "math": {
+                "type": "object",
+                "description": "Math transform configuration.",
+                "properties": {
+                  "type": { "type": "string" },
+                  "multiply": { "type": "number" }
+                }
+              },
+              "string": {
+                "type": "object",
+                "description": "String transform configuration.",
+                "properties": {
+                  "type": { "type": "string" },
+                  "fmt": { "type": "string" }
+                }
+              },
+              "convert": {
+                "type": "object",
+                "description": "Type conversion transform.",
+                "properties": {
+                  "toType": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "policy": {
+          "type": "object",
+          "description": "Policy for handling missing field paths.",
+          "properties": {
+            "fromFieldPath": {
+              "type": "string",
+              "enum": ["Optional", "Required"],
+              "description": "Policy for missing source field."
+            }
+          }
+        }
+      }
+    }
+  }
+}

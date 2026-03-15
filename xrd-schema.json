@@ -1,0 +1,228 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/api-evangelist/crossplane/blob/main/xrd-schema.json",
+  "title": "Crossplane CompositeResourceDefinition (XRD)",
+  "description": "Schema for a Crossplane CompositeResourceDefinition that defines the API schema for composite resources and optional claims, extending the Kubernetes API with custom infrastructure abstractions.",
+  "type": "object",
+  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "properties": {
+    "apiVersion": {
+      "type": "string",
+      "const": "apiextensions.crossplane.io/v1",
+      "description": "API version for the Crossplane XRD resource."
+    },
+    "kind": {
+      "type": "string",
+      "const": "CompositeResourceDefinition",
+      "description": "Resource kind identifier."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Standard Kubernetes object metadata.",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the XRD, conventionally in the format 'xplural.group'.",
+          "pattern": "^x[a-z]+\\.[a-z]+(\\.[a-z]+)*$"
+        },
+        "labels": {
+          "type": "object",
+          "description": "Key-value pairs for organizing XRDs.",
+          "additionalProperties": { "type": "string" }
+        },
+        "annotations": {
+          "type": "object",
+          "description": "Non-identifying metadata.",
+          "additionalProperties": { "type": "string" }
+        }
+      }
+    },
+    "spec": {
+      "type": "object",
+      "description": "Specification for the CompositeResourceDefinition.",
+      "required": ["group", "names", "versions"],
+      "properties": {
+        "group": {
+          "type": "string",
+          "description": "API group for the composite resource, typically a domain name.",
+          "pattern": "^[a-z]+(\\.[a-z]+)+$"
+        },
+        "names": {
+          "type": "object",
+          "description": "Names to use for the composite resource type.",
+          "required": ["kind", "plural"],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "description": "PascalCase singular kind for the composite resource.",
+              "pattern": "^X[A-Z][a-zA-Z]*$"
+            },
+            "plural": {
+              "type": "string",
+              "description": "Lowercase plural name for API discovery.",
+              "pattern": "^x[a-z]+$"
+            },
+            "singular": {
+              "type": "string",
+              "description": "Lowercase singular name."
+            },
+            "shortNames": {
+              "type": "array",
+              "description": "Short aliases for the composite resource.",
+              "items": { "type": "string" }
+            },
+            "listKind": {
+              "type": "string",
+              "description": "Name of the list kind."
+            },
+            "categories": {
+              "type": "array",
+              "description": "Categories the composite resource belongs to.",
+              "items": { "type": "string" }
+            }
+          }
+        },
+        "claimNames": {
+          "type": "object",
+          "description": "Names to use for the namespace-scoped claim resource. If omitted, no claim is generated.",
+          "required": ["kind", "plural"],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "description": "PascalCase singular kind for the claim."
+            },
+            "plural": {
+              "type": "string",
+              "description": "Lowercase plural name for the claim."
+            },
+            "singular": {
+              "type": "string",
+              "description": "Lowercase singular name for the claim."
+            },
+            "shortNames": {
+              "type": "array",
+              "description": "Short aliases for the claim.",
+              "items": { "type": "string" }
+            },
+            "categories": {
+              "type": "array",
+              "description": "Categories the claim belongs to.",
+              "items": { "type": "string" }
+            }
+          }
+        },
+        "connectionSecretKeys": {
+          "type": "array",
+          "description": "Keys that the composite resource and its claims expect in their connection secrets.",
+          "items": { "type": "string" }
+        },
+        "defaultCompositeDeletePolicy": {
+          "type": "string",
+          "enum": ["Background", "Foreground"],
+          "description": "Default delete policy for composite resources."
+        },
+        "defaultCompositionRef": {
+          "type": "object",
+          "description": "Default Composition to use when none is specified.",
+          "required": ["name"],
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the default Composition."
+            }
+          }
+        },
+        "defaultCompositionUpdatePolicy": {
+          "type": "string",
+          "enum": ["Automatic", "Manual"],
+          "description": "Default update policy for Composition revisions."
+        },
+        "enforcedCompositionRef": {
+          "type": "object",
+          "description": "Composition that must always be used, overriding user selection.",
+          "required": ["name"],
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the enforced Composition."
+            }
+          }
+        },
+        "versions": {
+          "type": "array",
+          "description": "Versions of the composite resource API.",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["name", "served", "referenceable", "schema"],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Version name, e.g. 'v1alpha1', 'v1beta1', 'v1'."
+              },
+              "served": {
+                "type": "boolean",
+                "description": "Whether this version is served by the API server."
+              },
+              "referenceable": {
+                "type": "boolean",
+                "description": "Whether this version can be referenced by Compositions."
+              },
+              "deprecated": {
+                "type": "boolean",
+                "description": "Whether this version is deprecated."
+              },
+              "deprecationMessage": {
+                "type": "string",
+                "description": "Message shown when this deprecated version is used."
+              },
+              "schema": {
+                "type": "object",
+                "description": "OpenAPI v3 schema for the composite resource spec.",
+                "required": ["openAPIV3Schema"],
+                "properties": {
+                  "openAPIV3Schema": {
+                    "type": "object",
+                    "description": "OpenAPI v3 schema definition for the composite resource.",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "const": "object"
+                      },
+                      "properties": {
+                        "type": "object",
+                        "description": "Properties of the composite resource spec."
+                      },
+                      "required": {
+                        "type": "array",
+                        "items": { "type": "string" }
+                      },
+                      "description": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              },
+              "additionalPrinterColumns": {
+                "type": "array",
+                "description": "Additional columns to display in kubectl output.",
+                "items": {
+                  "type": "object",
+                  "required": ["name", "type", "jsonPath"],
+                  "properties": {
+                    "name": { "type": "string" },
+                    "type": { "type": "string" },
+                    "jsonPath": { "type": "string" },
+                    "description": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

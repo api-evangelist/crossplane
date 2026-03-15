@@ -11,5 +11,45 @@ tags:
 - Control Plane
 created: '2025'
 modified: '2025'
-apis: []
+apis:
+- name: Crossplane Composition Schema
+  description: JSON Schema defining the structure of a Crossplane Composition resource,
+    which maps composite resources to composed managed resources through patches and
+    resource templates.
+  url: composition-schema.json
+  type: json-schema
+  tags:
+  - Composition
+  - Infrastructure as Code
+  - Resource Template
+- name: Crossplane CompositeResourceDefinition (XRD) Schema
+  description: JSON Schema defining the structure of a Crossplane CompositeResourceDefinition,
+    which extends the Kubernetes API with custom composite resource types and optional
+    namespace-scoped claims.
+  url: xrd-schema.json
+  type: json-schema
+  tags:
+  - XRD
+  - Custom Resources
+  - API Extension
+- name: Crossplane Provider Configuration Schema
+  description: JSON Schema defining the structure of Crossplane Provider, ProviderConfig,
+    and DeploymentRuntimeConfig resources for installing and authenticating cloud
+    infrastructure providers.
+  url: provider-schema.json
+  type: json-schema
+  tags:
+  - Provider
+  - Authentication
+  - Cloud Platform
+- name: Crossplane JSON-LD Context
+  description: JSON-LD context document mapping Crossplane infrastructure-as-code
+    concepts including Compositions, XRDs, Providers, Claims, and Managed Resources
+    to linked data vocabularies and Kubernetes ontology.
+  url: crossplane-context.jsonld
+  type: json-ld
+  tags:
+  - Linked Data
+  - Semantic Web
+  - Ontology
 common: []

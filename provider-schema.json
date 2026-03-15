@@ -1,0 +1,254 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/api-evangelist/crossplane/blob/main/provider-schema.json",
+  "title": "Crossplane Provider Configuration",
+  "description": "Schema for Crossplane Provider and ProviderConfig resources that install and configure cloud provider integrations for infrastructure provisioning.",
+  "type": "object",
+  "oneOf": [
+    { "$ref": "#/$defs/Provider" },
+    { "$ref": "#/$defs/ProviderConfig" },
+    { "$ref": "#/$defs/DeploymentRuntimeConfig" }
+  ],
+  "$defs": {
+    "Provider": {
+      "type": "object",
+      "description": "A Crossplane Provider package that extends Crossplane with managed resources for a specific infrastructure platform.",
+      "required": ["apiVersion", "kind", "metadata", "spec"],
+      "properties": {
+        "apiVersion": {
+          "type": "string",
+          "const": "pkg.crossplane.io/v1",
+          "description": "API version for the Provider package resource."
+        },
+        "kind": {
+          "type": "string",
+          "const": "Provider",
+          "description": "Resource kind identifier."
+        },
+        "metadata": {
+          "type": "object",
+          "required": ["name"],
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the Provider installation."
+            },
+            "labels": {
+              "type": "object",
+              "additionalProperties": { "type": "string" }
+            },
+            "annotations": {
+              "type": "object",
+              "additionalProperties": { "type": "string" }
+            }
+          }
+        },
+        "spec": {
+          "type": "object",
+          "required": ["package"],
+          "properties": {
+            "package": {
+              "type": "string",
+              "description": "OCI image reference for the Provider package."
+            },
+            "packagePullPolicy": {
+              "type": "string",
+              "enum": ["Always", "IfNotPresent", "Never"],
+              "description": "Image pull policy for the Provider package."
+            },
+            "packagePullSecrets": {
+              "type": "array",
+              "description": "References to secrets for pulling the package image.",
+              "items": {
+                "type": "object",
+                "required": ["name"],
+                "properties": {
+                  "name": { "type": "string" }
+                }
+              }
+            },
+            "revisionActivationPolicy": {
+              "type": "string",
+              "enum": ["Automatic", "Manual"],
+              "description": "Policy for activating new Provider revisions."
+            },
+            "revisionHistoryLimit": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Number of inactive revisions to retain."
+            },
+            "controllerConfigRef": {
+              "type": "object",
+              "description": "Reference to a ControllerConfig for the Provider pod.",
+              "required": ["name"],
+              "properties": {
+                "name": { "type": "string" }
+              }
+            },
+            "runtimeConfigRef": {
+              "type": "object",
+              "description": "Reference to a DeploymentRuntimeConfig for the Provider.",
+              "required": ["name"],
+              "properties": {
+                "name": { "type": "string" },
+                "apiVersion": { "type": "string" },
+                "kind": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "ProviderConfig": {
+      "type": "object",
+      "description": "Configuration for authenticating a Crossplane Provider with a cloud platform.",
+      "required": ["apiVersion", "kind", "metadata", "spec"],
+      "properties": {
+        "apiVersion": {
+          "type": "string",
+          "description": "Provider-specific API version, e.g. 'aws.upbound.io/v1beta1'."
+        },
+        "kind": {
+          "type": "string",
+          "const": "ProviderConfig",
+          "description": "Resource kind identifier."
+        },
+        "metadata": {
+          "type": "object",
+          "required": ["name"],
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the ProviderConfig, often 'default'."
+            },
+            "labels": {
+              "type": "object",
+              "additionalProperties": { "type": "string" }
+            },
+            "annotations": {
+              "type": "object",
+              "additionalProperties": { "type": "string" }
+            }
+          }
+        },
+        "spec": {
+          "type": "object",
+          "description": "Provider-specific authentication and configuration.",
+          "properties": {
+            "credentials": {
+              "type": "object",
+              "description": "Credentials for authenticating with the cloud platform.",
+              "required": ["source"],
+              "properties": {
+                "source": {
+                  "type": "string",
+                  "enum": ["Secret", "InjectedIdentity", "Environment", "Filesystem", "Upbound"],
+                  "description": "Source of the credentials."
+                },
+                "secretRef": {
+                  "type": "object",
+                  "description": "Reference to a Kubernetes secret containing credentials.",
+                  "required": ["name", "namespace", "key"],
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the credentials secret."
+                    },
+                    "namespace": {
+                      "type": "string",
+                      "description": "Namespace of the credentials secret."
+                    },
+                    "key": {
+                      "type": "string",
+                      "description": "Key within the secret containing the credentials."
+                    }
+                  }
+                }
+              }
+            },
+            "projectID": {
+              "type": "string",
+              "description": "Cloud provider project or account identifier."
+            },
+            "region": {
+              "type": "string",
+              "description": "Default region for provisioned resources."
+            },
+            "assumeRoleChain": {
+              "type": "array",
+              "description": "Chain of IAM roles to assume for authentication.",
+              "items": {
+                "type": "object",
+                "required": ["roleARN"],
+                "properties": {
+                  "roleARN": { "type": "string" },
+                  "externalID": { "type": "string" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "DeploymentRuntimeConfig": {
+      "type": "object",
+      "description": "Runtime configuration for Provider deployments.",
+      "required": ["apiVersion", "kind", "metadata"],
+      "properties": {
+        "apiVersion": {
+          "type": "string",
+          "const": "pkg.crossplane.io/v1beta1",
+          "description": "API version for the DeploymentRuntimeConfig."
+        },
+        "kind": {
+          "type": "string",
+          "const": "DeploymentRuntimeConfig",
+          "description": "Resource kind identifier."
+        },
+        "metadata": {
+          "type": "object",
+          "required": ["name"],
+          "properties": {
+            "name": { "type": "string" }
+          }
+        },
+        "spec": {
+          "type": "object",
+          "description": "Runtime configuration specification.",
+          "properties": {
+            "deploymentTemplate": {
+              "type": "object",
+              "description": "Template for the Provider deployment.",
+              "properties": {
+                "spec": {
+                  "type": "object",
+                  "description": "Deployment spec overrides.",
+                  "properties": {
+                    "replicas": { "type": "integer" },
+                    "selector": { "type": "object" },
+                    "template": { "type": "object" }
+                  }
+                }
+              }
+            },
+            "serviceAccountTemplate": {
+              "type": "object",
+              "description": "Template for the Provider service account.",
+              "properties": {
+                "metadata": {
+                  "type": "object",
+                  "properties": {
+                    "annotations": {
+                      "type": "object",
+                      "additionalProperties": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
