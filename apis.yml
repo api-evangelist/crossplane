@@ -1,16 +1,19 @@
+aid: crossplane
 name: Crossplane
 description: Open source Kubernetes add-on that transforms your cluster into a universal
   control plane, enabling you to manage cloud infrastructure, services, and applications
   using Kubernetes-style declarative configuration
-url: https://www.crossplane.io/
+type: Index
+url: https://raw.githubusercontent.com/api-evangelist/crossplane/refs/heads/main/apis.yml
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
 - Infrastructure as Code
 - Kubernetes
 - Cloud Native
 - Multi-Cloud
 - Control Plane
-created: '2025'
-modified: '2025'
+created: '2025-01-01'
+modified: '2026-03-16'
 apis:
 - name: Crossplane Composition Schema
   description: JSON Schema defining the structure of a Crossplane Composition resource,
@@ -53,3 +56,7 @@ apis:
   - Semantic Web
   - Ontology
 common: []
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
+specificationVersion: '0.19'
