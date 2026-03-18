@@ -1,0 +1,1626 @@
+openapi: 3.1.0
+info:
+  title: Crossplane Kubernetes API
+  description: >-
+    The Crossplane Kubernetes API extends the Kubernetes API server with custom
+    resources for managing cloud infrastructure declaratively. Resources are
+    organized into two main API groups: apiextensions.crossplane.io for
+    composition primitives (Compositions, CompositeResourceDefinitions,
+    EnvironmentConfigs) and pkg.crossplane.io for package management (Providers,
+    Functions, Configurations and their revisions). All operations use standard
+    Kubernetes REST conventions and are authenticated through the Kubernetes
+    API server's authentication mechanisms.
+  version: '2.2'
+  contact:
+    name: Crossplane Community
+    url: https://slack.crossplane.io/
+  termsOfService: https://www.crossplane.io/
+externalDocs:
+  description: Crossplane API Reference
+  url: https://docs.crossplane.io/latest/api/
+servers:
+  - url: https://kubernetes.default.svc
+    description: Kubernetes API Server (in-cluster)
+tags:
+  - name: Compositions
+    description: >-
+      Compositions define how to compose a set of managed resources or
+      Composition Functions into a higher-level composite resource. A
+      Composition acts as a template that maps fields from a composite
+      resource to composed resources using patches and transforms.
+  - name: CompositeResourceDefinitions
+    description: >-
+      CompositeResourceDefinitions (XRDs) extend the Kubernetes API with new
+      custom resource types. An XRD defines the schema and API surface for a
+      composite resource and an optional namespace-scoped claim resource.
+  - name: EnvironmentConfigs
+    description: >-
+      EnvironmentConfigs provide shared configuration data that can be
+      referenced by Compositions via environment patches, enabling reusable
+      configuration across multiple Compositions.
+  - name: Providers
+    description: >-
+      Providers are Crossplane packages that install controllers and CRDs for
+      managing resources on a specific infrastructure platform such as AWS,
+      GCP, or Azure.
+  - name: ProviderRevisions
+    description: >-
+      ProviderRevisions represent a revision of a Provider package. Crossplane
+      creates revisions when a Provider is updated, enabling rollback and
+      controlled upgrade workflows.
+  - name: Functions
+    description: >-
+      Functions are Crossplane packages that contain Composition Functions,
+      which are OCI container images invoked during composition to perform
+      advanced resource templating and transformation logic.
+  - name: FunctionRevisions
+    description: >-
+      FunctionRevisions represent a revision of a Function package, enabling
+      controlled upgrades and rollback of Composition Function logic.
+  - name: Configurations
+    description: >-
+      Configurations are Crossplane packages that bundle Compositions and
+      CompositeResourceDefinitions together into a distributable unit that
+      can be installed into a Crossplane control plane.
+  - name: ConfigurationRevisions
+    description: >-
+      ConfigurationRevisions represent a revision of a Configuration package,
+      enabling controlled upgrades and rollback of bundled platform APIs.
+  - name: DeploymentRuntimeConfigs
+    description: >-
+      DeploymentRuntimeConfigs customize the runtime behavior of Provider and
+      Function deployments, including replica counts, resource limits, service
+      account annotations, and pod template overrides.
+security:
+  - bearerAuth: []
+paths:
+  /apis/apiextensions.crossplane.io/v1/compositions:
+    get:
+      operationId: listCompositions
+      summary: List Compositions
+      description: >-
+        Returns a list of all Composition resources across the cluster.
+        Compositions define how composite resources are translated into
+        sets of managed resources or Composition Function pipelines.
+      tags:
+        - Compositions
+      parameters:
+        - $ref: '#/components/parameters/labelSelector'
+        - $ref: '#/components/parameters/fieldSelector'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: Successfully listed Compositions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompositionList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createComposition
+      summary: Create a Composition
+      description: >-
+        Creates a new Composition resource. The Composition spec must reference
+        a valid CompositeResourceDefinition via compositeTypeRef and define
+        either a resources array (for Resources mode) or a pipeline array
+        (for Pipeline mode).
+      tags:
+        - Compositions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Composition'
+      responses:
+        '201':
+          description: Composition successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Composition'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /apis/apiextensions.crossplane.io/v1/compositions/{name}:
+    get:
+      operationId: getComposition
+      summary: Get a Composition
+      description: >-
+        Returns the details of a specific Composition resource, including its
+        spec defining composed resource templates and patches, and its status
+        reflecting active revision information.
+      tags:
+        - Compositions
+      parameters:
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Successfully retrieved the Composition.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Composition'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: replaceComposition
+      summary: Replace a Composition
+      description: >-
+        Replaces the entire Composition resource with the provided body.
+        This operation triggers a new CompositionRevision to be created,
+        allowing rollback if needed.
+      tags:
+        - Compositions
+      parameters:
+        - $ref: '#/components/parameters/name'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Composition'
+      responses:
+        '200':
+          description: Composition successfully replaced.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Composition'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteComposition
+      summary: Delete a Composition
+      description: >-
+        Deletes the specified Composition resource. Existing composite resources
+        that reference this Composition will not be deleted but will cease to
+        reconcile until a new Composition is available.
+      tags:
+        - Compositions
+      parameters:
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Composition deletion initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions:
+    get:
+      operationId: listCompositeResourceDefinitions
+      summary: List CompositeResourceDefinitions
+      description: >-
+        Returns a list of all CompositeResourceDefinition (XRD) resources.
+        Each XRD defines the schema for a new composite resource type and
+        optionally a claim type that will be installed as Kubernetes CRDs.
+      tags:
+        - CompositeResourceDefinitions
+      parameters:
+        - $ref: '#/components/parameters/labelSelector'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: Successfully listed CompositeResourceDefinitions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompositeResourceDefinitionList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createCompositeResourceDefinition
+      summary: Create a CompositeResourceDefinition
+      description: >-
+        Creates a new CompositeResourceDefinition. Upon creation, Crossplane
+        installs corresponding CRDs and begins serving the new composite
+        resource API. If claimNames are specified, a namespaced claim CRD
+        is also installed.
+      tags:
+        - CompositeResourceDefinitions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompositeResourceDefinition'
+      responses:
+        '201':
+          description: CompositeResourceDefinition successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompositeResourceDefinition'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions/{name}:
+    get:
+      operationId: getCompositeResourceDefinition
+      summary: Get a CompositeResourceDefinition
+      description: >-
+        Returns details of a specific CompositeResourceDefinition, including
+        its version schemas, claim configuration, and status conditions
+        reflecting whether the CRDs are established.
+      tags:
+        - CompositeResourceDefinitions
+      parameters:
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Successfully retrieved the CompositeResourceDefinition.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompositeResourceDefinition'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: replaceCompositeResourceDefinition
+      summary: Replace a CompositeResourceDefinition
+      description: >-
+        Replaces a CompositeResourceDefinition. Crossplane will reconcile the
+        new schema, updating existing CRDs and triggering re-composition of
+        existing composite resources as needed.
+      tags:
+        - CompositeResourceDefinitions
+      parameters:
+        - $ref: '#/components/parameters/name'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompositeResourceDefinition'
+      responses:
+        '200':
+          description: CompositeResourceDefinition successfully replaced.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompositeResourceDefinition'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteCompositeResourceDefinition
+      summary: Delete a CompositeResourceDefinition
+      description: >-
+        Deletes a CompositeResourceDefinition. Crossplane will remove the
+        associated CRDs and all existing composite resources of that type
+        if no finalizers prevent deletion.
+      tags:
+        - CompositeResourceDefinitions
+      parameters:
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: CompositeResourceDefinition deletion initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /apis/apiextensions.crossplane.io/v1/environmentconfigs:
+    get:
+      operationId: listEnvironmentConfigs
+      summary: List EnvironmentConfigs
+      description: >-
+        Returns a list of all EnvironmentConfig resources. EnvironmentConfigs
+        hold shared configuration data that can be patched into Compositions
+        via environment patch types, enabling cluster-wide shared values.
+      tags:
+        - EnvironmentConfigs
+      parameters:
+        - $ref: '#/components/parameters/labelSelector'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: Successfully listed EnvironmentConfigs.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentConfigList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createEnvironmentConfig
+      summary: Create an EnvironmentConfig
+      description: >-
+        Creates a new EnvironmentConfig resource containing arbitrary key-value
+        configuration data. Compositions can select and merge EnvironmentConfigs
+        using label selectors.
+      tags:
+        - EnvironmentConfigs
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvironmentConfig'
+      responses:
+        '201':
+          description: EnvironmentConfig successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentConfig'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /apis/apiextensions.crossplane.io/v1/environmentconfigs/{name}:
+    get:
+      operationId: getEnvironmentConfig
+      summary: Get an EnvironmentConfig
+      description: >-
+        Returns a specific EnvironmentConfig resource by name, including its
+        data map of arbitrary configuration key-value pairs.
+      tags:
+        - EnvironmentConfigs
+      parameters:
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Successfully retrieved the EnvironmentConfig.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentConfig'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteEnvironmentConfig
+      summary: Delete an EnvironmentConfig
+      description: >-
+        Deletes a specific EnvironmentConfig. Compositions referencing this
+        config will fail to reconcile until the reference is removed or the
+        config is recreated.
+      tags:
+        - EnvironmentConfigs
+      parameters:
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: EnvironmentConfig deletion initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /apis/pkg.crossplane.io/v1/providers:
+    get:
+      operationId: listProviders
+      summary: List Providers
+      description: >-
+        Returns a list of all Provider package installations. Each Provider
+        installs a set of managed resource CRDs and a controller that
+        reconciles those resources against a specific infrastructure platform.
+      tags:
+        - Providers
+      parameters:
+        - $ref: '#/components/parameters/labelSelector'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: Successfully listed Providers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProviderList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createProvider
+      summary: Install a Provider
+      description: >-
+        Installs a new Provider by referencing an OCI image containing the
+        provider package. Crossplane fetches the package, installs its CRDs,
+        and starts the provider controller deployment.
+      tags:
+        - Providers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Provider'
+      responses:
+        '201':
+          description: Provider installation initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Provider'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /apis/pkg.crossplane.io/v1/providers/{name}:
+    get:
+      operationId: getProvider
+      summary: Get a Provider
+      description: >-
+        Returns details of a specific Provider, including its package reference,
+        revision activation policy, and status conditions reflecting whether the
+        provider is healthy and all CRDs are installed.
+      tags:
+        - Providers
+      parameters:
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Successfully retrieved the Provider.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Provider'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: replaceProvider
+      summary: Update a Provider
+      description: >-
+        Replaces a Provider resource, typically to update the package image
+        reference to a new version. Crossplane creates a new ProviderRevision
+        and activates it according to the revisionActivationPolicy.
+      tags:
+        - Providers
+      parameters:
+        - $ref: '#/components/parameters/name'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Provider'
+      responses:
+        '200':
+          description: Provider successfully updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Provider'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteProvider
+      summary: Uninstall a Provider
+      description: >-
+        Removes a Provider installation. Crossplane will delete the provider
+        controller and CRDs. Existing managed resources will be orphaned unless
+        deleted first.
+      tags:
+        - Providers
+      parameters:
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Provider uninstallation initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /apis/pkg.crossplane.io/v1/functions:
+    get:
+      operationId: listFunctions
+      summary: List Functions
+      description: >-
+        Returns a list of all Composition Function package installations.
+        Functions are OCI images that implement the Composition Function
+        gRPC protocol and are invoked as pipeline steps during composition.
+      tags:
+        - Functions
+      parameters:
+        - $ref: '#/components/parameters/labelSelector'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: Successfully listed Functions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FunctionList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createFunction
+      summary: Install a Function
+      description: >-
+        Installs a new Composition Function by referencing its OCI package
+        image. Once installed, the Function can be referenced in Composition
+        pipeline steps by name.
+      tags:
+        - Functions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Function'
+      responses:
+        '201':
+          description: Function installation initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Function'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /apis/pkg.crossplane.io/v1/functions/{name}:
+    get:
+      operationId: getFunction
+      summary: Get a Function
+      description: >-
+        Returns details of a specific Composition Function installation,
+        including its package image reference and status conditions reflecting
+        whether the function is healthy and ready to serve composition requests.
+      tags:
+        - Functions
+      parameters:
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Successfully retrieved the Function.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Function'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteFunction
+      summary: Uninstall a Function
+      description: >-
+        Removes a Composition Function installation. Compositions that reference
+        this Function in their pipeline will fail to reconcile until the
+        Function reference is removed or the Function is reinstalled.
+      tags:
+        - Functions
+      parameters:
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Function uninstallation initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /apis/pkg.crossplane.io/v1/configurations:
+    get:
+      operationId: listConfigurations
+      summary: List Configurations
+      description: >-
+        Returns a list of all Configuration package installations. Configurations
+        bundle Compositions and XRDs together, enabling platform teams to
+        distribute reusable platform APIs as versioned OCI packages.
+      tags:
+        - Configurations
+      parameters:
+        - $ref: '#/components/parameters/labelSelector'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: Successfully listed Configurations.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigurationList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createConfiguration
+      summary: Install a Configuration
+      description: >-
+        Installs a new Configuration package. Crossplane fetches the OCI image,
+        installs the bundled Compositions and XRDs, and tracks revisions for
+        upgrade management.
+      tags:
+        - Configurations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Configuration'
+      responses:
+        '201':
+          description: Configuration installation initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Configuration'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /apis/pkg.crossplane.io/v1/configurations/{name}:
+    get:
+      operationId: getConfiguration
+      summary: Get a Configuration
+      description: >-
+        Returns details of a specific Configuration installation, including its
+        package image reference, revision history, and status conditions.
+      tags:
+        - Configurations
+      parameters:
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Successfully retrieved the Configuration.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Configuration'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteConfiguration
+      summary: Uninstall a Configuration
+      description: >-
+        Removes a Configuration installation. Crossplane will remove the
+        bundled Compositions and XRDs if no other resources depend on them.
+      tags:
+        - Configurations
+      parameters:
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Configuration uninstallation initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /apis/pkg.crossplane.io/v1beta1/deploymentruntimeconfigs:
+    get:
+      operationId: listDeploymentRuntimeConfigs
+      summary: List DeploymentRuntimeConfigs
+      description: >-
+        Returns a list of all DeploymentRuntimeConfig resources. These resources
+        customize the Kubernetes Deployment and ServiceAccount used to run
+        Provider and Function controller pods.
+      tags:
+        - DeploymentRuntimeConfigs
+      parameters:
+        - $ref: '#/components/parameters/labelSelector'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: Successfully listed DeploymentRuntimeConfigs.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentRuntimeConfigList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createDeploymentRuntimeConfig
+      summary: Create a DeploymentRuntimeConfig
+      description: >-
+        Creates a DeploymentRuntimeConfig to customize how Crossplane deploys
+        Provider or Function pods. Providers and Functions reference this
+        resource via runtimeConfigRef in their spec.
+      tags:
+        - DeploymentRuntimeConfigs
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeploymentRuntimeConfig'
+      responses:
+        '201':
+          description: DeploymentRuntimeConfig successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentRuntimeConfig'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /apis/pkg.crossplane.io/v1beta1/deploymentruntimeconfigs/{name}:
+    get:
+      operationId: getDeploymentRuntimeConfig
+      summary: Get a DeploymentRuntimeConfig
+      description: >-
+        Returns a specific DeploymentRuntimeConfig, including its deployment
+        template and service account template overrides.
+      tags:
+        - DeploymentRuntimeConfigs
+      parameters:
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Successfully retrieved the DeploymentRuntimeConfig.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentRuntimeConfig'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteDeploymentRuntimeConfig
+      summary: Delete a DeploymentRuntimeConfig
+      description: >-
+        Deletes a DeploymentRuntimeConfig. Providers or Functions referencing
+        this config via runtimeConfigRef will continue using the last applied
+        configuration until they are updated.
+      tags:
+        - DeploymentRuntimeConfigs
+      parameters:
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: DeploymentRuntimeConfig deletion initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: >-
+        Kubernetes service account token or user bearer token for authenticating
+        with the Kubernetes API server. RBAC policies control which Crossplane
+        resources each identity can access.
+  parameters:
+    name:
+      name: name
+      in: path
+      required: true
+      description: Name of the Crossplane resource.
+      schema:
+        type: string
+    labelSelector:
+      name: labelSelector
+      in: query
+      required: false
+      description: >-
+        A selector to restrict the list of returned objects by their labels.
+        Defaults to everything.
+      schema:
+        type: string
+    fieldSelector:
+      name: fieldSelector
+      in: query
+      required: false
+      description: >-
+        A selector to restrict the list of returned objects by their fields.
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: >-
+        Maximum number of items to return in a single response. The server may
+        return fewer items than requested. Use the continue token for pagination.
+      schema:
+        type: integer
+        minimum: 1
+    continueToken:
+      name: continue
+      in: query
+      required: false
+      description: >-
+        Token returned by a previous list call to retrieve the next page of
+        results. This token encodes list position and expiration time.
+      schema:
+        type: string
+  responses:
+    BadRequest:
+      description: The request was malformed or failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    Conflict:
+      description: A resource with this name already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+  schemas:
+    ObjectMeta:
+      type: object
+      description: Standard Kubernetes object metadata.
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: Unique name of the resource within its scope.
+        namespace:
+          type: string
+          description: Namespace of the resource. Crossplane core resources are cluster-scoped and do not use namespace.
+        labels:
+          type: object
+          description: Key-value pairs for organizing and selecting resources.
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          description: Non-identifying metadata attached to the resource.
+          additionalProperties:
+            type: string
+        resourceVersion:
+          type: string
+          description: Opaque string that identifies the version of the resource for optimistic concurrency.
+        uid:
+          type: string
+          description: Unique identifier for the resource assigned by the API server.
+        generation:
+          type: integer
+          description: Sequence number for changes to the spec. Incremented by the API server on spec changes.
+        creationTimestamp:
+          type: string
+          format: date-time
+          description: Timestamp when the resource was created.
+        deletionTimestamp:
+          type: string
+          format: date-time
+          description: Timestamp after which the resource will be deleted, set when deletion is requested.
+        finalizers:
+          type: array
+          description: Finalizers that must be cleared before the object is deleted.
+          items:
+            type: string
+    Condition:
+      type: object
+      description: A status condition for a Crossplane resource.
+      required:
+        - type
+        - status
+      properties:
+        type:
+          type: string
+          description: Type of condition, such as Ready, Synced, or Healthy.
+        status:
+          type: string
+          enum:
+            - 'True'
+            - 'False'
+            - Unknown
+          description: Status of the condition.
+        reason:
+          type: string
+          description: Machine-readable reason for the condition's last transition.
+        message:
+          type: string
+          description: Human-readable message describing the current condition state.
+        lastTransitionTime:
+          type: string
+          format: date-time
+          description: Timestamp of the last transition for this condition.
+    Status:
+      type: object
+      description: A Kubernetes API Status response used for errors and operation results.
+      properties:
+        apiVersion:
+          type: string
+          description: API version of the Status object.
+        kind:
+          type: string
+          const: Status
+          description: Always Status.
+        status:
+          type: string
+          description: Status of the operation, Success or Failure.
+        message:
+          type: string
+          description: Human-readable description of the status.
+        reason:
+          type: string
+          description: Machine-readable reason for the status, such as NotFound or AlreadyExists.
+        code:
+          type: integer
+          description: HTTP status code corresponding to this status.
+    PackageSpec:
+      type: object
+      description: Common specification fields for Crossplane package resources (Provider, Function, Configuration).
+      required:
+        - package
+      properties:
+        package:
+          type: string
+          description: OCI image reference for the package, including registry, repository, and tag or digest.
+        packagePullPolicy:
+          type: string
+          enum:
+            - Always
+            - IfNotPresent
+            - Never
+          description: Image pull policy for fetching the package OCI image.
+        packagePullSecrets:
+          type: array
+          description: References to Kubernetes secrets containing OCI registry credentials.
+          items:
+            type: object
+            required:
+              - name
+            properties:
+              name:
+                type: string
+                description: Name of the image pull secret.
+        revisionActivationPolicy:
+          type: string
+          enum:
+            - Automatic
+            - Manual
+          description: >-
+            Policy for activating new package revisions. Automatic activates
+            immediately; Manual requires explicit activation.
+        revisionHistoryLimit:
+          type: integer
+          minimum: 0
+          description: Number of inactive package revisions to retain for rollback.
+        runtimeConfigRef:
+          type: object
+          description: Reference to a DeploymentRuntimeConfig for customizing the package's runtime deployment.
+          required:
+            - name
+          properties:
+            name:
+              type: string
+              description: Name of the DeploymentRuntimeConfig.
+            apiVersion:
+              type: string
+              description: API version of the referenced resource.
+            kind:
+              type: string
+              description: Kind of the referenced resource.
+    PackageStatus:
+      type: object
+      description: Common status fields for Crossplane package resources.
+      properties:
+        currentRevision:
+          type: string
+          description: Name of the currently active package revision.
+        conditions:
+          type: array
+          description: Status conditions for the package.
+          items:
+            $ref: '#/components/schemas/Condition'
+    Provider:
+      type: object
+      description: >-
+        A Crossplane Provider package that extends the control plane with managed
+        resource CRDs and a controller for a specific infrastructure platform.
+      required:
+        - apiVersion
+        - kind
+        - metadata
+        - spec
+      properties:
+        apiVersion:
+          type: string
+          const: pkg.crossplane.io/v1
+          description: API version for the Provider resource.
+        kind:
+          type: string
+          const: Provider
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          $ref: '#/components/schemas/PackageSpec'
+        status:
+          $ref: '#/components/schemas/PackageStatus'
+    ProviderList:
+      type: object
+      description: A list of Provider resources.
+      required:
+        - apiVersion
+        - kind
+        - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list resource.
+        kind:
+          type: string
+          const: ProviderList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list for use with watch.
+            continue:
+              type: string
+              description: Continuation token for paginating large result sets.
+        items:
+          type: array
+          description: List of Provider resources.
+          items:
+            $ref: '#/components/schemas/Provider'
+    Function:
+      type: object
+      description: >-
+        A Crossplane Composition Function package. Functions implement the
+        Composition Function gRPC protocol and are invoked as steps in a
+        Composition pipeline to template composed resources.
+      required:
+        - apiVersion
+        - kind
+        - metadata
+        - spec
+      properties:
+        apiVersion:
+          type: string
+          const: pkg.crossplane.io/v1
+          description: API version for the Function resource.
+        kind:
+          type: string
+          const: Function
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          $ref: '#/components/schemas/PackageSpec'
+        status:
+          $ref: '#/components/schemas/PackageStatus'
+    FunctionList:
+      type: object
+      description: A list of Function resources.
+      required:
+        - apiVersion
+        - kind
+        - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list resource.
+        kind:
+          type: string
+          const: FunctionList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Continuation token for pagination.
+        items:
+          type: array
+          description: List of Function resources.
+          items:
+            $ref: '#/components/schemas/Function'
+    Configuration:
+      type: object
+      description: >-
+        A Crossplane Configuration package that bundles Compositions and
+        CompositeResourceDefinitions into a versioned, distributable OCI image
+        for sharing platform APIs across control planes.
+      required:
+        - apiVersion
+        - kind
+        - metadata
+        - spec
+      properties:
+        apiVersion:
+          type: string
+          const: pkg.crossplane.io/v1
+          description: API version for the Configuration resource.
+        kind:
+          type: string
+          const: Configuration
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          $ref: '#/components/schemas/PackageSpec'
+        status:
+          $ref: '#/components/schemas/PackageStatus'
+    ConfigurationList:
+      type: object
+      description: A list of Configuration resources.
+      required:
+        - apiVersion
+        - kind
+        - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list resource.
+        kind:
+          type: string
+          const: ConfigurationList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Continuation token for pagination.
+        items:
+          type: array
+          description: List of Configuration resources.
+          items:
+            $ref: '#/components/schemas/Configuration'
+    Composition:
+      type: object
+      description: >-
+        A Crossplane Composition that defines how to translate a composite
+        resource into a set of composed managed resources or a pipeline of
+        Composition Functions. Compositions act as templates that are selected
+        by composite resources based on compositeTypeRef matching.
+      required:
+        - apiVersion
+        - kind
+        - metadata
+        - spec
+      properties:
+        apiVersion:
+          type: string
+          const: apiextensions.crossplane.io/v1
+          description: API version for the Composition resource.
+        kind:
+          type: string
+          const: Composition
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          type: object
+          description: Specification of the Composition's resource templates and composition mode.
+          required:
+            - compositeTypeRef
+          properties:
+            compositeTypeRef:
+              type: object
+              description: Reference to the XRD type this Composition satisfies.
+              required:
+                - apiVersion
+                - kind
+              properties:
+                apiVersion:
+                  type: string
+                  description: API version of the composite resource type.
+                kind:
+                  type: string
+                  description: Kind of the composite resource type.
+            mode:
+              type: string
+              enum:
+                - Resources
+                - Pipeline
+              description: Composition mode. Resources uses resource templates; Pipeline uses a function pipeline.
+            resources:
+              type: array
+              description: Composed resource templates used in Resources mode.
+              items:
+                type: object
+                description: A composed resource template with patches and connection details.
+            pipeline:
+              type: array
+              description: Ordered pipeline of Composition Function steps used in Pipeline mode.
+              items:
+                type: object
+                description: A pipeline step referencing a Function with optional input.
+            writeConnectionSecretsToNamespace:
+              type: string
+              description: Namespace where composite resource connection secrets are written.
+            publishConnectionDetailsWithStoreConfigRef:
+              type: object
+              description: Reference to a StoreConfig for publishing connection details.
+              properties:
+                name:
+                  type: string
+                  description: Name of the StoreConfig.
+        status:
+          type: object
+          description: Status of the Composition.
+          properties:
+            conditions:
+              type: array
+              description: Status conditions for the Composition.
+              items:
+                $ref: '#/components/schemas/Condition'
+    CompositionList:
+      type: object
+      description: A list of Composition resources.
+      required:
+        - apiVersion
+        - kind
+        - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list resource.
+        kind:
+          type: string
+          const: CompositionList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Continuation token for pagination.
+        items:
+          type: array
+          description: List of Composition resources.
+          items:
+            $ref: '#/components/schemas/Composition'
+    CompositeResourceDefinition:
+      type: object
+      description: >-
+        A Crossplane CompositeResourceDefinition (XRD) that extends the
+        Kubernetes API with a new composite resource type. Creating an XRD
+        causes Crossplane to install corresponding CRDs and begin serving
+        the new API. Optionally defines a namespace-scoped claim type.
+      required:
+        - apiVersion
+        - kind
+        - metadata
+        - spec
+      properties:
+        apiVersion:
+          type: string
+          const: apiextensions.crossplane.io/v1
+          description: API version for the CompositeResourceDefinition resource.
+        kind:
+          type: string
+          const: CompositeResourceDefinition
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          type: object
+          description: Specification for the new composite resource API.
+          required:
+            - group
+            - names
+            - versions
+          properties:
+            group:
+              type: string
+              description: API group for the composite resource, conventionally a domain name.
+            names:
+              type: object
+              description: Names for the composite resource kind.
+              required:
+                - kind
+                - plural
+              properties:
+                kind:
+                  type: string
+                  description: PascalCase singular kind name, conventionally prefixed with X.
+                plural:
+                  type: string
+                  description: Lowercase plural name used in API paths.
+                singular:
+                  type: string
+                  description: Lowercase singular name.
+                shortNames:
+                  type: array
+                  description: Short aliases for use with kubectl.
+                  items:
+                    type: string
+                categories:
+                  type: array
+                  description: Categories this type belongs to, such as crossplane.
+                  items:
+                    type: string
+            claimNames:
+              type: object
+              description: >-
+                Names for the optional namespace-scoped claim resource type.
+                When specified, Crossplane creates a claim CRD in addition to
+                the composite resource CRD.
+              properties:
+                kind:
+                  type: string
+                  description: PascalCase kind name for the claim.
+                plural:
+                  type: string
+                  description: Lowercase plural name for the claim.
+            versions:
+              type: array
+              description: API versions to serve for this composite resource type.
+              minItems: 1
+              items:
+                type: object
+                description: A version of the composite resource API schema.
+            connectionSecretKeys:
+              type: array
+              description: Keys expected in connection secrets propagated from composed resources.
+              items:
+                type: string
+            defaultCompositionRef:
+              type: object
+              description: Default Composition to use when composite resources do not specify one.
+              properties:
+                name:
+                  type: string
+                  description: Name of the default Composition.
+            enforcedCompositionRef:
+              type: object
+              description: Composition that is always used, preventing overrides by composite resource users.
+              properties:
+                name:
+                  type: string
+                  description: Name of the enforced Composition.
+        status:
+          type: object
+          description: Status of the CompositeResourceDefinition.
+          properties:
+            conditions:
+              type: array
+              description: Status conditions including Established and Offered.
+              items:
+                $ref: '#/components/schemas/Condition'
+    CompositeResourceDefinitionList:
+      type: object
+      description: A list of CompositeResourceDefinition resources.
+      required:
+        - apiVersion
+        - kind
+        - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list resource.
+        kind:
+          type: string
+          const: CompositeResourceDefinitionList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Continuation token for pagination.
+        items:
+          type: array
+          description: List of CompositeResourceDefinition resources.
+          items:
+            $ref: '#/components/schemas/CompositeResourceDefinition'
+    EnvironmentConfig:
+      type: object
+      description: >-
+        A Crossplane EnvironmentConfig that stores arbitrary key-value
+        configuration data for use as shared environment data in Compositions.
+        EnvironmentConfigs are selected by Compositions using label selectors
+        and merged into an in-memory environment used during patching.
+      required:
+        - apiVersion
+        - kind
+        - metadata
+      properties:
+        apiVersion:
+          type: string
+          const: apiextensions.crossplane.io/v1alpha1
+          description: API version for the EnvironmentConfig resource.
+        kind:
+          type: string
+          const: EnvironmentConfig
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        data:
+          type: object
+          description: >-
+            Arbitrary key-value data map available to Compositions that select
+            this EnvironmentConfig. Values can be strings, numbers, booleans,
+            arrays, or nested objects.
+          additionalProperties: true
+    EnvironmentConfigList:
+      type: object
+      description: A list of EnvironmentConfig resources.
+      required:
+        - apiVersion
+        - kind
+        - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list resource.
+        kind:
+          type: string
+          const: EnvironmentConfigList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Continuation token for pagination.
+        items:
+          type: array
+          description: List of EnvironmentConfig resources.
+          items:
+            $ref: '#/components/schemas/EnvironmentConfig'
+    DeploymentRuntimeConfig:
+      type: object
+      description: >-
+        A DeploymentRuntimeConfig customizes the Kubernetes Deployment and
+        ServiceAccount that Crossplane creates to run a Provider or Function.
+        Use it to set resource limits, add annotations for workload identity,
+        or configure custom tolerations and node selectors.
+      required:
+        - apiVersion
+        - kind
+        - metadata
+      properties:
+        apiVersion:
+          type: string
+          const: pkg.crossplane.io/v1beta1
+          description: API version for the DeploymentRuntimeConfig resource.
+        kind:
+          type: string
+          const: DeploymentRuntimeConfig
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          type: object
+          description: Runtime configuration specification.
+          properties:
+            deploymentTemplate:
+              type: object
+              description: Template overrides for the Provider or Function Deployment.
+              properties:
+                metadata:
+                  type: object
+                  description: Metadata overrides for the Deployment.
+                spec:
+                  type: object
+                  description: Deployment spec overrides including replicas, selector, and pod template.
+                  properties:
+                    replicas:
+                      type: integer
+                      minimum: 0
+                      description: Number of pod replicas for the provider or function.
+                    template:
+                      type: object
+                      description: Pod template overrides including containers, volumes, and tolerations.
+            serviceAccountTemplate:
+              type: object
+              description: Template overrides for the Provider or Function ServiceAccount.
+              properties:
+                metadata:
+                  type: object
+                  description: Metadata overrides, commonly used to add workload identity annotations.
+                  properties:
+                    annotations:
+                      type: object
+                      description: Annotations to apply to the ServiceAccount, such as IAM role ARN mappings.
+                      additionalProperties:
+                        type: string
+    DeploymentRuntimeConfigList:
+      type: object
+      description: A list of DeploymentRuntimeConfig resources.
+      required:
+        - apiVersion
+        - kind
+        - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list resource.
+        kind:
+          type: string
+          const: DeploymentRuntimeConfigList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Continuation token for pagination.
+        items:
+          type: array
+          description: List of DeploymentRuntimeConfig resources.
+          items:
+            $ref: '#/components/schemas/DeploymentRuntimeConfig'

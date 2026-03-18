@@ -1,0 +1,226 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@vocab": "https://schema.org/",
+    "crossplane": "https://crossplane.io/schemas/vocab/",
+    "k8s": "https://kubernetes.io/docs/reference/",
+    "iac": "https://w3id.org/infrastructure-as-code#",
+    "cncf": "https://www.cncf.io/projects/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "Composition": {
+      "@id": "crossplane:Composition",
+      "@context": {
+        "compositeTypeRef": {
+          "@id": "crossplane:compositeTypeRef",
+          "@type": "@id"
+        },
+        "patchSets": {
+          "@id": "crossplane:patchSets",
+          "@container": "@list"
+        },
+        "resources": {
+          "@id": "crossplane:composedResources",
+          "@container": "@list"
+        },
+        "pipeline": {
+          "@id": "crossplane:pipeline",
+          "@container": "@list"
+        },
+        "mode": {
+          "@id": "crossplane:compositionMode",
+          "@type": "xsd:string"
+        },
+        "writeConnectionSecretsToNamespace": {
+          "@id": "crossplane:writeConnectionSecretsToNamespace",
+          "@type": "xsd:string"
+        }
+      }
+    },
+
+    "CompositeResourceDefinition": {
+      "@id": "crossplane:CompositeResourceDefinition",
+      "@context": {
+        "group": {
+          "@id": "crossplane:apiGroup",
+          "@type": "xsd:string"
+        },
+        "names": {
+          "@id": "crossplane:resourceNames",
+          "@type": "@json"
+        },
+        "claimNames": {
+          "@id": "crossplane:claimNames",
+          "@type": "@json"
+        },
+        "versions": {
+          "@id": "crossplane:apiVersions",
+          "@container": "@list"
+        },
+        "connectionSecretKeys": {
+          "@id": "crossplane:connectionSecretKeys",
+          "@container": "@set"
+        },
+        "defaultCompositionRef": {
+          "@id": "crossplane:defaultCompositionRef",
+          "@type": "@id"
+        },
+        "enforcedCompositionRef": {
+          "@id": "crossplane:enforcedCompositionRef",
+          "@type": "@id"
+        }
+      }
+    },
+
+    "Provider": {
+      "@id": "crossplane:Provider",
+      "@context": {
+        "package": {
+          "@id": "crossplane:packageImage",
+          "@type": "xsd:string"
+        },
+        "packagePullPolicy": {
+          "@id": "crossplane:packagePullPolicy",
+          "@type": "xsd:string"
+        },
+        "revisionActivationPolicy": {
+          "@id": "crossplane:revisionActivationPolicy",
+          "@type": "xsd:string"
+        },
+        "revisionHistoryLimit": {
+          "@id": "crossplane:revisionHistoryLimit",
+          "@type": "xsd:integer"
+        },
+        "runtimeConfigRef": {
+          "@id": "crossplane:runtimeConfigRef",
+          "@type": "@id"
+        }
+      }
+    },
+
+    "ProviderConfig": {
+      "@id": "crossplane:ProviderConfig",
+      "@context": {
+        "credentials": {
+          "@id": "crossplane:credentials",
+          "@type": "@json"
+        },
+        "projectID": {
+          "@id": "crossplane:projectID",
+          "@type": "xsd:string"
+        },
+        "region": {
+          "@id": "crossplane:region",
+          "@type": "xsd:string"
+        }
+      }
+    },
+
+    "ManagedResource": {
+      "@id": "crossplane:ManagedResource",
+      "@context": {
+        "providerConfigRef": {
+          "@id": "crossplane:providerConfigRef",
+          "@type": "@id"
+        },
+        "deletionPolicy": {
+          "@id": "crossplane:deletionPolicy",
+          "@type": "xsd:string"
+        },
+        "forProvider": {
+          "@id": "crossplane:forProvider",
+          "@type": "@json"
+        },
+        "atProvider": {
+          "@id": "crossplane:atProvider",
+          "@type": "@json"
+        }
+      }
+    },
+
+    "Claim": {
+      "@id": "crossplane:Claim",
+      "@context": {
+        "compositionRef": {
+          "@id": "crossplane:compositionRef",
+          "@type": "@id"
+        },
+        "compositionSelector": {
+          "@id": "crossplane:compositionSelector",
+          "@type": "@json"
+        },
+        "resourceRef": {
+          "@id": "crossplane:resourceRef",
+          "@type": "@id"
+        },
+        "writeConnectionSecretToRef": {
+          "@id": "crossplane:writeConnectionSecretToRef",
+          "@type": "@id"
+        }
+      }
+    },
+
+    "CompositionFunction": {
+      "@id": "crossplane:CompositionFunction",
+      "@context": {
+        "package": {
+          "@id": "crossplane:packageImage",
+          "@type": "xsd:string"
+        },
+        "runtimeConfigRef": {
+          "@id": "crossplane:runtimeConfigRef",
+          "@type": "@id"
+        }
+      }
+    },
+
+    "EnvironmentConfig": {
+      "@id": "crossplane:EnvironmentConfig",
+      "@context": {
+        "data": {
+          "@id": "crossplane:environmentData",
+          "@type": "@json"
+        }
+      }
+    },
+
+    "apiVersion": {
+      "@id": "k8s:apiVersion",
+      "@type": "xsd:string"
+    },
+    "kind": {
+      "@id": "k8s:kind",
+      "@type": "xsd:string"
+    },
+    "metadata": {
+      "@id": "k8s:metadata",
+      "@type": "@json"
+    },
+    "spec": {
+      "@id": "k8s:spec",
+      "@type": "@json"
+    },
+    "status": {
+      "@id": "k8s:status",
+      "@type": "@json"
+    },
+    "name": "dcterms:title",
+    "description": "dcterms:description",
+    "created": {
+      "@id": "dcterms:created",
+      "@type": "xsd:dateTime"
+    },
+    "modified": {
+      "@id": "dcterms:modified",
+      "@type": "xsd:dateTime"
+    },
+    "version": "dcterms:hasVersion",
+    "license": {
+      "@id": "dcterms:license",
+      "@type": "@id"
+    }
+  }
+}

@@ -1,8 +1,10 @@
 aid: crossplane
 name: Crossplane
-description: Open source Kubernetes add-on that transforms your cluster into a universal
-  control plane, enabling you to manage cloud infrastructure, services, and applications
-  using Kubernetes-style declarative configuration
+description: >-
+  Open source Kubernetes add-on that transforms your cluster into a universal
+  control plane, enabling you to manage cloud infrastructure, services, and
+  applications using Kubernetes-style declarative configuration. Crossplane is
+  a graduated Cloud Native Computing Foundation project.
 type: Index
 url: https://raw.githubusercontent.com/api-evangelist/crossplane/refs/heads/main/apis.yml
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
@@ -13,49 +15,70 @@ tags:
 - Multi-Cloud
 - Control Plane
 created: '2025-01-01'
-modified: '2026-03-16'
+modified: '2026-03-18'
 apis:
-- name: Crossplane Composition Schema
-  description: JSON Schema defining the structure of a Crossplane Composition resource,
-    which maps composite resources to composed managed resources through patches and
-    resource templates.
-  url: composition-schema.json
-  type: json-schema
+- aid: crossplane:crossplane-kubernetes-api
+  name: Crossplane Kubernetes API
+  description: >-
+    The Crossplane Kubernetes API extends the Kubernetes API with custom
+    resources including Compositions, CompositeResourceDefinitions (XRDs),
+    Providers, ProviderConfigs, and Claims. These resources allow declarative
+    management of cloud infrastructure and services through standard Kubernetes
+    manifests and the kubectl CLI.
+  humanURL: https://docs.crossplane.io/latest/api/
+  baseURL: https://kubernetes.default.svc
   tags:
-  - Composition
+  - Kubernetes
   - Infrastructure as Code
-  - Resource Template
-- name: Crossplane CompositeResourceDefinition (XRD) Schema
-  description: JSON Schema defining the structure of a Crossplane CompositeResourceDefinition,
-    which extends the Kubernetes API with custom composite resource types and optional
-    namespace-scoped claims.
-  url: xrd-schema.json
-  type: json-schema
-  tags:
-  - XRD
-  - Custom Resources
-  - API Extension
-- name: Crossplane Provider Configuration Schema
-  description: JSON Schema defining the structure of Crossplane Provider, ProviderConfig,
-    and DeploymentRuntimeConfig resources for installing and authenticating cloud
-    infrastructure providers.
-  url: provider-schema.json
-  type: json-schema
-  tags:
-  - Provider
-  - Authentication
-  - Cloud Platform
-- name: Crossplane JSON-LD Context
-  description: JSON-LD context document mapping Crossplane infrastructure-as-code
-    concepts including Compositions, XRDs, Providers, Claims, and Managed Resources
-    to linked data vocabularies and Kubernetes ontology.
-  url: crossplane-context.jsonld
-  type: json-ld
-  tags:
-  - Linked Data
-  - Semantic Web
-  - Ontology
-common: []
+  - Control Plane
+  properties:
+  - type: Documentation
+    url: https://docs.crossplane.io/latest/
+  - type: Reference
+    url: https://docs.crossplane.io/latest/api/
+  - type: Getting Started
+    url: https://docs.crossplane.io/latest/get-started/get-started-with-composition/
+  - type: OpenAPI
+    url: openapi/crossplane-kubernetes-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/crossplane-composition-schema.json
+  - type: JSONSchema
+    url: json-schema/crossplane-xrd-schema.json
+  - type: JSONSchema
+    url: json-schema/crossplane-provider-schema.json
+  - type: JSON-LD
+    url: json-ld/crossplane-context.jsonld
+  - type: Change Log
+    url: https://github.com/crossplane/crossplane/releases
+common:
+- type: JSONSchema
+  url: json-schema/crossplane-composition-schema.json
+- type: JSONSchema
+  url: json-schema/crossplane-xrd-schema.json
+- type: JSONSchema
+  url: json-schema/crossplane-provider-schema.json
+- type: JSON-LD
+  url: json-ld/crossplane-context.jsonld
+- type: Website
+  url: https://www.crossplane.io/
+- type: Documentation
+  url: https://docs.crossplane.io/latest/
+- type: Getting Started
+  url: https://docs.crossplane.io/latest/get-started/get-started-with-composition/
+- type: Reference
+  url: https://docs.crossplane.io/latest/api/
+- type: Blog
+  url: https://blog.crossplane.io/
+- type: GitHub Organization
+  url: https://github.com/crossplane
+- type: GitHubRepository
+  url: https://github.com/crossplane/crossplane
+- type: Change Log
+  url: https://github.com/crossplane/crossplane/releases
+- type: Community
+  url: https://docs.crossplane.io/latest/learn/
+- type: Contributing
+  url: https://docs.crossplane.io/contribute/contribute/
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
