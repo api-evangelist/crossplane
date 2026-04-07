@@ -77,7 +77,7 @@ paths:
   /apis/apiextensions.crossplane.io/v1/compositions:
     get:
       operationId: listCompositions
-      summary: List Compositions
+      summary: Crossplane List Compositions
       description: >-
         Returns a list of all Composition resources across the cluster.
         Compositions define how composite resources are translated into
@@ -100,7 +100,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       operationId: createComposition
-      summary: Create a Composition
+      summary: Crossplane Create a Composition
       description: >-
         Creates a new Composition resource. The Composition spec must reference
         a valid CompositeResourceDefinition via compositeTypeRef and define
@@ -130,7 +130,7 @@ paths:
   /apis/apiextensions.crossplane.io/v1/compositions/{name}:
     get:
       operationId: getComposition
-      summary: Get a Composition
+      summary: Crossplane Get a Composition
       description: >-
         Returns the details of a specific Composition resource, including its
         spec defining composed resource templates and patches, and its status
@@ -152,7 +152,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: replaceComposition
-      summary: Replace a Composition
+      summary: Crossplane Replace a Composition
       description: >-
         Replaces the entire Composition resource with the provided body.
         This operation triggers a new CompositionRevision to be created,
@@ -182,7 +182,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteComposition
-      summary: Delete a Composition
+      summary: Crossplane Delete a Composition
       description: >-
         Deletes the specified Composition resource. Existing composite resources
         that reference this Composition will not be deleted but will cease to
@@ -205,7 +205,7 @@ paths:
   /apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions:
     get:
       operationId: listCompositeResourceDefinitions
-      summary: List CompositeResourceDefinitions
+      summary: Crossplane List CompositeResourceDefinitions
       description: >-
         Returns a list of all CompositeResourceDefinition (XRD) resources.
         Each XRD defines the schema for a new composite resource type and
@@ -227,7 +227,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       operationId: createCompositeResourceDefinition
-      summary: Create a CompositeResourceDefinition
+      summary: Crossplane Create a CompositeResourceDefinition
       description: >-
         Creates a new CompositeResourceDefinition. Upon creation, Crossplane
         installs corresponding CRDs and begins serving the new composite
@@ -257,7 +257,7 @@ paths:
   /apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions/{name}:
     get:
       operationId: getCompositeResourceDefinition
-      summary: Get a CompositeResourceDefinition
+      summary: Crossplane Get a CompositeResourceDefinition
       description: >-
         Returns details of a specific CompositeResourceDefinition, including
         its version schemas, claim configuration, and status conditions
@@ -279,7 +279,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: replaceCompositeResourceDefinition
-      summary: Replace a CompositeResourceDefinition
+      summary: Crossplane Replace a CompositeResourceDefinition
       description: >-
         Replaces a CompositeResourceDefinition. Crossplane will reconcile the
         new schema, updating existing CRDs and triggering re-composition of
@@ -309,7 +309,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteCompositeResourceDefinition
-      summary: Delete a CompositeResourceDefinition
+      summary: Crossplane Delete a CompositeResourceDefinition
       description: >-
         Deletes a CompositeResourceDefinition. Crossplane will remove the
         associated CRDs and all existing composite resources of that type
@@ -332,7 +332,7 @@ paths:
   /apis/apiextensions.crossplane.io/v1/environmentconfigs:
     get:
       operationId: listEnvironmentConfigs
-      summary: List EnvironmentConfigs
+      summary: Crossplane List EnvironmentConfigs
       description: >-
         Returns a list of all EnvironmentConfig resources. EnvironmentConfigs
         hold shared configuration data that can be patched into Compositions
@@ -354,7 +354,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       operationId: createEnvironmentConfig
-      summary: Create an EnvironmentConfig
+      summary: Crossplane Create an EnvironmentConfig
       description: >-
         Creates a new EnvironmentConfig resource containing arbitrary key-value
         configuration data. Compositions can select and merge EnvironmentConfigs
@@ -381,7 +381,7 @@ paths:
   /apis/apiextensions.crossplane.io/v1/environmentconfigs/{name}:
     get:
       operationId: getEnvironmentConfig
-      summary: Get an EnvironmentConfig
+      summary: Crossplane Get an EnvironmentConfig
       description: >-
         Returns a specific EnvironmentConfig resource by name, including its
         data map of arbitrary configuration key-value pairs.
@@ -402,7 +402,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteEnvironmentConfig
-      summary: Delete an EnvironmentConfig
+      summary: Crossplane Delete an EnvironmentConfig
       description: >-
         Deletes a specific EnvironmentConfig. Compositions referencing this
         config will fail to reconcile until the reference is removed or the
@@ -425,7 +425,7 @@ paths:
   /apis/pkg.crossplane.io/v1/providers:
     get:
       operationId: listProviders
-      summary: List Providers
+      summary: Crossplane List Providers
       description: >-
         Returns a list of all Provider package installations. Each Provider
         installs a set of managed resource CRDs and a controller that
@@ -447,7 +447,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       operationId: createProvider
-      summary: Install a Provider
+      summary: Crossplane Install a Provider
       description: >-
         Installs a new Provider by referencing an OCI image containing the
         provider package. Crossplane fetches the package, installs its CRDs,
@@ -476,7 +476,7 @@ paths:
   /apis/pkg.crossplane.io/v1/providers/{name}:
     get:
       operationId: getProvider
-      summary: Get a Provider
+      summary: Crossplane Get a Provider
       description: >-
         Returns details of a specific Provider, including its package reference,
         revision activation policy, and status conditions reflecting whether the
@@ -498,7 +498,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: replaceProvider
-      summary: Update a Provider
+      summary: Crossplane Update a Provider
       description: >-
         Replaces a Provider resource, typically to update the package image
         reference to a new version. Crossplane creates a new ProviderRevision
@@ -528,7 +528,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteProvider
-      summary: Uninstall a Provider
+      summary: Crossplane Uninstall a Provider
       description: >-
         Removes a Provider installation. Crossplane will delete the provider
         controller and CRDs. Existing managed resources will be orphaned unless
@@ -551,7 +551,7 @@ paths:
   /apis/pkg.crossplane.io/v1/functions:
     get:
       operationId: listFunctions
-      summary: List Functions
+      summary: Crossplane List Functions
       description: >-
         Returns a list of all Composition Function package installations.
         Functions are OCI images that implement the Composition Function
@@ -573,7 +573,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       operationId: createFunction
-      summary: Install a Function
+      summary: Crossplane Install a Function
       description: >-
         Installs a new Composition Function by referencing its OCI package
         image. Once installed, the Function can be referenced in Composition
@@ -602,7 +602,7 @@ paths:
   /apis/pkg.crossplane.io/v1/functions/{name}:
     get:
       operationId: getFunction
-      summary: Get a Function
+      summary: Crossplane Get a Function
       description: >-
         Returns details of a specific Composition Function installation,
         including its package image reference and status conditions reflecting
@@ -624,7 +624,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteFunction
-      summary: Uninstall a Function
+      summary: Crossplane Uninstall a Function
       description: >-
         Removes a Composition Function installation. Compositions that reference
         this Function in their pipeline will fail to reconcile until the
@@ -647,7 +647,7 @@ paths:
   /apis/pkg.crossplane.io/v1/configurations:
     get:
       operationId: listConfigurations
-      summary: List Configurations
+      summary: Crossplane List Configurations
       description: >-
         Returns a list of all Configuration package installations. Configurations
         bundle Compositions and XRDs together, enabling platform teams to
@@ -669,7 +669,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       operationId: createConfiguration
-      summary: Install a Configuration
+      summary: Crossplane Install a Configuration
       description: >-
         Installs a new Configuration package. Crossplane fetches the OCI image,
         installs the bundled Compositions and XRDs, and tracks revisions for
@@ -698,7 +698,7 @@ paths:
   /apis/pkg.crossplane.io/v1/configurations/{name}:
     get:
       operationId: getConfiguration
-      summary: Get a Configuration
+      summary: Crossplane Get a Configuration
       description: >-
         Returns details of a specific Configuration installation, including its
         package image reference, revision history, and status conditions.
@@ -719,7 +719,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteConfiguration
-      summary: Uninstall a Configuration
+      summary: Crossplane Uninstall a Configuration
       description: >-
         Removes a Configuration installation. Crossplane will remove the
         bundled Compositions and XRDs if no other resources depend on them.
@@ -741,7 +741,7 @@ paths:
   /apis/pkg.crossplane.io/v1beta1/deploymentruntimeconfigs:
     get:
       operationId: listDeploymentRuntimeConfigs
-      summary: List DeploymentRuntimeConfigs
+      summary: Crossplane List DeploymentRuntimeConfigs
       description: >-
         Returns a list of all DeploymentRuntimeConfig resources. These resources
         customize the Kubernetes Deployment and ServiceAccount used to run
@@ -763,7 +763,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       operationId: createDeploymentRuntimeConfig
-      summary: Create a DeploymentRuntimeConfig
+      summary: Crossplane Create a DeploymentRuntimeConfig
       description: >-
         Creates a DeploymentRuntimeConfig to customize how Crossplane deploys
         Provider or Function pods. Providers and Functions reference this
@@ -790,7 +790,7 @@ paths:
   /apis/pkg.crossplane.io/v1beta1/deploymentruntimeconfigs/{name}:
     get:
       operationId: getDeploymentRuntimeConfig
-      summary: Get a DeploymentRuntimeConfig
+      summary: Crossplane Get a DeploymentRuntimeConfig
       description: >-
         Returns a specific DeploymentRuntimeConfig, including its deployment
         template and service account template overrides.
@@ -811,7 +811,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteDeploymentRuntimeConfig
-      summary: Delete a DeploymentRuntimeConfig
+      summary: Crossplane Delete a DeploymentRuntimeConfig
       description: >-
         Deletes a DeploymentRuntimeConfig. Providers or Functions referencing
         this config via runtimeConfigRef will continue using the last applied
