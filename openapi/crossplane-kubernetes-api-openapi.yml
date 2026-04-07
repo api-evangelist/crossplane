@@ -22,55 +22,42 @@ servers:
   - url: https://kubernetes.default.svc
     description: Kubernetes API Server (in-cluster)
 tags:
+  - name: CompositeResourceDefinitions
+    description: >-
+      CompositeResourceDefinitions (XRDs) extend the Kubernetes API with new
+      custom resource types. An XRD defines the schema and API surface for a
+      composite resource and an optional namespace-scoped claim resource.
   - name: Compositions
     description: >-
       Compositions define how to compose a set of managed resources or
       Composition Functions into a higher-level composite resource. A
       Composition acts as a template that maps fields from a composite
       resource to composed resources using patches and transforms.
-  - name: CompositeResourceDefinitions
-    description: >-
-      CompositeResourceDefinitions (XRDs) extend the Kubernetes API with new
-      custom resource types. An XRD defines the schema and API surface for a
-      composite resource and an optional namespace-scoped claim resource.
-  - name: EnvironmentConfigs
-    description: >-
-      EnvironmentConfigs provide shared configuration data that can be
-      referenced by Compositions via environment patches, enabling reusable
-      configuration across multiple Compositions.
-  - name: Providers
-    description: >-
-      Providers are Crossplane packages that install controllers and CRDs for
-      managing resources on a specific infrastructure platform such as AWS,
-      GCP, or Azure.
-  - name: ProviderRevisions
-    description: >-
-      ProviderRevisions represent a revision of a Provider package. Crossplane
-      creates revisions when a Provider is updated, enabling rollback and
-      controlled upgrade workflows.
-  - name: Functions
-    description: >-
-      Functions are Crossplane packages that contain Composition Functions,
-      which are OCI container images invoked during composition to perform
-      advanced resource templating and transformation logic.
-  - name: FunctionRevisions
-    description: >-
-      FunctionRevisions represent a revision of a Function package, enabling
-      controlled upgrades and rollback of Composition Function logic.
   - name: Configurations
     description: >-
       Configurations are Crossplane packages that bundle Compositions and
       CompositeResourceDefinitions together into a distributable unit that
       can be installed into a Crossplane control plane.
-  - name: ConfigurationRevisions
-    description: >-
-      ConfigurationRevisions represent a revision of a Configuration package,
-      enabling controlled upgrades and rollback of bundled platform APIs.
   - name: DeploymentRuntimeConfigs
     description: >-
       DeploymentRuntimeConfigs customize the runtime behavior of Provider and
       Function deployments, including replica counts, resource limits, service
       account annotations, and pod template overrides.
+  - name: EnvironmentConfigs
+    description: >-
+      EnvironmentConfigs provide shared configuration data that can be
+      referenced by Compositions via environment patches, enabling reusable
+      configuration across multiple Compositions.
+  - name: Functions
+    description: >-
+      Functions are Crossplane packages that contain Composition Functions,
+      which are OCI container images invoked during composition to perform
+      advanced resource templating and transformation logic.
+  - name: Providers
+    description: >-
+      Providers are Crossplane packages that install controllers and CRDs for
+      managing resources on a specific infrastructure platform such as AWS,
+      GCP, or Azure.
 security:
   - bearerAuth: []
 paths:
