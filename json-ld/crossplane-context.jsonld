@@ -1,8 +1,7 @@
 {
   "@context": {
-    "@version": 1.1,
     "@vocab": "https://schema.org/",
-    "crossplane": "https://crossplane.io/schemas/vocab/",
+    "crossplane": "https://crossplane.io/docs/concepts/",
     "k8s": "https://kubernetes.io/docs/reference/",
     "iac": "https://w3id.org/infrastructure-as-code#",
     "cncf": "https://www.cncf.io/projects/",
@@ -12,215 +11,131 @@
     "xsd": "http://www.w3.org/2001/XMLSchema#",
 
     "Composition": {
-      "@id": "crossplane:Composition",
-      "@context": {
-        "compositeTypeRef": {
-          "@id": "crossplane:compositeTypeRef",
-          "@type": "@id"
-        },
-        "patchSets": {
-          "@id": "crossplane:patchSets",
-          "@container": "@list"
-        },
-        "resources": {
-          "@id": "crossplane:composedResources",
-          "@container": "@list"
-        },
-        "pipeline": {
-          "@id": "crossplane:pipeline",
-          "@container": "@list"
-        },
-        "mode": {
-          "@id": "crossplane:compositionMode",
-          "@type": "xsd:string"
-        },
-        "writeConnectionSecretsToNamespace": {
-          "@id": "crossplane:writeConnectionSecretsToNamespace",
-          "@type": "xsd:string"
-        }
-      }
+      "@id": "crossplane:compositions",
+      "@type": "@id",
+      "rdfs:label": "Composition",
+      "rdfs:comment": "A Crossplane Composition defines how to transform a composite resource into one or more composed managed resources, including field mapping and patching.",
+      "skos:broader": "iac:ResourceTemplate",
+      "skos:related": ["k8s:custom-resources", "crossplane:composite-resources"]
     },
 
     "CompositeResourceDefinition": {
-      "@id": "crossplane:CompositeResourceDefinition",
-      "@context": {
-        "group": {
-          "@id": "crossplane:apiGroup",
-          "@type": "xsd:string"
-        },
-        "names": {
-          "@id": "crossplane:resourceNames",
-          "@type": "@json"
-        },
-        "claimNames": {
-          "@id": "crossplane:claimNames",
-          "@type": "@json"
-        },
-        "versions": {
-          "@id": "crossplane:apiVersions",
-          "@container": "@list"
-        },
-        "connectionSecretKeys": {
-          "@id": "crossplane:connectionSecretKeys",
-          "@container": "@set"
-        },
-        "defaultCompositionRef": {
-          "@id": "crossplane:defaultCompositionRef",
-          "@type": "@id"
-        },
-        "enforcedCompositionRef": {
-          "@id": "crossplane:enforcedCompositionRef",
-          "@type": "@id"
-        }
-      }
+      "@id": "crossplane:composite-resource-definitions",
+      "@type": "@id",
+      "rdfs:label": "CompositeResourceDefinition (XRD)",
+      "rdfs:comment": "Defines the schema and API surface for a composite resource, extending the Kubernetes API with a custom infrastructure abstraction.",
+      "skos:broader": "k8s:custom-resources",
+      "skos:related": ["crossplane:compositions", "crossplane:claims"]
     },
 
     "Provider": {
-      "@id": "crossplane:Provider",
-      "@context": {
-        "package": {
-          "@id": "crossplane:packageImage",
-          "@type": "xsd:string"
-        },
-        "packagePullPolicy": {
-          "@id": "crossplane:packagePullPolicy",
-          "@type": "xsd:string"
-        },
-        "revisionActivationPolicy": {
-          "@id": "crossplane:revisionActivationPolicy",
-          "@type": "xsd:string"
-        },
-        "revisionHistoryLimit": {
-          "@id": "crossplane:revisionHistoryLimit",
-          "@type": "xsd:integer"
-        },
-        "runtimeConfigRef": {
-          "@id": "crossplane:runtimeConfigRef",
-          "@type": "@id"
-        }
-      }
+      "@id": "crossplane:providers",
+      "@type": "@id",
+      "rdfs:label": "Provider",
+      "rdfs:comment": "A Crossplane Provider package that installs controllers and CRDs for managing resources on a specific infrastructure platform such as AWS, GCP, or Azure.",
+      "skos:broader": "k8s:operators",
+      "skos:related": ["crossplane:provider-configs", "crossplane:managed-resources"]
     },
 
     "ProviderConfig": {
-      "@id": "crossplane:ProviderConfig",
-      "@context": {
-        "credentials": {
-          "@id": "crossplane:credentials",
-          "@type": "@json"
-        },
-        "projectID": {
-          "@id": "crossplane:projectID",
-          "@type": "xsd:string"
-        },
-        "region": {
-          "@id": "crossplane:region",
-          "@type": "xsd:string"
-        }
-      }
+      "@id": "crossplane:provider-configs",
+      "@type": "@id",
+      "rdfs:label": "ProviderConfig",
+      "rdfs:comment": "Authentication and configuration for a Crossplane Provider, specifying how the provider connects to an infrastructure platform.",
+      "skos:broader": "iac:ProviderConfiguration",
+      "skos:related": "crossplane:providers"
     },
 
     "ManagedResource": {
-      "@id": "crossplane:ManagedResource",
-      "@context": {
-        "providerConfigRef": {
-          "@id": "crossplane:providerConfigRef",
-          "@type": "@id"
-        },
-        "deletionPolicy": {
-          "@id": "crossplane:deletionPolicy",
-          "@type": "xsd:string"
-        },
-        "forProvider": {
-          "@id": "crossplane:forProvider",
-          "@type": "@json"
-        },
-        "atProvider": {
-          "@id": "crossplane:atProvider",
-          "@type": "@json"
-        }
-      }
+      "@id": "crossplane:managed-resources",
+      "@type": "@id",
+      "rdfs:label": "Managed Resource",
+      "rdfs:comment": "A Kubernetes custom resource representing a single piece of external infrastructure managed by a Crossplane Provider.",
+      "skos:broader": "iac:InfrastructureResource",
+      "skos:related": ["crossplane:providers", "crossplane:compositions"]
     },
 
     "Claim": {
-      "@id": "crossplane:Claim",
-      "@context": {
-        "compositionRef": {
-          "@id": "crossplane:compositionRef",
-          "@type": "@id"
-        },
-        "compositionSelector": {
-          "@id": "crossplane:compositionSelector",
-          "@type": "@json"
-        },
-        "resourceRef": {
-          "@id": "crossplane:resourceRef",
-          "@type": "@id"
-        },
-        "writeConnectionSecretToRef": {
-          "@id": "crossplane:writeConnectionSecretToRef",
-          "@type": "@id"
-        }
-      }
+      "@id": "crossplane:claims",
+      "@type": "@id",
+      "rdfs:label": "Claim",
+      "rdfs:comment": "A namespace-scoped resource that requests a composite resource, providing a self-service interface for application teams.",
+      "skos:broader": "k8s:namespaced-resources",
+      "skos:related": "crossplane:composite-resource-definitions"
     },
 
     "CompositionFunction": {
-      "@id": "crossplane:CompositionFunction",
-      "@context": {
-        "package": {
-          "@id": "crossplane:packageImage",
-          "@type": "xsd:string"
-        },
-        "runtimeConfigRef": {
-          "@id": "crossplane:runtimeConfigRef",
-          "@type": "@id"
-        }
-      }
+      "@id": "crossplane:composition-functions",
+      "@type": "@id",
+      "rdfs:label": "Composition Function",
+      "rdfs:comment": "A containerized function invoked during composition to perform advanced resource templating, transformation, or validation logic.",
+      "skos:broader": "iac:TransformFunction",
+      "skos:related": "crossplane:compositions"
     },
 
-    "EnvironmentConfig": {
-      "@id": "crossplane:EnvironmentConfig",
-      "@context": {
-        "data": {
-          "@id": "crossplane:environmentData",
-          "@type": "@json"
-        }
-      }
+    "ControlPlane": {
+      "@id": "crossplane:control-planes",
+      "@type": "@id",
+      "rdfs:label": "Control Plane",
+      "rdfs:comment": "A Kubernetes cluster running Crossplane that serves as a universal control plane for managing infrastructure across multiple providers.",
+      "skos:broader": "k8s:clusters",
+      "skos:exactMatch": "cncf:crossplane"
+    },
+
+    "compositeTypeRef": {
+      "@id": "crossplane:compositeTypeRef",
+      "@type": "@id",
+      "rdfs:comment": "Reference linking a Composition to the CompositeResourceDefinition it satisfies."
+    },
+
+    "providerConfigRef": {
+      "@id": "crossplane:providerConfigRef",
+      "@type": "@id",
+      "rdfs:comment": "Reference from a managed resource to its ProviderConfig for authentication."
+    },
+
+    "patch": {
+      "@id": "crossplane:patches",
+      "rdfs:comment": "A field-level mapping that copies or transforms values between composite and composed resources."
+    },
+
+    "connectionSecret": {
+      "@id": "crossplane:connection-secrets",
+      "rdfs:comment": "A Kubernetes Secret containing connection details propagated from composed resources to the composite resource or claim."
     },
 
     "apiVersion": {
-      "@id": "k8s:apiVersion",
-      "@type": "xsd:string"
+      "@id": "k8s:api-version",
+      "@type": "xsd:string",
+      "rdfs:comment": "Kubernetes API group and version identifier."
     },
+
     "kind": {
-      "@id": "k8s:kind",
-      "@type": "xsd:string"
+      "@id": "k8s:resource-kind",
+      "@type": "xsd:string",
+      "rdfs:comment": "Kubernetes resource type identifier."
     },
+
     "metadata": {
-      "@id": "k8s:metadata",
-      "@type": "@json"
+      "@id": "k8s:object-metadata",
+      "rdfs:comment": "Standard Kubernetes object metadata including name, namespace, labels, and annotations."
     },
+
     "spec": {
-      "@id": "k8s:spec",
-      "@type": "@json"
+      "@id": "k8s:resource-spec",
+      "rdfs:comment": "Desired state specification for the Kubernetes resource."
     },
+
     "status": {
-      "@id": "k8s:status",
-      "@type": "@json"
+      "@id": "k8s:resource-status",
+      "rdfs:comment": "Observed state and conditions of the Kubernetes resource."
     },
+
     "name": "dcterms:title",
     "description": "dcterms:description",
-    "created": {
-      "@id": "dcterms:created",
-      "@type": "xsd:dateTime"
-    },
-    "modified": {
-      "@id": "dcterms:modified",
-      "@type": "xsd:dateTime"
-    },
+    "created": "dcterms:created",
+    "modified": "dcterms:modified",
     "version": "dcterms:hasVersion",
-    "license": {
-      "@id": "dcterms:license",
-      "@type": "@id"
-    }
+    "license": "dcterms:license"
   }
 }

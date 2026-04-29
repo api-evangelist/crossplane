@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://crossplane.io/schemas/crossplane/xrd.json",
+  "$id": "https://github.com/api-evangelist/crossplane/blob/main/xrd-schema.json",
   "title": "Crossplane CompositeResourceDefinition (XRD)",
   "description": "Schema for a Crossplane CompositeResourceDefinition that defines the API schema for composite resources and optional claims, extending the Kubernetes API with custom infrastructure abstractions.",
   "type": "object",
@@ -188,8 +188,7 @@
                     "properties": {
                       "type": {
                         "type": "string",
-                        "const": "object",
-                        "description": "Schema type, always object."
+                        "const": "object"
                       },
                       "properties": {
                         "type": "object",
@@ -197,12 +196,10 @@
                       },
                       "required": {
                         "type": "array",
-                        "description": "Required fields in the schema.",
                         "items": { "type": "string" }
                       },
                       "description": {
-                        "type": "string",
-                        "description": "Human-readable description of the composite resource."
+                        "type": "string"
                       }
                     }
                   }
@@ -215,10 +212,10 @@
                   "type": "object",
                   "required": ["name", "type", "jsonPath"],
                   "properties": {
-                    "name": { "type": "string", "description": "Column name." },
-                    "type": { "type": "string", "description": "Column data type." },
-                    "jsonPath": { "type": "string", "description": "JSONPath expression to the field value." },
-                    "description": { "type": "string", "description": "Column description." }
+                    "name": { "type": "string" },
+                    "type": { "type": "string" },
+                    "jsonPath": { "type": "string" },
+                    "description": { "type": "string" }
                   }
                 }
               }

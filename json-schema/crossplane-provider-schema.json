@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://crossplane.io/schemas/crossplane/provider.json",
+  "$id": "https://github.com/api-evangelist/crossplane/blob/main/provider-schema.json",
   "title": "Crossplane Provider Configuration",
   "description": "Schema for Crossplane Provider and ProviderConfig resources that install and configure cloud provider integrations for infrastructure provisioning.",
   "type": "object",
@@ -27,7 +27,6 @@
         },
         "metadata": {
           "type": "object",
-          "description": "Kubernetes object metadata for the Provider resource.",
           "required": ["name"],
           "properties": {
             "name": {
@@ -36,24 +35,21 @@
             },
             "labels": {
               "type": "object",
-              "description": "Key-value labels for organizing Provider resources.",
               "additionalProperties": { "type": "string" }
             },
             "annotations": {
               "type": "object",
-              "description": "Non-identifying metadata annotations.",
               "additionalProperties": { "type": "string" }
             }
           }
         },
         "spec": {
           "type": "object",
-          "description": "Specification for the Provider package installation.",
           "required": ["package"],
           "properties": {
             "package": {
               "type": "string",
-              "description": "OCI image reference for the Provider package, e.g. xpkg.upbound.io/upbound/provider-aws:v1.0.0."
+              "description": "OCI image reference for the Provider package."
             },
             "packagePullPolicy": {
               "type": "string",
@@ -67,7 +63,7 @@
                 "type": "object",
                 "required": ["name"],
                 "properties": {
-                  "name": { "type": "string", "description": "Name of the image pull secret." }
+                  "name": { "type": "string" }
                 }
               }
             },
@@ -86,7 +82,7 @@
               "description": "Reference to a ControllerConfig for the Provider pod.",
               "required": ["name"],
               "properties": {
-                "name": { "type": "string", "description": "Name of the ControllerConfig." }
+                "name": { "type": "string" }
               }
             },
             "runtimeConfigRef": {
@@ -94,9 +90,9 @@
               "description": "Reference to a DeploymentRuntimeConfig for the Provider.",
               "required": ["name"],
               "properties": {
-                "name": { "type": "string", "description": "Name of the DeploymentRuntimeConfig." },
-                "apiVersion": { "type": "string", "description": "API version of the runtime config." },
-                "kind": { "type": "string", "description": "Kind of the runtime config." }
+                "name": { "type": "string" },
+                "apiVersion": { "type": "string" },
+                "kind": { "type": "string" }
               }
             }
           }
@@ -119,7 +115,6 @@
         },
         "metadata": {
           "type": "object",
-          "description": "Kubernetes object metadata for the ProviderConfig.",
           "required": ["name"],
           "properties": {
             "name": {
@@ -128,12 +123,10 @@
             },
             "labels": {
               "type": "object",
-              "description": "Key-value labels.",
               "additionalProperties": { "type": "string" }
             },
             "annotations": {
               "type": "object",
-              "description": "Non-identifying annotations.",
               "additionalProperties": { "type": "string" }
             }
           }
@@ -188,8 +181,8 @@
                 "type": "object",
                 "required": ["roleARN"],
                 "properties": {
-                  "roleARN": { "type": "string", "description": "ARN of the IAM role to assume." },
-                  "externalID": { "type": "string", "description": "External ID for assuming the role." }
+                  "roleARN": { "type": "string" },
+                  "externalID": { "type": "string" }
                 }
               }
             }
@@ -199,7 +192,7 @@
     },
     "DeploymentRuntimeConfig": {
       "type": "object",
-      "description": "Runtime configuration for Provider deployments, allowing customization of the Provider pod deployment.",
+      "description": "Runtime configuration for Provider deployments.",
       "required": ["apiVersion", "kind", "metadata"],
       "properties": {
         "apiVersion": {
@@ -214,10 +207,9 @@
         },
         "metadata": {
           "type": "object",
-          "description": "Kubernetes object metadata.",
           "required": ["name"],
           "properties": {
-            "name": { "type": "string", "description": "Name of the DeploymentRuntimeConfig." }
+            "name": { "type": "string" }
           }
         },
         "spec": {
@@ -232,9 +224,9 @@
                   "type": "object",
                   "description": "Deployment spec overrides.",
                   "properties": {
-                    "replicas": { "type": "integer", "description": "Number of Provider pod replicas." },
-                    "selector": { "type": "object", "description": "Label selector for the deployment." },
-                    "template": { "type": "object", "description": "Pod template for the deployment." }
+                    "replicas": { "type": "integer" },
+                    "selector": { "type": "object" },
+                    "template": { "type": "object" }
                   }
                 }
               }
@@ -245,11 +237,9 @@
               "properties": {
                 "metadata": {
                   "type": "object",
-                  "description": "Service account metadata template.",
                   "properties": {
                     "annotations": {
                       "type": "object",
-                      "description": "Annotations to add to the service account, e.g. for IRSA or Workload Identity.",
                       "additionalProperties": { "type": "string" }
                     }
                   }

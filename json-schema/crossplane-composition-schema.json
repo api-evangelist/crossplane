@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://crossplane.io/schemas/crossplane/composition.json",
+  "$id": "https://github.com/api-evangelist/crossplane/blob/main/composition-schema.json",
   "title": "Crossplane Composition",
   "description": "Schema for a Crossplane Composition that defines how to compose infrastructure resources into higher-level composite resources by mapping patches and configuring managed resources.",
   "type": "object",
@@ -261,23 +261,23 @@
                 "type": "object",
                 "description": "Math transform configuration.",
                 "properties": {
-                  "type": { "type": "string", "description": "Math operation type." },
-                  "multiply": { "type": "number", "description": "Multiplication factor." }
+                  "type": { "type": "string" },
+                  "multiply": { "type": "number" }
                 }
               },
               "string": {
                 "type": "object",
                 "description": "String transform configuration.",
                 "properties": {
-                  "type": { "type": "string", "description": "String operation type." },
-                  "fmt": { "type": "string", "description": "Go format string." }
+                  "type": { "type": "string" },
+                  "fmt": { "type": "string" }
                 }
               },
               "convert": {
                 "type": "object",
                 "description": "Type conversion transform.",
                 "properties": {
-                  "toType": { "type": "string", "description": "Target type for conversion." }
+                  "toType": { "type": "string" }
                 }
               }
             }
