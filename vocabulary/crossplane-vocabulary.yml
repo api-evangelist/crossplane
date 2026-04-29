@@ -1,0 +1,110 @@
+name: Crossplane Vocabulary
+description: >-
+  Controlled vocabulary describing the core resource types, concepts, and
+  relationships in the Crossplane control plane API.
+url: https://docs.crossplane.io/latest/concepts/
+version: '1.0'
+modified: '2026-04-28'
+terms:
+  - term: Composition
+    description: >-
+      A template that defines how a composite resource is realized as one
+      or more composed managed resources or Composition Functions.
+    relatedTerms:
+      - CompositeResource
+      - CompositionRevision
+      - Function
+  - term: CompositeResourceDefinition
+    description: >-
+      An XRD that extends the Kubernetes API with a new composite resource
+      type and optionally a namespaced claim type.
+    aliases:
+      - XRD
+    relatedTerms:
+      - CompositeResource
+      - Claim
+  - term: CompositeResource
+    description: >-
+      A custom Kubernetes resource defined by an XRD whose desired state is
+      reconciled into composed resources by a Composition.
+    aliases:
+      - XR
+    relatedTerms:
+      - CompositeResourceDefinition
+      - Composition
+      - Claim
+  - term: Claim
+    description: >-
+      A namespaced resource that requests a CompositeResource on behalf of
+      an application team, providing a self-service interface to platform
+      capabilities.
+    relatedTerms:
+      - CompositeResource
+      - CompositeResourceDefinition
+  - term: Provider
+    description: >-
+      A Crossplane package that adds support for a specific external API
+      (e.g., AWS, GCP, Azure) by introducing managed resources and
+      controllers.
+    relatedTerms:
+      - ProviderConfig
+      - ProviderRevision
+      - Package
+  - term: ProviderConfig
+    description: >-
+      A configuration object that tells a Provider how to authenticate and
+      connect to an external API for managing resources.
+    relatedTerms:
+      - Provider
+      - ManagedResource
+  - term: ManagedResource
+    description: >-
+      A Kubernetes representation of an external API resource, reconciled
+      by a Provider controller toward the desired state declared in
+      Kubernetes.
+    relatedTerms:
+      - Provider
+      - CompositeResource
+  - term: Configuration
+    description: >-
+      A Crossplane package that bundles XRDs and Compositions for
+      distributable platform APIs.
+    relatedTerms:
+      - Composition
+      - CompositeResourceDefinition
+      - Package
+  - term: Function
+    description: >-
+      A Composition Function that runs as part of the composition pipeline,
+      enabling logic-rich composition beyond patches and transforms.
+    relatedTerms:
+      - Composition
+  - term: EnvironmentConfig
+    description: >-
+      Shared configuration values referenced by Compositions through
+      environment patches, enabling reuse across environments.
+    relatedTerms:
+      - Composition
+  - term: DeploymentRuntimeConfig
+    description: >-
+      Customization of how Provider and Function deployments run, including
+      replica counts, resource limits, and pod template overrides.
+    relatedTerms:
+      - Provider
+      - Function
+  - term: Package
+    description: >-
+      An OCI image containing a Provider, Configuration, or Function and
+      installable into a Crossplane control plane.
+    relatedTerms:
+      - Provider
+      - Configuration
+      - Function
+  - term: PackageRevision
+    description: >-
+      A specific installed revision of a Package. Crossplane retains a
+      configurable history for rollback.
+    relatedTerms:
+      - Package
+      - Provider
+      - Configuration

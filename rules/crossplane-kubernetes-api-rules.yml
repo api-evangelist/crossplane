@@ -1,0 +1,65 @@
+extends: ["spectral:oas"]
+documentationUrl: https://docs.crossplane.io/latest/api/
+rules:
+  crossplane-info-contact:
+    description: API info object should reference Crossplane community contact.
+    given: "$.info.contact"
+    severity: error
+    then:
+      field: url
+      function: pattern
+      functionOptions:
+        match: "(crossplane|slack)"
+  crossplane-server-kubernetes:
+    description: Server URL should reference the Kubernetes API server.
+    given: "$.servers[*].url"
+    severity: warn
+    then:
+      function: pattern
+      functionOptions:
+        match: "kubernetes"
+  crossplane-required-paths:
+    description: API must define core Crossplane API extension paths.
+    given: "$.paths"
+    severity: error
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          required:
+            - /apis/apiextensions.crossplane.io/v1/compositions
+            - /apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions
+  crossplane-pkg-paths:
+    description: API must define package management paths under pkg.crossplane.io.
+    given: "$.paths"
+    severity: error
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          required:
+            - /apis/pkg.crossplane.io/v1/providers
+  crossplane-operation-id:
+    description: All operations must define an operationId.
+    given: "$.paths.*.*"
+    severity: error
+    then:
+      field: operationId
+      function: truthy
+  crossplane-operation-id-prefix:
+    description: Operation IDs should start with a verb (list, get, create, replace, delete, patch).
+    given: "$.paths.*.*.operationId"
+    severity: warn
+    then:
+      function: pattern
+      functionOptions:
+        match: "^(list|get|create|replace|delete|patch)"
+  crossplane-tags:
+    description: All operations must define tags.
+    given: "$.paths.*.*"
+    severity: error
+    then:
+      field: tags
+      function: truthy

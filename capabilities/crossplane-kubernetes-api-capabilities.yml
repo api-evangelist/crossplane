@@ -1,0 +1,109 @@
+name: Crossplane Kubernetes API Capabilities
+description: >-
+  Workflow capabilities exposed by Crossplane's Kubernetes API extension for
+  defining composite resources, composing infrastructure, and managing
+  Crossplane packages on a control plane cluster.
+url: https://docs.crossplane.io/latest/api/
+version: '1.0'
+modified: '2026-04-28'
+api: Crossplane Kubernetes API
+baseURL: https://kubernetes.default.svc
+capabilities:
+  - name: Composite Resource Definition Management
+    description: >-
+      Create, update, list, and delete CompositeResourceDefinitions (XRDs)
+      that extend the Kubernetes API with new composite resource types and
+      optional namespaced claim types.
+    operations:
+      - listCompositeResourceDefinitions
+      - createCompositeResourceDefinition
+      - getCompositeResourceDefinition
+      - replaceCompositeResourceDefinition
+      - deleteCompositeResourceDefinition
+    inputs:
+      - XRD manifest
+    outputs:
+      - CompositeResourceDefinition object
+      - installed CRDs
+  - name: Composition Authoring
+    description: >-
+      Author and version Compositions that map composite resources to
+      composed managed resources or Composition Functions through patches
+      and transforms.
+    operations:
+      - listCompositions
+      - createComposition
+      - getComposition
+      - replaceComposition
+      - deleteComposition
+    inputs:
+      - Composition manifest
+    outputs:
+      - Composition object
+      - CompositionRevision history
+  - name: Provider Lifecycle
+    description: >-
+      Install, upgrade, and remove Crossplane Providers and ProviderConfigs
+      that supply managed resources for cloud infrastructure.
+    operations:
+      - listProviders
+      - createProvider
+      - getProvider
+      - replaceProvider
+      - deleteProvider
+    inputs:
+      - Provider manifest
+      - package OCI reference
+    outputs:
+      - Provider object
+      - installed ProviderRevisions
+  - name: Configuration Package Management
+    description: >-
+      Install bundled Crossplane Configurations that group XRDs and
+      Compositions into distributable units.
+    operations:
+      - listConfigurations
+      - createConfiguration
+      - getConfiguration
+      - replaceConfiguration
+      - deleteConfiguration
+    inputs:
+      - Configuration manifest
+    outputs:
+      - Configuration object
+      - ConfigurationRevisions
+  - name: Environment Configuration
+    description: >-
+      Manage EnvironmentConfigs that supply shared configuration values to
+      Compositions via environment patches.
+    operations:
+      - listEnvironmentConfigs
+      - createEnvironmentConfig
+      - getEnvironmentConfig
+      - replaceEnvironmentConfig
+      - deleteEnvironmentConfig
+    inputs:
+      - EnvironmentConfig manifest
+    outputs:
+      - EnvironmentConfig object
+useCases:
+  - name: Platform API Definition
+    description: Define a self-service platform API by authoring an XRD plus a Composition that hides cloud complexity behind a custom resource.
+    capabilities:
+      - Composite Resource Definition Management
+      - Composition Authoring
+  - name: Multi-Cloud Provider Onboarding
+    description: Install AWS, GCP, and Azure Providers and bind them via ProviderConfigs to enable cross-cloud composition.
+    capabilities:
+      - Provider Lifecycle
+  - name: Reusable Platform Distribution
+    description: Bundle XRDs and Compositions into Configurations that platform teams can install on any Crossplane control plane.
+    capabilities:
+      - Configuration Package Management
+      - Composite Resource Definition Management
+      - Composition Authoring
+  - name: Environment-Aware Composition
+    description: Use EnvironmentConfigs to inject region, project, and account values into Compositions without hard-coding.
+    capabilities:
+      - Environment Configuration
+      - Composition Authoring
