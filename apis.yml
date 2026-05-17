@@ -1,6 +1,6 @@
 aid: crossplane
 name: Crossplane
-x-type: opensource
+kind: opensource
 description: >-
   Crossplane is a graduated CNCF open-source Kubernetes add-on that
   transforms a cluster into a universal control plane for cloud
