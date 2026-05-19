@@ -1,0 +1,197 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Crossplane Kubernetes API — Compositions
+  description: 'Crossplane Kubernetes API — Compositions. 5 operations. Lead operation: Crossplane List Compositions. Self-contained
+    Naftiko capability covering one Crossplane business surface.'
+  tags:
+  - Crossplane
+  - Compositions
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    CROSSPLANE_API_KEY: CROSSPLANE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: kubernetes-compositions
+    baseUri: https://kubernetes.default.svc
+    description: Crossplane Kubernetes API — Compositions business capability. Self-contained, no shared references.
+    resources:
+    - name: apis-apiextensions.crossplane.io-v1-compositions
+      path: /apis/apiextensions.crossplane.io/v1/compositions
+      operations:
+      - name: listcompositions
+        method: GET
+        description: Crossplane List Compositions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createcomposition
+        method: POST
+        description: Crossplane Create a Composition
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: apis-apiextensions.crossplane.io-v1-compositions-name
+      path: /apis/apiextensions.crossplane.io/v1/compositions/{name}
+      operations:
+      - name: getcomposition
+        method: GET
+        description: Crossplane Get a Composition
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: replacecomposition
+        method: PUT
+        description: Crossplane Replace a Composition
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletecomposition
+        method: DELETE
+        description: Crossplane Delete a Composition
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.CROSSPLANE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: kubernetes-compositions-rest
+    port: 8080
+    description: REST adapter for Crossplane Kubernetes API — Compositions. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/apis/apiextensions-crossplane-io/v1/compositions
+      name: apis-apiextensions-crossplane-io-v1-compositions
+      description: REST surface for apis-apiextensions.crossplane.io-v1-compositions.
+      operations:
+      - method: GET
+        name: listcompositions
+        description: Crossplane List Compositions
+        call: kubernetes-compositions.listcompositions
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createcomposition
+        description: Crossplane Create a Composition
+        call: kubernetes-compositions.createcomposition
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/apis/apiextensions-crossplane-io/v1/compositions/{name}
+      name: apis-apiextensions-crossplane-io-v1-compositions-name
+      description: REST surface for apis-apiextensions.crossplane.io-v1-compositions-name.
+      operations:
+      - method: GET
+        name: getcomposition
+        description: Crossplane Get a Composition
+        call: kubernetes-compositions.getcomposition
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: replacecomposition
+        description: Crossplane Replace a Composition
+        call: kubernetes-compositions.replacecomposition
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletecomposition
+        description: Crossplane Delete a Composition
+        call: kubernetes-compositions.deletecomposition
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: kubernetes-compositions-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Crossplane Kubernetes API — Compositions. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: crossplane-list-compositions
+      description: Crossplane List Compositions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: kubernetes-compositions.listcompositions
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: crossplane-create-composition
+      description: Crossplane Create a Composition
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: kubernetes-compositions.createcomposition
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: crossplane-get-composition
+      description: Crossplane Get a Composition
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: kubernetes-compositions.getcomposition
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: crossplane-replace-composition
+      description: Crossplane Replace a Composition
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: kubernetes-compositions.replacecomposition
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: crossplane-delete-composition
+      description: Crossplane Delete a Composition
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: kubernetes-compositions.deletecomposition
+      outputParameters:
+      - type: object
+        mapping: $.

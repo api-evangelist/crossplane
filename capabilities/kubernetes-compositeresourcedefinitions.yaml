@@ -1,0 +1,197 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Crossplane Kubernetes API — CompositeResourceDefinitions
+  description: 'Crossplane Kubernetes API — CompositeResourceDefinitions. 5 operations. Lead operation: Crossplane List CompositeResourceDefinitions.
+    Self-contained Naftiko capability covering one Crossplane business surface.'
+  tags:
+  - Crossplane
+  - CompositeResourceDefinitions
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    CROSSPLANE_API_KEY: CROSSPLANE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: kubernetes-compositeresourcedefinitions
+    baseUri: https://kubernetes.default.svc
+    description: Crossplane Kubernetes API — CompositeResourceDefinitions business capability. Self-contained, no shared references.
+    resources:
+    - name: apis-apiextensions.crossplane.io-v1-compositeresourcedefinitions
+      path: /apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions
+      operations:
+      - name: listcompositeresourcedefinitions
+        method: GET
+        description: Crossplane List CompositeResourceDefinitions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createcompositeresourcedefinition
+        method: POST
+        description: Crossplane Create a CompositeResourceDefinition
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: apis-apiextensions.crossplane.io-v1-compositeresourcedefinitions-name
+      path: /apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions/{name}
+      operations:
+      - name: getcompositeresourcedefinition
+        method: GET
+        description: Crossplane Get a CompositeResourceDefinition
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: replacecompositeresourcedefinition
+        method: PUT
+        description: Crossplane Replace a CompositeResourceDefinition
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletecompositeresourcedefinition
+        method: DELETE
+        description: Crossplane Delete a CompositeResourceDefinition
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.CROSSPLANE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: kubernetes-compositeresourcedefinitions-rest
+    port: 8080
+    description: REST adapter for Crossplane Kubernetes API — CompositeResourceDefinitions. One Spectral-compliant resource
+      per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/apis/apiextensions-crossplane-io/v1/compositeresourcedefinitions
+      name: apis-apiextensions-crossplane-io-v1-compositeresourcedefinitions
+      description: REST surface for apis-apiextensions.crossplane.io-v1-compositeresourcedefinitions.
+      operations:
+      - method: GET
+        name: listcompositeresourcedefinitions
+        description: Crossplane List CompositeResourceDefinitions
+        call: kubernetes-compositeresourcedefinitions.listcompositeresourcedefinitions
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createcompositeresourcedefinition
+        description: Crossplane Create a CompositeResourceDefinition
+        call: kubernetes-compositeresourcedefinitions.createcompositeresourcedefinition
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/apis/apiextensions-crossplane-io/v1/compositeresourcedefinitions/{name}
+      name: apis-apiextensions-crossplane-io-v1-compositeresourcedefinitions-name
+      description: REST surface for apis-apiextensions.crossplane.io-v1-compositeresourcedefinitions-name.
+      operations:
+      - method: GET
+        name: getcompositeresourcedefinition
+        description: Crossplane Get a CompositeResourceDefinition
+        call: kubernetes-compositeresourcedefinitions.getcompositeresourcedefinition
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: replacecompositeresourcedefinition
+        description: Crossplane Replace a CompositeResourceDefinition
+        call: kubernetes-compositeresourcedefinitions.replacecompositeresourcedefinition
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletecompositeresourcedefinition
+        description: Crossplane Delete a CompositeResourceDefinition
+        call: kubernetes-compositeresourcedefinitions.deletecompositeresourcedefinition
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: kubernetes-compositeresourcedefinitions-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Crossplane Kubernetes API — CompositeResourceDefinitions. One tool per consumed operation,
+      routed inline through this capability's consumes block.
+    tools:
+    - name: crossplane-list-compositeresourcedefinitions
+      description: Crossplane List CompositeResourceDefinitions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: kubernetes-compositeresourcedefinitions.listcompositeresourcedefinitions
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: crossplane-create-compositeresourcedefinition
+      description: Crossplane Create a CompositeResourceDefinition
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: kubernetes-compositeresourcedefinitions.createcompositeresourcedefinition
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: crossplane-get-compositeresourcedefinition
+      description: Crossplane Get a CompositeResourceDefinition
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: kubernetes-compositeresourcedefinitions.getcompositeresourcedefinition
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: crossplane-replace-compositeresourcedefinition
+      description: Crossplane Replace a CompositeResourceDefinition
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: kubernetes-compositeresourcedefinitions.replacecompositeresourcedefinition
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: crossplane-delete-compositeresourcedefinition
+      description: Crossplane Delete a CompositeResourceDefinition
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: kubernetes-compositeresourcedefinitions.deletecompositeresourcedefinition
+      outputParameters:
+      - type: object
+        mapping: $.
