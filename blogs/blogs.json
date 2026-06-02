@@ -2,12 +2,20 @@
   "repo": "crossplane",
   "feeds": [
     {
-      "source": "https://blog.crossplane.io/",
+      "source": "https://blog.crossplane.io/feed/",
       "feed_url": "https://blog.crossplane.io/feed/",
-      "title": "The Crossplane Blog",
-      "saved": 11
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
+      "source": "https://docs.crossplane.io/latest/api/",
+      "feed_url": "https://docs.crossplane.io/latest/api/index.xml",
+      "title": "",
+      "saved": 0,
+      "method": "discovered"
     }
   ],
   "post_count": 21,
-  "fetched": "2026-05-17T20:20:35Z"
+  "fetched": "2026-06-01T23:35:02Z"
 }
