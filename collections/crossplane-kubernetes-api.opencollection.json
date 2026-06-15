@@ -1,0 +1,735 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Crossplane Kubernetes API",
+    "version": "2.2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Compositions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Crossplane List Compositions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/apiextensions.crossplane.io/v1/compositions",
+            "params": [
+              {
+                "name": "labelSelector",
+                "value": "",
+                "type": "query",
+                "description": "A selector to restrict the list of returned objects by their labels. Defaults to everything."
+              },
+              {
+                "name": "fieldSelector",
+                "value": "",
+                "type": "query",
+                "description": "A selector to restrict the list of returned objects by their fields."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in a single response. The server may return fewer items than requested. Use the continue token for pagination."
+              },
+              {
+                "name": "continue",
+                "value": "",
+                "type": "query",
+                "description": "Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time."
+              }
+            ]
+          },
+          "docs": "Returns a list of all Composition resources across the cluster. Compositions define how composite resources are translated into sets of managed resources or Composition Function pipelines."
+        },
+        {
+          "info": {
+            "name": "Crossplane Create a Composition",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kubernetes.default.svc/apis/apiextensions.crossplane.io/v1/compositions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new Composition resource. The Composition spec must reference a valid CompositeResourceDefinition via compositeTypeRef and define either a resources array (for Resources mode) or a pipeline array (for Pipeline mode)."
+        },
+        {
+          "info": {
+            "name": "Crossplane Get a Composition",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/apiextensions.crossplane.io/v1/compositions/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Crossplane resource."
+              }
+            ]
+          },
+          "docs": "Returns the details of a specific Composition resource, including its spec defining composed resource templates and patches, and its status reflecting active revision information."
+        },
+        {
+          "info": {
+            "name": "Crossplane Replace a Composition",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://kubernetes.default.svc/apis/apiextensions.crossplane.io/v1/compositions/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Crossplane resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replaces the entire Composition resource with the provided body. This operation triggers a new CompositionRevision to be created, allowing rollback if needed."
+        },
+        {
+          "info": {
+            "name": "Crossplane Delete a Composition",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://kubernetes.default.svc/apis/apiextensions.crossplane.io/v1/compositions/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Crossplane resource."
+              }
+            ]
+          },
+          "docs": "Deletes the specified Composition resource. Existing composite resources that reference this Composition will not be deleted but will cease to reconcile until a new Composition is available."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "CompositeResourceDefinitions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Crossplane List CompositeResourceDefinitions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions",
+            "params": [
+              {
+                "name": "labelSelector",
+                "value": "",
+                "type": "query",
+                "description": "A selector to restrict the list of returned objects by their labels. Defaults to everything."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in a single response. The server may return fewer items than requested. Use the continue token for pagination."
+              },
+              {
+                "name": "continue",
+                "value": "",
+                "type": "query",
+                "description": "Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time."
+              }
+            ]
+          },
+          "docs": "Returns a list of all CompositeResourceDefinition (XRD) resources. Each XRD defines the schema for a new composite resource type and optionally a claim type that will be installed as Kubernetes CRDs."
+        },
+        {
+          "info": {
+            "name": "Crossplane Create a CompositeResourceDefinition",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kubernetes.default.svc/apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new CompositeResourceDefinition. Upon creation, Crossplane installs corresponding CRDs and begins serving the new composite resource API. If claimNames are specified, a namespaced claim CRD is also installed."
+        },
+        {
+          "info": {
+            "name": "Crossplane Get a CompositeResourceDefinition",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Crossplane resource."
+              }
+            ]
+          },
+          "docs": "Returns details of a specific CompositeResourceDefinition, including its version schemas, claim configuration, and status conditions reflecting whether the CRDs are established."
+        },
+        {
+          "info": {
+            "name": "Crossplane Replace a CompositeResourceDefinition",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://kubernetes.default.svc/apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Crossplane resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replaces a CompositeResourceDefinition. Crossplane will reconcile the new schema, updating existing CRDs and triggering re-composition of existing composite resources as needed."
+        },
+        {
+          "info": {
+            "name": "Crossplane Delete a CompositeResourceDefinition",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://kubernetes.default.svc/apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Crossplane resource."
+              }
+            ]
+          },
+          "docs": "Deletes a CompositeResourceDefinition. Crossplane will remove the associated CRDs and all existing composite resources of that type if no finalizers prevent deletion."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "EnvironmentConfigs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Crossplane List EnvironmentConfigs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/apiextensions.crossplane.io/v1/environmentconfigs",
+            "params": [
+              {
+                "name": "labelSelector",
+                "value": "",
+                "type": "query",
+                "description": "A selector to restrict the list of returned objects by their labels. Defaults to everything."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in a single response. The server may return fewer items than requested. Use the continue token for pagination."
+              },
+              {
+                "name": "continue",
+                "value": "",
+                "type": "query",
+                "description": "Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time."
+              }
+            ]
+          },
+          "docs": "Returns a list of all EnvironmentConfig resources. EnvironmentConfigs hold shared configuration data that can be patched into Compositions via environment patch types, enabling cluster-wide shared values."
+        },
+        {
+          "info": {
+            "name": "Crossplane Create an EnvironmentConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kubernetes.default.svc/apis/apiextensions.crossplane.io/v1/environmentconfigs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new EnvironmentConfig resource containing arbitrary key-value configuration data. Compositions can select and merge EnvironmentConfigs using label selectors."
+        },
+        {
+          "info": {
+            "name": "Crossplane Get an EnvironmentConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/apiextensions.crossplane.io/v1/environmentconfigs/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Crossplane resource."
+              }
+            ]
+          },
+          "docs": "Returns a specific EnvironmentConfig resource by name, including its data map of arbitrary configuration key-value pairs."
+        },
+        {
+          "info": {
+            "name": "Crossplane Delete an EnvironmentConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://kubernetes.default.svc/apis/apiextensions.crossplane.io/v1/environmentconfigs/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Crossplane resource."
+              }
+            ]
+          },
+          "docs": "Deletes a specific EnvironmentConfig. Compositions referencing this config will fail to reconcile until the reference is removed or the config is recreated."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Providers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Crossplane List Providers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/pkg.crossplane.io/v1/providers",
+            "params": [
+              {
+                "name": "labelSelector",
+                "value": "",
+                "type": "query",
+                "description": "A selector to restrict the list of returned objects by their labels. Defaults to everything."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in a single response. The server may return fewer items than requested. Use the continue token for pagination."
+              },
+              {
+                "name": "continue",
+                "value": "",
+                "type": "query",
+                "description": "Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time."
+              }
+            ]
+          },
+          "docs": "Returns a list of all Provider package installations. Each Provider installs a set of managed resource CRDs and a controller that reconciles those resources against a specific infrastructure platform."
+        },
+        {
+          "info": {
+            "name": "Crossplane Install a Provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kubernetes.default.svc/apis/pkg.crossplane.io/v1/providers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Installs a new Provider by referencing an OCI image containing the provider package. Crossplane fetches the package, installs its CRDs, and starts the provider controller deployment."
+        },
+        {
+          "info": {
+            "name": "Crossplane Get a Provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/pkg.crossplane.io/v1/providers/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Crossplane resource."
+              }
+            ]
+          },
+          "docs": "Returns details of a specific Provider, including its package reference, revision activation policy, and status conditions reflecting whether the provider is healthy and all CRDs are installed."
+        },
+        {
+          "info": {
+            "name": "Crossplane Update a Provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://kubernetes.default.svc/apis/pkg.crossplane.io/v1/providers/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Crossplane resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replaces a Provider resource, typically to update the package image reference to a new version. Crossplane creates a new ProviderRevision and activates it according to the revisionActivationPolicy."
+        },
+        {
+          "info": {
+            "name": "Crossplane Uninstall a Provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://kubernetes.default.svc/apis/pkg.crossplane.io/v1/providers/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Crossplane resource."
+              }
+            ]
+          },
+          "docs": "Removes a Provider installation. Crossplane will delete the provider controller and CRDs. Existing managed resources will be orphaned unless deleted first."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Functions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Crossplane List Functions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/pkg.crossplane.io/v1/functions",
+            "params": [
+              {
+                "name": "labelSelector",
+                "value": "",
+                "type": "query",
+                "description": "A selector to restrict the list of returned objects by their labels. Defaults to everything."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in a single response. The server may return fewer items than requested. Use the continue token for pagination."
+              },
+              {
+                "name": "continue",
+                "value": "",
+                "type": "query",
+                "description": "Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time."
+              }
+            ]
+          },
+          "docs": "Returns a list of all Composition Function package installations. Functions are OCI images that implement the Composition Function gRPC protocol and are invoked as pipeline steps during composition."
+        },
+        {
+          "info": {
+            "name": "Crossplane Install a Function",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kubernetes.default.svc/apis/pkg.crossplane.io/v1/functions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Installs a new Composition Function by referencing its OCI package image. Once installed, the Function can be referenced in Composition pipeline steps by name."
+        },
+        {
+          "info": {
+            "name": "Crossplane Get a Function",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/pkg.crossplane.io/v1/functions/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Crossplane resource."
+              }
+            ]
+          },
+          "docs": "Returns details of a specific Composition Function installation, including its package image reference and status conditions reflecting whether the function is healthy and ready to serve composition requests."
+        },
+        {
+          "info": {
+            "name": "Crossplane Uninstall a Function",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://kubernetes.default.svc/apis/pkg.crossplane.io/v1/functions/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Crossplane resource."
+              }
+            ]
+          },
+          "docs": "Removes a Composition Function installation. Compositions that reference this Function in their pipeline will fail to reconcile until the Function reference is removed or the Function is reinstalled."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Configurations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Crossplane List Configurations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/pkg.crossplane.io/v1/configurations",
+            "params": [
+              {
+                "name": "labelSelector",
+                "value": "",
+                "type": "query",
+                "description": "A selector to restrict the list of returned objects by their labels. Defaults to everything."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in a single response. The server may return fewer items than requested. Use the continue token for pagination."
+              },
+              {
+                "name": "continue",
+                "value": "",
+                "type": "query",
+                "description": "Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time."
+              }
+            ]
+          },
+          "docs": "Returns a list of all Configuration package installations. Configurations bundle Compositions and XRDs together, enabling platform teams to distribute reusable platform APIs as versioned OCI packages."
+        },
+        {
+          "info": {
+            "name": "Crossplane Install a Configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kubernetes.default.svc/apis/pkg.crossplane.io/v1/configurations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Installs a new Configuration package. Crossplane fetches the OCI image, installs the bundled Compositions and XRDs, and tracks revisions for upgrade management."
+        },
+        {
+          "info": {
+            "name": "Crossplane Get a Configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/pkg.crossplane.io/v1/configurations/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Crossplane resource."
+              }
+            ]
+          },
+          "docs": "Returns details of a specific Configuration installation, including its package image reference, revision history, and status conditions."
+        },
+        {
+          "info": {
+            "name": "Crossplane Uninstall a Configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://kubernetes.default.svc/apis/pkg.crossplane.io/v1/configurations/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Crossplane resource."
+              }
+            ]
+          },
+          "docs": "Removes a Configuration installation. Crossplane will remove the bundled Compositions and XRDs if no other resources depend on them."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "DeploymentRuntimeConfigs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Crossplane List DeploymentRuntimeConfigs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/pkg.crossplane.io/v1beta1/deploymentruntimeconfigs",
+            "params": [
+              {
+                "name": "labelSelector",
+                "value": "",
+                "type": "query",
+                "description": "A selector to restrict the list of returned objects by their labels. Defaults to everything."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in a single response. The server may return fewer items than requested. Use the continue token for pagination."
+              },
+              {
+                "name": "continue",
+                "value": "",
+                "type": "query",
+                "description": "Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time."
+              }
+            ]
+          },
+          "docs": "Returns a list of all DeploymentRuntimeConfig resources. These resources customize the Kubernetes Deployment and ServiceAccount used to run Provider and Function controller pods."
+        },
+        {
+          "info": {
+            "name": "Crossplane Create a DeploymentRuntimeConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kubernetes.default.svc/apis/pkg.crossplane.io/v1beta1/deploymentruntimeconfigs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a DeploymentRuntimeConfig to customize how Crossplane deploys Provider or Function pods. Providers and Functions reference this resource via runtimeConfigRef in their spec."
+        },
+        {
+          "info": {
+            "name": "Crossplane Get a DeploymentRuntimeConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/pkg.crossplane.io/v1beta1/deploymentruntimeconfigs/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Crossplane resource."
+              }
+            ]
+          },
+          "docs": "Returns a specific DeploymentRuntimeConfig, including its deployment template and service account template overrides."
+        },
+        {
+          "info": {
+            "name": "Crossplane Delete a DeploymentRuntimeConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://kubernetes.default.svc/apis/pkg.crossplane.io/v1beta1/deploymentruntimeconfigs/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Crossplane resource."
+              }
+            ]
+          },
+          "docs": "Deletes a DeploymentRuntimeConfig. Providers or Functions referencing this config via runtimeConfigRef will continue using the last applied configuration until they are updated."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
