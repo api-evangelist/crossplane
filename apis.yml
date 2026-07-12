@@ -73,6 +73,10 @@ apis:
       - Multi-Cloud
       - Platform Engineering
 common:
+  - type: DomainSecurity
+    url: security/crossplane-domain-security.yml
+  - type: Authentication
+    url: authentication/crossplane-authentication.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/crossplane
   - type: JSONSchema

@@ -1,0 +1,16 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/crossplane-kubernetes-api-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  description: Kubernetes service account token or user bearer token for authenticating with
+    the Kubernetes API server. RBAC policies control which Crossplane resources each identity
+    can access.
+  sources:
+  - openapi/crossplane-kubernetes-api-openapi.yml
