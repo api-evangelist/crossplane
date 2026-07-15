@@ -73,6 +73,8 @@ apis:
       - Multi-Cloud
       - Platform Engineering
 common:
+  - type: AgenticAccess
+    url: agentic-access/crossplane-agentic-access.yml
   - type: DomainSecurity
     url: security/crossplane-domain-security.yml
   - type: Authentication
