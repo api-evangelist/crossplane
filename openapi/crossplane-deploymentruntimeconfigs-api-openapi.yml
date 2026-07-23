@@ -1,0 +1,309 @@
+openapi: 3.1.0
+info:
+  title: Crossplane Kubernetes CompositeResourceDefinitions DeploymentRuntimeConfigs API
+  description: 'The Crossplane Kubernetes API extends the Kubernetes API server with custom resources for managing cloud infrastructure declaratively. Resources are organized into two main API groups: apiextensions.crossplane.io for composition primitives (Compositions, CompositeResourceDefinitions, EnvironmentConfigs) and pkg.crossplane.io for package management (Providers, Functions, Configurations and their revisions). All operations use standard Kubernetes REST conventions and are authenticated through the Kubernetes API server''s authentication mechanisms.'
+  version: '2.2'
+  contact:
+    name: Crossplane Community
+    url: https://slack.crossplane.io/
+  termsOfService: https://www.crossplane.io/
+servers:
+- url: https://kubernetes.default.svc
+  description: Kubernetes API Server (in-cluster)
+security:
+- bearerAuth: []
+tags:
+- name: DeploymentRuntimeConfigs
+  description: DeploymentRuntimeConfigs customize the runtime behavior of Provider and Function deployments, including replica counts, resource limits, service account annotations, and pod template overrides.
+paths:
+  /apis/pkg.crossplane.io/v1beta1/deploymentruntimeconfigs:
+    get:
+      operationId: listDeploymentRuntimeConfigs
+      summary: Crossplane List DeploymentRuntimeConfigs
+      description: Returns a list of all DeploymentRuntimeConfig resources. These resources customize the Kubernetes Deployment and ServiceAccount used to run Provider and Function controller pods.
+      tags:
+      - DeploymentRuntimeConfigs
+      parameters:
+      - $ref: '#/components/parameters/labelSelector'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: Successfully listed DeploymentRuntimeConfigs.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentRuntimeConfigList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createDeploymentRuntimeConfig
+      summary: Crossplane Create a DeploymentRuntimeConfig
+      description: Creates a DeploymentRuntimeConfig to customize how Crossplane deploys Provider or Function pods. Providers and Functions reference this resource via runtimeConfigRef in their spec.
+      tags:
+      - DeploymentRuntimeConfigs
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeploymentRuntimeConfig'
+      responses:
+        '201':
+          description: DeploymentRuntimeConfig successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentRuntimeConfig'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /apis/pkg.crossplane.io/v1beta1/deploymentruntimeconfigs/{name}:
+    get:
+      operationId: getDeploymentRuntimeConfig
+      summary: Crossplane Get a DeploymentRuntimeConfig
+      description: Returns a specific DeploymentRuntimeConfig, including its deployment template and service account template overrides.
+      tags:
+      - DeploymentRuntimeConfigs
+      parameters:
+      - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Successfully retrieved the DeploymentRuntimeConfig.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentRuntimeConfig'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteDeploymentRuntimeConfig
+      summary: Crossplane Delete a DeploymentRuntimeConfig
+      description: Deletes a DeploymentRuntimeConfig. Providers or Functions referencing this config via runtimeConfigRef will continue using the last applied configuration until they are updated.
+      tags:
+      - DeploymentRuntimeConfigs
+      parameters:
+      - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: DeploymentRuntimeConfig deletion initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    labelSelector:
+      name: labelSelector
+      in: query
+      required: false
+      description: A selector to restrict the list of returned objects by their labels. Defaults to everything.
+      schema:
+        type: string
+    continueToken:
+      name: continue
+      in: query
+      required: false
+      description: Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time.
+      schema:
+        type: string
+    name:
+      name: name
+      in: path
+      required: true
+      description: Name of the Crossplane resource.
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of items to return in a single response. The server may return fewer items than requested. Use the continue token for pagination.
+      schema:
+        type: integer
+        minimum: 1
+  schemas:
+    DeploymentRuntimeConfigList:
+      type: object
+      description: A list of DeploymentRuntimeConfig resources.
+      required:
+      - apiVersion
+      - kind
+      - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list resource.
+        kind:
+          type: string
+          const: DeploymentRuntimeConfigList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Continuation token for pagination.
+        items:
+          type: array
+          description: List of DeploymentRuntimeConfig resources.
+          items:
+            $ref: '#/components/schemas/DeploymentRuntimeConfig'
+    DeploymentRuntimeConfig:
+      type: object
+      description: A DeploymentRuntimeConfig customizes the Kubernetes Deployment and ServiceAccount that Crossplane creates to run a Provider or Function. Use it to set resource limits, add annotations for workload identity, or configure custom tolerations and node selectors.
+      required:
+      - apiVersion
+      - kind
+      - metadata
+      properties:
+        apiVersion:
+          type: string
+          const: pkg.crossplane.io/v1beta1
+          description: API version for the DeploymentRuntimeConfig resource.
+        kind:
+          type: string
+          const: DeploymentRuntimeConfig
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          type: object
+          description: Runtime configuration specification.
+          properties:
+            deploymentTemplate:
+              type: object
+              description: Template overrides for the Provider or Function Deployment.
+              properties:
+                metadata:
+                  type: object
+                  description: Metadata overrides for the Deployment.
+                spec:
+                  type: object
+                  description: Deployment spec overrides including replicas, selector, and pod template.
+                  properties:
+                    replicas:
+                      type: integer
+                      minimum: 0
+                      description: Number of pod replicas for the provider or function.
+                    template:
+                      type: object
+                      description: Pod template overrides including containers, volumes, and tolerations.
+            serviceAccountTemplate:
+              type: object
+              description: Template overrides for the Provider or Function ServiceAccount.
+              properties:
+                metadata:
+                  type: object
+                  description: Metadata overrides, commonly used to add workload identity annotations.
+                  properties:
+                    annotations:
+                      type: object
+                      description: Annotations to apply to the ServiceAccount, such as IAM role ARN mappings.
+                      additionalProperties:
+                        type: string
+    Status:
+      type: object
+      description: A Kubernetes API Status response used for errors and operation results.
+      properties:
+        apiVersion:
+          type: string
+          description: API version of the Status object.
+        kind:
+          type: string
+          const: Status
+          description: Always Status.
+        status:
+          type: string
+          description: Status of the operation, Success or Failure.
+        message:
+          type: string
+          description: Human-readable description of the status.
+        reason:
+          type: string
+          description: Machine-readable reason for the status, such as NotFound or AlreadyExists.
+        code:
+          type: integer
+          description: HTTP status code corresponding to this status.
+    ObjectMeta:
+      type: object
+      description: Standard Kubernetes object metadata.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Unique name of the resource within its scope.
+        namespace:
+          type: string
+          description: Namespace of the resource. Crossplane core resources are cluster-scoped and do not use namespace.
+        labels:
+          type: object
+          description: Key-value pairs for organizing and selecting resources.
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          description: Non-identifying metadata attached to the resource.
+          additionalProperties:
+            type: string
+        resourceVersion:
+          type: string
+          description: Opaque string that identifies the version of the resource for optimistic concurrency.
+        uid:
+          type: string
+          description: Unique identifier for the resource assigned by the API server.
+        generation:
+          type: integer
+          description: Sequence number for changes to the spec. Incremented by the API server on spec changes.
+        creationTimestamp:
+          type: string
+          format: date-time
+          description: Timestamp when the resource was created.
+        deletionTimestamp:
+          type: string
+          format: date-time
+          description: Timestamp after which the resource will be deleted, set when deletion is requested.
+        finalizers:
+          type: array
+          description: Finalizers that must be cleared before the object is deleted.
+          items:
+            type: string
+  responses:
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    BadRequest:
+      description: The request was malformed or failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Kubernetes service account token or user bearer token for authenticating with the Kubernetes API server. RBAC policies control which Crossplane resources each identity can access.
+externalDocs:
+  description: Crossplane API Reference
+  url: https://docs.crossplane.io/latest/api/

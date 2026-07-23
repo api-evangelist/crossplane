@@ -1,0 +1,278 @@
+openapi: 3.1.0
+info:
+  title: Crossplane Kubernetes CompositeResourceDefinitions EnvironmentConfigs API
+  description: 'The Crossplane Kubernetes API extends the Kubernetes API server with custom resources for managing cloud infrastructure declaratively. Resources are organized into two main API groups: apiextensions.crossplane.io for composition primitives (Compositions, CompositeResourceDefinitions, EnvironmentConfigs) and pkg.crossplane.io for package management (Providers, Functions, Configurations and their revisions). All operations use standard Kubernetes REST conventions and are authenticated through the Kubernetes API server''s authentication mechanisms.'
+  version: '2.2'
+  contact:
+    name: Crossplane Community
+    url: https://slack.crossplane.io/
+  termsOfService: https://www.crossplane.io/
+servers:
+- url: https://kubernetes.default.svc
+  description: Kubernetes API Server (in-cluster)
+security:
+- bearerAuth: []
+tags:
+- name: EnvironmentConfigs
+  description: EnvironmentConfigs provide shared configuration data that can be referenced by Compositions via environment patches, enabling reusable configuration across multiple Compositions.
+paths:
+  /apis/apiextensions.crossplane.io/v1/environmentconfigs:
+    get:
+      operationId: listEnvironmentConfigs
+      summary: Crossplane List EnvironmentConfigs
+      description: Returns a list of all EnvironmentConfig resources. EnvironmentConfigs hold shared configuration data that can be patched into Compositions via environment patch types, enabling cluster-wide shared values.
+      tags:
+      - EnvironmentConfigs
+      parameters:
+      - $ref: '#/components/parameters/labelSelector'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: Successfully listed EnvironmentConfigs.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentConfigList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createEnvironmentConfig
+      summary: Crossplane Create an EnvironmentConfig
+      description: Creates a new EnvironmentConfig resource containing arbitrary key-value configuration data. Compositions can select and merge EnvironmentConfigs using label selectors.
+      tags:
+      - EnvironmentConfigs
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvironmentConfig'
+      responses:
+        '201':
+          description: EnvironmentConfig successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentConfig'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /apis/apiextensions.crossplane.io/v1/environmentconfigs/{name}:
+    get:
+      operationId: getEnvironmentConfig
+      summary: Crossplane Get an EnvironmentConfig
+      description: Returns a specific EnvironmentConfig resource by name, including its data map of arbitrary configuration key-value pairs.
+      tags:
+      - EnvironmentConfigs
+      parameters:
+      - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Successfully retrieved the EnvironmentConfig.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentConfig'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteEnvironmentConfig
+      summary: Crossplane Delete an EnvironmentConfig
+      description: Deletes a specific EnvironmentConfig. Compositions referencing this config will fail to reconcile until the reference is removed or the config is recreated.
+      tags:
+      - EnvironmentConfigs
+      parameters:
+      - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: EnvironmentConfig deletion initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    labelSelector:
+      name: labelSelector
+      in: query
+      required: false
+      description: A selector to restrict the list of returned objects by their labels. Defaults to everything.
+      schema:
+        type: string
+    continueToken:
+      name: continue
+      in: query
+      required: false
+      description: Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time.
+      schema:
+        type: string
+    name:
+      name: name
+      in: path
+      required: true
+      description: Name of the Crossplane resource.
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of items to return in a single response. The server may return fewer items than requested. Use the continue token for pagination.
+      schema:
+        type: integer
+        minimum: 1
+  responses:
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    BadRequest:
+      description: The request was malformed or failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+  schemas:
+    EnvironmentConfigList:
+      type: object
+      description: A list of EnvironmentConfig resources.
+      required:
+      - apiVersion
+      - kind
+      - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list resource.
+        kind:
+          type: string
+          const: EnvironmentConfigList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Continuation token for pagination.
+        items:
+          type: array
+          description: List of EnvironmentConfig resources.
+          items:
+            $ref: '#/components/schemas/EnvironmentConfig'
+    ObjectMeta:
+      type: object
+      description: Standard Kubernetes object metadata.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Unique name of the resource within its scope.
+        namespace:
+          type: string
+          description: Namespace of the resource. Crossplane core resources are cluster-scoped and do not use namespace.
+        labels:
+          type: object
+          description: Key-value pairs for organizing and selecting resources.
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          description: Non-identifying metadata attached to the resource.
+          additionalProperties:
+            type: string
+        resourceVersion:
+          type: string
+          description: Opaque string that identifies the version of the resource for optimistic concurrency.
+        uid:
+          type: string
+          description: Unique identifier for the resource assigned by the API server.
+        generation:
+          type: integer
+          description: Sequence number for changes to the spec. Incremented by the API server on spec changes.
+        creationTimestamp:
+          type: string
+          format: date-time
+          description: Timestamp when the resource was created.
+        deletionTimestamp:
+          type: string
+          format: date-time
+          description: Timestamp after which the resource will be deleted, set when deletion is requested.
+        finalizers:
+          type: array
+          description: Finalizers that must be cleared before the object is deleted.
+          items:
+            type: string
+    EnvironmentConfig:
+      type: object
+      description: A Crossplane EnvironmentConfig that stores arbitrary key-value configuration data for use as shared environment data in Compositions. EnvironmentConfigs are selected by Compositions using label selectors and merged into an in-memory environment used during patching.
+      required:
+      - apiVersion
+      - kind
+      - metadata
+      properties:
+        apiVersion:
+          type: string
+          const: apiextensions.crossplane.io/v1alpha1
+          description: API version for the EnvironmentConfig resource.
+        kind:
+          type: string
+          const: EnvironmentConfig
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        data:
+          type: object
+          description: Arbitrary key-value data map available to Compositions that select this EnvironmentConfig. Values can be strings, numbers, booleans, arrays, or nested objects.
+          additionalProperties: true
+    Status:
+      type: object
+      description: A Kubernetes API Status response used for errors and operation results.
+      properties:
+        apiVersion:
+          type: string
+          description: API version of the Status object.
+        kind:
+          type: string
+          const: Status
+          description: Always Status.
+        status:
+          type: string
+          description: Status of the operation, Success or Failure.
+        message:
+          type: string
+          description: Human-readable description of the status.
+        reason:
+          type: string
+          description: Machine-readable reason for the status, such as NotFound or AlreadyExists.
+        code:
+          type: integer
+          description: HTTP status code corresponding to this status.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Kubernetes service account token or user bearer token for authenticating with the Kubernetes API server. RBAC policies control which Crossplane resources each identity can access.
+externalDocs:
+  description: Crossplane API Reference
+  url: https://docs.crossplane.io/latest/api/

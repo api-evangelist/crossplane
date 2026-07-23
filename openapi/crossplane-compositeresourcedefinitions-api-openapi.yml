@@ -1,0 +1,419 @@
+openapi: 3.1.0
+info:
+  title: Crossplane Kubernetes CompositeResourceDefinitions API
+  description: 'The Crossplane Kubernetes API extends the Kubernetes API server with custom resources for managing cloud infrastructure declaratively. Resources are organized into two main API groups: apiextensions.crossplane.io for composition primitives (Compositions, CompositeResourceDefinitions, EnvironmentConfigs) and pkg.crossplane.io for package management (Providers, Functions, Configurations and their revisions). All operations use standard Kubernetes REST conventions and are authenticated through the Kubernetes API server''s authentication mechanisms.'
+  version: '2.2'
+  contact:
+    name: Crossplane Community
+    url: https://slack.crossplane.io/
+  termsOfService: https://www.crossplane.io/
+servers:
+- url: https://kubernetes.default.svc
+  description: Kubernetes API Server (in-cluster)
+security:
+- bearerAuth: []
+tags:
+- name: CompositeResourceDefinitions
+  description: CompositeResourceDefinitions (XRDs) extend the Kubernetes API with new custom resource types. An XRD defines the schema and API surface for a composite resource and an optional namespace-scoped claim resource.
+paths:
+  /apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions:
+    get:
+      operationId: listCompositeResourceDefinitions
+      summary: Crossplane List CompositeResourceDefinitions
+      description: Returns a list of all CompositeResourceDefinition (XRD) resources. Each XRD defines the schema for a new composite resource type and optionally a claim type that will be installed as Kubernetes CRDs.
+      tags:
+      - CompositeResourceDefinitions
+      parameters:
+      - $ref: '#/components/parameters/labelSelector'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: Successfully listed CompositeResourceDefinitions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompositeResourceDefinitionList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createCompositeResourceDefinition
+      summary: Crossplane Create a CompositeResourceDefinition
+      description: Creates a new CompositeResourceDefinition. Upon creation, Crossplane installs corresponding CRDs and begins serving the new composite resource API. If claimNames are specified, a namespaced claim CRD is also installed.
+      tags:
+      - CompositeResourceDefinitions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompositeResourceDefinition'
+      responses:
+        '201':
+          description: CompositeResourceDefinition successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompositeResourceDefinition'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions/{name}:
+    get:
+      operationId: getCompositeResourceDefinition
+      summary: Crossplane Get a CompositeResourceDefinition
+      description: Returns details of a specific CompositeResourceDefinition, including its version schemas, claim configuration, and status conditions reflecting whether the CRDs are established.
+      tags:
+      - CompositeResourceDefinitions
+      parameters:
+      - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Successfully retrieved the CompositeResourceDefinition.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompositeResourceDefinition'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: replaceCompositeResourceDefinition
+      summary: Crossplane Replace a CompositeResourceDefinition
+      description: Replaces a CompositeResourceDefinition. Crossplane will reconcile the new schema, updating existing CRDs and triggering re-composition of existing composite resources as needed.
+      tags:
+      - CompositeResourceDefinitions
+      parameters:
+      - $ref: '#/components/parameters/name'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompositeResourceDefinition'
+      responses:
+        '200':
+          description: CompositeResourceDefinition successfully replaced.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompositeResourceDefinition'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteCompositeResourceDefinition
+      summary: Crossplane Delete a CompositeResourceDefinition
+      description: Deletes a CompositeResourceDefinition. Crossplane will remove the associated CRDs and all existing composite resources of that type if no finalizers prevent deletion.
+      tags:
+      - CompositeResourceDefinitions
+      parameters:
+      - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: CompositeResourceDefinition deletion initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    CompositeResourceDefinition:
+      type: object
+      description: A Crossplane CompositeResourceDefinition (XRD) that extends the Kubernetes API with a new composite resource type. Creating an XRD causes Crossplane to install corresponding CRDs and begin serving the new API. Optionally defines a namespace-scoped claim type.
+      required:
+      - apiVersion
+      - kind
+      - metadata
+      - spec
+      properties:
+        apiVersion:
+          type: string
+          const: apiextensions.crossplane.io/v1
+          description: API version for the CompositeResourceDefinition resource.
+        kind:
+          type: string
+          const: CompositeResourceDefinition
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          type: object
+          description: Specification for the new composite resource API.
+          required:
+          - group
+          - names
+          - versions
+          properties:
+            group:
+              type: string
+              description: API group for the composite resource, conventionally a domain name.
+            names:
+              type: object
+              description: Names for the composite resource kind.
+              required:
+              - kind
+              - plural
+              properties:
+                kind:
+                  type: string
+                  description: PascalCase singular kind name, conventionally prefixed with X.
+                plural:
+                  type: string
+                  description: Lowercase plural name used in API paths.
+                singular:
+                  type: string
+                  description: Lowercase singular name.
+                shortNames:
+                  type: array
+                  description: Short aliases for use with kubectl.
+                  items:
+                    type: string
+                categories:
+                  type: array
+                  description: Categories this type belongs to, such as crossplane.
+                  items:
+                    type: string
+            claimNames:
+              type: object
+              description: Names for the optional namespace-scoped claim resource type. When specified, Crossplane creates a claim CRD in addition to the composite resource CRD.
+              properties:
+                kind:
+                  type: string
+                  description: PascalCase kind name for the claim.
+                plural:
+                  type: string
+                  description: Lowercase plural name for the claim.
+            versions:
+              type: array
+              description: API versions to serve for this composite resource type.
+              minItems: 1
+              items:
+                type: object
+                description: A version of the composite resource API schema.
+            connectionSecretKeys:
+              type: array
+              description: Keys expected in connection secrets propagated from composed resources.
+              items:
+                type: string
+            defaultCompositionRef:
+              type: object
+              description: Default Composition to use when composite resources do not specify one.
+              properties:
+                name:
+                  type: string
+                  description: Name of the default Composition.
+            enforcedCompositionRef:
+              type: object
+              description: Composition that is always used, preventing overrides by composite resource users.
+              properties:
+                name:
+                  type: string
+                  description: Name of the enforced Composition.
+        status:
+          type: object
+          description: Status of the CompositeResourceDefinition.
+          properties:
+            conditions:
+              type: array
+              description: Status conditions including Established and Offered.
+              items:
+                $ref: '#/components/schemas/Condition'
+    Status:
+      type: object
+      description: A Kubernetes API Status response used for errors and operation results.
+      properties:
+        apiVersion:
+          type: string
+          description: API version of the Status object.
+        kind:
+          type: string
+          const: Status
+          description: Always Status.
+        status:
+          type: string
+          description: Status of the operation, Success or Failure.
+        message:
+          type: string
+          description: Human-readable description of the status.
+        reason:
+          type: string
+          description: Machine-readable reason for the status, such as NotFound or AlreadyExists.
+        code:
+          type: integer
+          description: HTTP status code corresponding to this status.
+    ObjectMeta:
+      type: object
+      description: Standard Kubernetes object metadata.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Unique name of the resource within its scope.
+        namespace:
+          type: string
+          description: Namespace of the resource. Crossplane core resources are cluster-scoped and do not use namespace.
+        labels:
+          type: object
+          description: Key-value pairs for organizing and selecting resources.
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          description: Non-identifying metadata attached to the resource.
+          additionalProperties:
+            type: string
+        resourceVersion:
+          type: string
+          description: Opaque string that identifies the version of the resource for optimistic concurrency.
+        uid:
+          type: string
+          description: Unique identifier for the resource assigned by the API server.
+        generation:
+          type: integer
+          description: Sequence number for changes to the spec. Incremented by the API server on spec changes.
+        creationTimestamp:
+          type: string
+          format: date-time
+          description: Timestamp when the resource was created.
+        deletionTimestamp:
+          type: string
+          format: date-time
+          description: Timestamp after which the resource will be deleted, set when deletion is requested.
+        finalizers:
+          type: array
+          description: Finalizers that must be cleared before the object is deleted.
+          items:
+            type: string
+    Condition:
+      type: object
+      description: A status condition for a Crossplane resource.
+      required:
+      - type
+      - status
+      properties:
+        type:
+          type: string
+          description: Type of condition, such as Ready, Synced, or Healthy.
+        status:
+          type: string
+          enum:
+          - 'True'
+          - 'False'
+          - Unknown
+          description: Status of the condition.
+        reason:
+          type: string
+          description: Machine-readable reason for the condition's last transition.
+        message:
+          type: string
+          description: Human-readable message describing the current condition state.
+        lastTransitionTime:
+          type: string
+          format: date-time
+          description: Timestamp of the last transition for this condition.
+    CompositeResourceDefinitionList:
+      type: object
+      description: A list of CompositeResourceDefinition resources.
+      required:
+      - apiVersion
+      - kind
+      - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list resource.
+        kind:
+          type: string
+          const: CompositeResourceDefinitionList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Continuation token for pagination.
+        items:
+          type: array
+          description: List of CompositeResourceDefinition resources.
+          items:
+            $ref: '#/components/schemas/CompositeResourceDefinition'
+  parameters:
+    labelSelector:
+      name: labelSelector
+      in: query
+      required: false
+      description: A selector to restrict the list of returned objects by their labels. Defaults to everything.
+      schema:
+        type: string
+    continueToken:
+      name: continue
+      in: query
+      required: false
+      description: Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time.
+      schema:
+        type: string
+    name:
+      name: name
+      in: path
+      required: true
+      description: Name of the Crossplane resource.
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of items to return in a single response. The server may return fewer items than requested. Use the continue token for pagination.
+      schema:
+        type: integer
+        minimum: 1
+  responses:
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    BadRequest:
+      description: The request was malformed or failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    Conflict:
+      description: A resource with this name already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Kubernetes service account token or user bearer token for authenticating with the Kubernetes API server. RBAC policies control which Crossplane resources each identity can access.
+externalDocs:
+  description: Crossplane API Reference
+  url: https://docs.crossplane.io/latest/api/

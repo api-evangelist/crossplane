@@ -1,0 +1,405 @@
+openapi: 3.1.0
+info:
+  title: Crossplane Kubernetes CompositeResourceDefinitions Providers API
+  description: 'The Crossplane Kubernetes API extends the Kubernetes API server with custom resources for managing cloud infrastructure declaratively. Resources are organized into two main API groups: apiextensions.crossplane.io for composition primitives (Compositions, CompositeResourceDefinitions, EnvironmentConfigs) and pkg.crossplane.io for package management (Providers, Functions, Configurations and their revisions). All operations use standard Kubernetes REST conventions and are authenticated through the Kubernetes API server''s authentication mechanisms.'
+  version: '2.2'
+  contact:
+    name: Crossplane Community
+    url: https://slack.crossplane.io/
+  termsOfService: https://www.crossplane.io/
+servers:
+- url: https://kubernetes.default.svc
+  description: Kubernetes API Server (in-cluster)
+security:
+- bearerAuth: []
+tags:
+- name: Providers
+  description: Providers are Crossplane packages that install controllers and CRDs for managing resources on a specific infrastructure platform such as AWS, GCP, or Azure.
+paths:
+  /apis/pkg.crossplane.io/v1/providers:
+    get:
+      operationId: listProviders
+      summary: Crossplane List Providers
+      description: Returns a list of all Provider package installations. Each Provider installs a set of managed resource CRDs and a controller that reconciles those resources against a specific infrastructure platform.
+      tags:
+      - Providers
+      parameters:
+      - $ref: '#/components/parameters/labelSelector'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: Successfully listed Providers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProviderList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createProvider
+      summary: Crossplane Install a Provider
+      description: Installs a new Provider by referencing an OCI image containing the provider package. Crossplane fetches the package, installs its CRDs, and starts the provider controller deployment.
+      tags:
+      - Providers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Provider'
+      responses:
+        '201':
+          description: Provider installation initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Provider'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /apis/pkg.crossplane.io/v1/providers/{name}:
+    get:
+      operationId: getProvider
+      summary: Crossplane Get a Provider
+      description: Returns details of a specific Provider, including its package reference, revision activation policy, and status conditions reflecting whether the provider is healthy and all CRDs are installed.
+      tags:
+      - Providers
+      parameters:
+      - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Successfully retrieved the Provider.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Provider'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: replaceProvider
+      summary: Crossplane Update a Provider
+      description: Replaces a Provider resource, typically to update the package image reference to a new version. Crossplane creates a new ProviderRevision and activates it according to the revisionActivationPolicy.
+      tags:
+      - Providers
+      parameters:
+      - $ref: '#/components/parameters/name'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Provider'
+      responses:
+        '200':
+          description: Provider successfully updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Provider'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteProvider
+      summary: Crossplane Uninstall a Provider
+      description: Removes a Provider installation. Crossplane will delete the provider controller and CRDs. Existing managed resources will be orphaned unless deleted first.
+      tags:
+      - Providers
+      parameters:
+      - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Provider uninstallation initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    labelSelector:
+      name: labelSelector
+      in: query
+      required: false
+      description: A selector to restrict the list of returned objects by their labels. Defaults to everything.
+      schema:
+        type: string
+    continueToken:
+      name: continue
+      in: query
+      required: false
+      description: Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time.
+      schema:
+        type: string
+    name:
+      name: name
+      in: path
+      required: true
+      description: Name of the Crossplane resource.
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of items to return in a single response. The server may return fewer items than requested. Use the continue token for pagination.
+      schema:
+        type: integer
+        minimum: 1
+  responses:
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    BadRequest:
+      description: The request was malformed or failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    Conflict:
+      description: A resource with this name already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+  schemas:
+    Condition:
+      type: object
+      description: A status condition for a Crossplane resource.
+      required:
+      - type
+      - status
+      properties:
+        type:
+          type: string
+          description: Type of condition, such as Ready, Synced, or Healthy.
+        status:
+          type: string
+          enum:
+          - 'True'
+          - 'False'
+          - Unknown
+          description: Status of the condition.
+        reason:
+          type: string
+          description: Machine-readable reason for the condition's last transition.
+        message:
+          type: string
+          description: Human-readable message describing the current condition state.
+        lastTransitionTime:
+          type: string
+          format: date-time
+          description: Timestamp of the last transition for this condition.
+    Status:
+      type: object
+      description: A Kubernetes API Status response used for errors and operation results.
+      properties:
+        apiVersion:
+          type: string
+          description: API version of the Status object.
+        kind:
+          type: string
+          const: Status
+          description: Always Status.
+        status:
+          type: string
+          description: Status of the operation, Success or Failure.
+        message:
+          type: string
+          description: Human-readable description of the status.
+        reason:
+          type: string
+          description: Machine-readable reason for the status, such as NotFound or AlreadyExists.
+        code:
+          type: integer
+          description: HTTP status code corresponding to this status.
+    ObjectMeta:
+      type: object
+      description: Standard Kubernetes object metadata.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Unique name of the resource within its scope.
+        namespace:
+          type: string
+          description: Namespace of the resource. Crossplane core resources are cluster-scoped and do not use namespace.
+        labels:
+          type: object
+          description: Key-value pairs for organizing and selecting resources.
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          description: Non-identifying metadata attached to the resource.
+          additionalProperties:
+            type: string
+        resourceVersion:
+          type: string
+          description: Opaque string that identifies the version of the resource for optimistic concurrency.
+        uid:
+          type: string
+          description: Unique identifier for the resource assigned by the API server.
+        generation:
+          type: integer
+          description: Sequence number for changes to the spec. Incremented by the API server on spec changes.
+        creationTimestamp:
+          type: string
+          format: date-time
+          description: Timestamp when the resource was created.
+        deletionTimestamp:
+          type: string
+          format: date-time
+          description: Timestamp after which the resource will be deleted, set when deletion is requested.
+        finalizers:
+          type: array
+          description: Finalizers that must be cleared before the object is deleted.
+          items:
+            type: string
+    PackageSpec:
+      type: object
+      description: Common specification fields for Crossplane package resources (Provider, Function, Configuration).
+      required:
+      - package
+      properties:
+        package:
+          type: string
+          description: OCI image reference for the package, including registry, repository, and tag or digest.
+        packagePullPolicy:
+          type: string
+          enum:
+          - Always
+          - IfNotPresent
+          - Never
+          description: Image pull policy for fetching the package OCI image.
+        packagePullSecrets:
+          type: array
+          description: References to Kubernetes secrets containing OCI registry credentials.
+          items:
+            type: object
+            required:
+            - name
+            properties:
+              name:
+                type: string
+                description: Name of the image pull secret.
+        revisionActivationPolicy:
+          type: string
+          enum:
+          - Automatic
+          - Manual
+          description: Policy for activating new package revisions. Automatic activates immediately; Manual requires explicit activation.
+        revisionHistoryLimit:
+          type: integer
+          minimum: 0
+          description: Number of inactive package revisions to retain for rollback.
+        runtimeConfigRef:
+          type: object
+          description: Reference to a DeploymentRuntimeConfig for customizing the package's runtime deployment.
+          required:
+          - name
+          properties:
+            name:
+              type: string
+              description: Name of the DeploymentRuntimeConfig.
+            apiVersion:
+              type: string
+              description: API version of the referenced resource.
+            kind:
+              type: string
+              description: Kind of the referenced resource.
+    ProviderList:
+      type: object
+      description: A list of Provider resources.
+      required:
+      - apiVersion
+      - kind
+      - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list resource.
+        kind:
+          type: string
+          const: ProviderList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list for use with watch.
+            continue:
+              type: string
+              description: Continuation token for paginating large result sets.
+        items:
+          type: array
+          description: List of Provider resources.
+          items:
+            $ref: '#/components/schemas/Provider'
+    Provider:
+      type: object
+      description: A Crossplane Provider package that extends the control plane with managed resource CRDs and a controller for a specific infrastructure platform.
+      required:
+      - apiVersion
+      - kind
+      - metadata
+      - spec
+      properties:
+        apiVersion:
+          type: string
+          const: pkg.crossplane.io/v1
+          description: API version for the Provider resource.
+        kind:
+          type: string
+          const: Provider
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          $ref: '#/components/schemas/PackageSpec'
+        status:
+          $ref: '#/components/schemas/PackageStatus'
+    PackageStatus:
+      type: object
+      description: Common status fields for Crossplane package resources.
+      properties:
+        currentRevision:
+          type: string
+          description: Name of the currently active package revision.
+        conditions:
+          type: array
+          description: Status conditions for the package.
+          items:
+            $ref: '#/components/schemas/Condition'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Kubernetes service account token or user bearer token for authenticating with the Kubernetes API server. RBAC policies control which Crossplane resources each identity can access.
+externalDocs:
+  description: Crossplane API Reference
+  url: https://docs.crossplane.io/latest/api/

@@ -1,0 +1,401 @@
+openapi: 3.1.0
+info:
+  title: Crossplane Kubernetes CompositeResourceDefinitions Compositions API
+  description: 'The Crossplane Kubernetes API extends the Kubernetes API server with custom resources for managing cloud infrastructure declaratively. Resources are organized into two main API groups: apiextensions.crossplane.io for composition primitives (Compositions, CompositeResourceDefinitions, EnvironmentConfigs) and pkg.crossplane.io for package management (Providers, Functions, Configurations and their revisions). All operations use standard Kubernetes REST conventions and are authenticated through the Kubernetes API server''s authentication mechanisms.'
+  version: '2.2'
+  contact:
+    name: Crossplane Community
+    url: https://slack.crossplane.io/
+  termsOfService: https://www.crossplane.io/
+servers:
+- url: https://kubernetes.default.svc
+  description: Kubernetes API Server (in-cluster)
+security:
+- bearerAuth: []
+tags:
+- name: Compositions
+  description: Compositions define how to compose a set of managed resources or Composition Functions into a higher-level composite resource. A Composition acts as a template that maps fields from a composite resource to composed resources using patches and transforms.
+paths:
+  /apis/apiextensions.crossplane.io/v1/compositions:
+    get:
+      operationId: listCompositions
+      summary: Crossplane List Compositions
+      description: Returns a list of all Composition resources across the cluster. Compositions define how composite resources are translated into sets of managed resources or Composition Function pipelines.
+      tags:
+      - Compositions
+      parameters:
+      - $ref: '#/components/parameters/labelSelector'
+      - $ref: '#/components/parameters/fieldSelector'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: Successfully listed Compositions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompositionList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createComposition
+      summary: Crossplane Create a Composition
+      description: Creates a new Composition resource. The Composition spec must reference a valid CompositeResourceDefinition via compositeTypeRef and define either a resources array (for Resources mode) or a pipeline array (for Pipeline mode).
+      tags:
+      - Compositions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Composition'
+      responses:
+        '201':
+          description: Composition successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Composition'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /apis/apiextensions.crossplane.io/v1/compositions/{name}:
+    get:
+      operationId: getComposition
+      summary: Crossplane Get a Composition
+      description: Returns the details of a specific Composition resource, including its spec defining composed resource templates and patches, and its status reflecting active revision information.
+      tags:
+      - Compositions
+      parameters:
+      - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Successfully retrieved the Composition.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Composition'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: replaceComposition
+      summary: Crossplane Replace a Composition
+      description: Replaces the entire Composition resource with the provided body. This operation triggers a new CompositionRevision to be created, allowing rollback if needed.
+      tags:
+      - Compositions
+      parameters:
+      - $ref: '#/components/parameters/name'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Composition'
+      responses:
+        '200':
+          description: Composition successfully replaced.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Composition'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteComposition
+      summary: Crossplane Delete a Composition
+      description: Deletes the specified Composition resource. Existing composite resources that reference this Composition will not be deleted but will cease to reconcile until a new Composition is available.
+      tags:
+      - Compositions
+      parameters:
+      - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Composition deletion initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    labelSelector:
+      name: labelSelector
+      in: query
+      required: false
+      description: A selector to restrict the list of returned objects by their labels. Defaults to everything.
+      schema:
+        type: string
+    continueToken:
+      name: continue
+      in: query
+      required: false
+      description: Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time.
+      schema:
+        type: string
+    name:
+      name: name
+      in: path
+      required: true
+      description: Name of the Crossplane resource.
+      schema:
+        type: string
+    fieldSelector:
+      name: fieldSelector
+      in: query
+      required: false
+      description: A selector to restrict the list of returned objects by their fields.
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of items to return in a single response. The server may return fewer items than requested. Use the continue token for pagination.
+      schema:
+        type: integer
+        minimum: 1
+  responses:
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    BadRequest:
+      description: The request was malformed or failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    Conflict:
+      description: A resource with this name already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+  schemas:
+    CompositionList:
+      type: object
+      description: A list of Composition resources.
+      required:
+      - apiVersion
+      - kind
+      - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list resource.
+        kind:
+          type: string
+          const: CompositionList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Continuation token for pagination.
+        items:
+          type: array
+          description: List of Composition resources.
+          items:
+            $ref: '#/components/schemas/Composition'
+    ObjectMeta:
+      type: object
+      description: Standard Kubernetes object metadata.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Unique name of the resource within its scope.
+        namespace:
+          type: string
+          description: Namespace of the resource. Crossplane core resources are cluster-scoped and do not use namespace.
+        labels:
+          type: object
+          description: Key-value pairs for organizing and selecting resources.
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          description: Non-identifying metadata attached to the resource.
+          additionalProperties:
+            type: string
+        resourceVersion:
+          type: string
+          description: Opaque string that identifies the version of the resource for optimistic concurrency.
+        uid:
+          type: string
+          description: Unique identifier for the resource assigned by the API server.
+        generation:
+          type: integer
+          description: Sequence number for changes to the spec. Incremented by the API server on spec changes.
+        creationTimestamp:
+          type: string
+          format: date-time
+          description: Timestamp when the resource was created.
+        deletionTimestamp:
+          type: string
+          format: date-time
+          description: Timestamp after which the resource will be deleted, set when deletion is requested.
+        finalizers:
+          type: array
+          description: Finalizers that must be cleared before the object is deleted.
+          items:
+            type: string
+    Status:
+      type: object
+      description: A Kubernetes API Status response used for errors and operation results.
+      properties:
+        apiVersion:
+          type: string
+          description: API version of the Status object.
+        kind:
+          type: string
+          const: Status
+          description: Always Status.
+        status:
+          type: string
+          description: Status of the operation, Success or Failure.
+        message:
+          type: string
+          description: Human-readable description of the status.
+        reason:
+          type: string
+          description: Machine-readable reason for the status, such as NotFound or AlreadyExists.
+        code:
+          type: integer
+          description: HTTP status code corresponding to this status.
+    Composition:
+      type: object
+      description: A Crossplane Composition that defines how to translate a composite resource into a set of composed managed resources or a pipeline of Composition Functions. Compositions act as templates that are selected by composite resources based on compositeTypeRef matching.
+      required:
+      - apiVersion
+      - kind
+      - metadata
+      - spec
+      properties:
+        apiVersion:
+          type: string
+          const: apiextensions.crossplane.io/v1
+          description: API version for the Composition resource.
+        kind:
+          type: string
+          const: Composition
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          type: object
+          description: Specification of the Composition's resource templates and composition mode.
+          required:
+          - compositeTypeRef
+          properties:
+            compositeTypeRef:
+              type: object
+              description: Reference to the XRD type this Composition satisfies.
+              required:
+              - apiVersion
+              - kind
+              properties:
+                apiVersion:
+                  type: string
+                  description: API version of the composite resource type.
+                kind:
+                  type: string
+                  description: Kind of the composite resource type.
+            mode:
+              type: string
+              enum:
+              - Resources
+              - Pipeline
+              description: Composition mode. Resources uses resource templates; Pipeline uses a function pipeline.
+            resources:
+              type: array
+              description: Composed resource templates used in Resources mode.
+              items:
+                type: object
+                description: A composed resource template with patches and connection details.
+            pipeline:
+              type: array
+              description: Ordered pipeline of Composition Function steps used in Pipeline mode.
+              items:
+                type: object
+                description: A pipeline step referencing a Function with optional input.
+            writeConnectionSecretsToNamespace:
+              type: string
+              description: Namespace where composite resource connection secrets are written.
+            publishConnectionDetailsWithStoreConfigRef:
+              type: object
+              description: Reference to a StoreConfig for publishing connection details.
+              properties:
+                name:
+                  type: string
+                  description: Name of the StoreConfig.
+        status:
+          type: object
+          description: Status of the Composition.
+          properties:
+            conditions:
+              type: array
+              description: Status conditions for the Composition.
+              items:
+                $ref: '#/components/schemas/Condition'
+    Condition:
+      type: object
+      description: A status condition for a Crossplane resource.
+      required:
+      - type
+      - status
+      properties:
+        type:
+          type: string
+          description: Type of condition, such as Ready, Synced, or Healthy.
+        status:
+          type: string
+          enum:
+          - 'True'
+          - 'False'
+          - Unknown
+          description: Status of the condition.
+        reason:
+          type: string
+          description: Machine-readable reason for the condition's last transition.
+        message:
+          type: string
+          description: Human-readable message describing the current condition state.
+        lastTransitionTime:
+          type: string
+          format: date-time
+          description: Timestamp of the last transition for this condition.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Kubernetes service account token or user bearer token for authenticating with the Kubernetes API server. RBAC policies control which Crossplane resources each identity can access.
+externalDocs:
+  description: Crossplane API Reference
+  url: https://docs.crossplane.io/latest/api/
