@@ -8,7 +8,20 @@ description: >-
   EnvironmentConfigs, allowing platform teams to author self-service platform APIs that compose managed resources across
   AWS, GCP, Azure, and other providers using Kubernetes-style declarative configuration.
 url: https://raw.githubusercontent.com/api-evangelist/crossplane/refs/heads/main/apis.yml
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/crossplane.png
 tags:
   - Apache 2.0
   - CNCF
@@ -30,49 +43,235 @@ type: Index
 access: Public
 position: Provider
 apis:
-  - aid: crossplane:crossplane-kubernetes-api
-    name: Crossplane Kubernetes API
-    description: >-
-      The Crossplane Kubernetes API extends the Kubernetes API server with custom resources for managing cloud
-      infrastructure declaratively. Resources are organized into two main API groups: apiextensions.crossplane.io for
-      composition primitives (Compositions, CompositeResourceDefinitions, EnvironmentConfigs, DeploymentRuntimeConfigs)
-      and pkg.crossplane.io for package management (Providers, Functions, Configurations and their revisions). All
-      operations use standard Kubernetes REST conventions and are authenticated through the Kubernetes API server's
-      authentication mechanisms.
-    humanURL: https://docs.crossplane.io/latest/api/
-    baseURL: https://kubernetes.default.svc
-    properties:
-      - type: Documentation
-        url: https://docs.crossplane.io/latest/
-      - type: Reference
-        url: https://docs.crossplane.io/latest/api/
-      - type: GettingStarted
-        url: https://docs.crossplane.io/latest/get-started/get-started-with-composition/
-      - type: OpenAPI
-        url: openapi/crossplane-kubernetes-api-openapi.yml
-      - type: Rules
-        url: rules/crossplane-kubernetes-api-rules.yml
-      - type: Capabilities
-        url: capabilities/crossplane-kubernetes-api-capabilities.yml
-      - type: JSONSchema
-        url: json-schema/crossplane-composition-schema.json
-      - type: JSONSchema
-        url: json-schema/crossplane-xrd-schema.json
-      - type: JSONSchema
-        url: json-schema/crossplane-provider-schema.json
-      - type: JSONLD
-        url: json-ld/crossplane-context.jsonld
-      - type: ChangeLog
-        url: https://github.com/crossplane/crossplane/releases
-    tags:
-      - Composition
-      - Control Plane
-      - Custom Resources
-      - Infrastructure as Code
-      - Kubernetes
-      - Multi-Cloud
-      - Platform Engineering
+- aid: crossplane:crossplane-compositeresourcedefinitions-api
+  name: Crossplane CompositeResourceDefinitions API
+  description: >-
+    CompositeResourceDefinitions (XRDs) extend the Kubernetes API with new custom resource types. An XRD
+    defines the schema and API surface for a composite resource and an optional namespace-scoped claim
+    resource.
+  humanURL: https://docs.crossplane.io/latest/api/
+  baseURL: https://kubernetes.default.svc
+  tags:
+  - CompositeResourceDefinitions
+  properties:
+  - type: OpenAPI
+    url: openapi/crossplane-compositeresourcedefinitions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.crossplane.io/latest/
+  - type: Reference
+    url: https://docs.crossplane.io/latest/api/
+  - type: GettingStarted
+    url: https://docs.crossplane.io/latest/get-started/get-started-with-composition/
+  - type: Rules
+    url: rules/crossplane-kubernetes-api-rules.yml
+  - type: Capabilities
+    url: capabilities/crossplane-kubernetes-api-capabilities.yml
+  - type: JSONSchema
+    url: json-schema/crossplane-composition-schema.json
+  - type: JSONSchema
+    url: json-schema/crossplane-xrd-schema.json
+  - type: JSONSchema
+    url: json-schema/crossplane-provider-schema.json
+  - type: JSONLD
+    url: json-ld/crossplane-context.jsonld
+  - type: ChangeLog
+    url: https://github.com/crossplane/crossplane/releases
+- aid: crossplane:crossplane-compositions-api
+  name: Crossplane Compositions API
+  description: >-
+    Compositions define how to compose a set of managed resources or Composition Functions into a higher-level
+    composite resource. A Composition acts as a template that maps fields from a composite resource to
+    composed resources using patches and transforms.
+  humanURL: https://docs.crossplane.io/latest/api/
+  baseURL: https://kubernetes.default.svc
+  tags:
+  - Compositions
+  properties:
+  - type: OpenAPI
+    url: openapi/crossplane-compositions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.crossplane.io/latest/
+  - type: Reference
+    url: https://docs.crossplane.io/latest/api/
+  - type: GettingStarted
+    url: https://docs.crossplane.io/latest/get-started/get-started-with-composition/
+  - type: Rules
+    url: rules/crossplane-kubernetes-api-rules.yml
+  - type: Capabilities
+    url: capabilities/crossplane-kubernetes-api-capabilities.yml
+  - type: JSONSchema
+    url: json-schema/crossplane-composition-schema.json
+  - type: JSONSchema
+    url: json-schema/crossplane-xrd-schema.json
+  - type: JSONSchema
+    url: json-schema/crossplane-provider-schema.json
+  - type: JSONLD
+    url: json-ld/crossplane-context.jsonld
+  - type: ChangeLog
+    url: https://github.com/crossplane/crossplane/releases
+- aid: crossplane:crossplane-configurations-api
+  name: Crossplane Configurations API
+  description: >-
+    Configurations are Crossplane packages that bundle Compositions and CompositeResourceDefinitions together
+    into a distributable unit that can be installed into a Crossplane control plane.
+  humanURL: https://docs.crossplane.io/latest/api/
+  baseURL: https://kubernetes.default.svc
+  tags:
+  - Configurations
+  properties:
+  - type: OpenAPI
+    url: openapi/crossplane-configurations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.crossplane.io/latest/
+  - type: Reference
+    url: https://docs.crossplane.io/latest/api/
+  - type: GettingStarted
+    url: https://docs.crossplane.io/latest/get-started/get-started-with-composition/
+  - type: Rules
+    url: rules/crossplane-kubernetes-api-rules.yml
+  - type: Capabilities
+    url: capabilities/crossplane-kubernetes-api-capabilities.yml
+  - type: JSONSchema
+    url: json-schema/crossplane-composition-schema.json
+  - type: JSONSchema
+    url: json-schema/crossplane-xrd-schema.json
+  - type: JSONSchema
+    url: json-schema/crossplane-provider-schema.json
+  - type: JSONLD
+    url: json-ld/crossplane-context.jsonld
+  - type: ChangeLog
+    url: https://github.com/crossplane/crossplane/releases
+- aid: crossplane:crossplane-deploymentruntimeconfigs-api
+  name: Crossplane DeploymentRuntimeConfigs API
+  description: >-
+    DeploymentRuntimeConfigs customize the runtime behavior of Provider and Function deployments, including
+    replica counts, resource limits, service account annotations, and pod template overrides.
+  humanURL: https://docs.crossplane.io/latest/api/
+  baseURL: https://kubernetes.default.svc
+  tags:
+  - DeploymentRuntimeConfigs
+  properties:
+  - type: OpenAPI
+    url: openapi/crossplane-deploymentruntimeconfigs-api-openapi.yml
+  - type: Documentation
+    url: https://docs.crossplane.io/latest/
+  - type: Reference
+    url: https://docs.crossplane.io/latest/api/
+  - type: GettingStarted
+    url: https://docs.crossplane.io/latest/get-started/get-started-with-composition/
+  - type: Rules
+    url: rules/crossplane-kubernetes-api-rules.yml
+  - type: Capabilities
+    url: capabilities/crossplane-kubernetes-api-capabilities.yml
+  - type: JSONSchema
+    url: json-schema/crossplane-composition-schema.json
+  - type: JSONSchema
+    url: json-schema/crossplane-xrd-schema.json
+  - type: JSONSchema
+    url: json-schema/crossplane-provider-schema.json
+  - type: JSONLD
+    url: json-ld/crossplane-context.jsonld
+  - type: ChangeLog
+    url: https://github.com/crossplane/crossplane/releases
+- aid: crossplane:crossplane-environmentconfigs-api
+  name: Crossplane EnvironmentConfigs API
+  description: >-
+    EnvironmentConfigs provide shared configuration data that can be referenced by Compositions via environment
+    patches, enabling reusable configuration across multiple Compositions.
+  humanURL: https://docs.crossplane.io/latest/api/
+  baseURL: https://kubernetes.default.svc
+  tags:
+  - EnvironmentConfigs
+  properties:
+  - type: OpenAPI
+    url: openapi/crossplane-environmentconfigs-api-openapi.yml
+  - type: Documentation
+    url: https://docs.crossplane.io/latest/
+  - type: Reference
+    url: https://docs.crossplane.io/latest/api/
+  - type: GettingStarted
+    url: https://docs.crossplane.io/latest/get-started/get-started-with-composition/
+  - type: Rules
+    url: rules/crossplane-kubernetes-api-rules.yml
+  - type: Capabilities
+    url: capabilities/crossplane-kubernetes-api-capabilities.yml
+  - type: JSONSchema
+    url: json-schema/crossplane-composition-schema.json
+  - type: JSONSchema
+    url: json-schema/crossplane-xrd-schema.json
+  - type: JSONSchema
+    url: json-schema/crossplane-provider-schema.json
+  - type: JSONLD
+    url: json-ld/crossplane-context.jsonld
+  - type: ChangeLog
+    url: https://github.com/crossplane/crossplane/releases
+- aid: crossplane:crossplane-functions-api
+  name: Crossplane Functions API
+  description: >-
+    Functions are Crossplane packages that contain Composition Functions, which are OCI container images
+    invoked during composition to perform advanced resource templating and transformation logic.
+  humanURL: https://docs.crossplane.io/latest/api/
+  baseURL: https://kubernetes.default.svc
+  tags:
+  - Functions
+  properties:
+  - type: OpenAPI
+    url: openapi/crossplane-functions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.crossplane.io/latest/
+  - type: Reference
+    url: https://docs.crossplane.io/latest/api/
+  - type: GettingStarted
+    url: https://docs.crossplane.io/latest/get-started/get-started-with-composition/
+  - type: Rules
+    url: rules/crossplane-kubernetes-api-rules.yml
+  - type: Capabilities
+    url: capabilities/crossplane-kubernetes-api-capabilities.yml
+  - type: JSONSchema
+    url: json-schema/crossplane-composition-schema.json
+  - type: JSONSchema
+    url: json-schema/crossplane-xrd-schema.json
+  - type: JSONSchema
+    url: json-schema/crossplane-provider-schema.json
+  - type: JSONLD
+    url: json-ld/crossplane-context.jsonld
+  - type: ChangeLog
+    url: https://github.com/crossplane/crossplane/releases
+- aid: crossplane:crossplane-providers-api
+  name: Crossplane Providers API
+  description: >-
+    Providers are Crossplane packages that install controllers and CRDs for managing resources on a specific
+    infrastructure platform such as AWS, GCP, or Azure.
+  humanURL: https://docs.crossplane.io/latest/api/
+  baseURL: https://kubernetes.default.svc
+  tags:
+  - Providers
+  properties:
+  - type: OpenAPI
+    url: openapi/crossplane-providers-api-openapi.yml
+  - type: Documentation
+    url: https://docs.crossplane.io/latest/
+  - type: Reference
+    url: https://docs.crossplane.io/latest/api/
+  - type: GettingStarted
+    url: https://docs.crossplane.io/latest/get-started/get-started-with-composition/
+  - type: Rules
+    url: rules/crossplane-kubernetes-api-rules.yml
+  - type: Capabilities
+    url: capabilities/crossplane-kubernetes-api-capabilities.yml
+  - type: JSONSchema
+    url: json-schema/crossplane-composition-schema.json
+  - type: JSONSchema
+    url: json-schema/crossplane-xrd-schema.json
+  - type: JSONSchema
+    url: json-schema/crossplane-provider-schema.json
+  - type: JSONLD
+    url: json-ld/crossplane-context.jsonld
+  - type: ChangeLog
+    url: https://github.com/crossplane/crossplane/releases
 common:
+  - type: PostmanWorkspace
+    url: https://www.postman.com/kinlaneapi/crossplane/overview
   - type: AgenticAccess
     url: agentic-access/crossplane-agentic-access.yml
   - type: DomainSecurity
