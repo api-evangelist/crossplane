@@ -1,0 +1,867 @@
+{
+  "info": {
+    "_postman_id": "cd1924ba-b3e6-4dfe-9987-294d0fda2bcb",
+    "name": "Crossplane Kubernetes CompositeResourceDefinitions EnvironmentConfigs API",
+    "description": "The Crossplane Kubernetes API extends the Kubernetes API server with custom resources for managing cloud infrastructure declaratively. Resources are organized into two main API groups: apiextensions.crossplane.io for composition primitives (Compositions, CompositeResourceDefinitions, EnvironmentConfigs) and pkg.crossplane.io for package management (Providers, Functions, Configurations and their revisions). All operations use standard Kubernetes REST conventions and are authenticated through the Kubernetes API server's authentication mechanisms.\n\nContact Support:\n Name: Crossplane Community",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:26:37.000Z",
+    "updatedAt": "2026-07-28T01:26:37.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-cd1924ba-b3e6-4dfe-9987-294d0fda2bcb"
+  },
+  "item": [
+    {
+      "name": "apis",
+      "item": [
+        {
+          "name": "apiextensions.crossplane.io",
+          "item": [
+            {
+              "name": "v1",
+              "item": [
+                {
+                  "name": "environmentconfigs",
+                  "item": [
+                    {
+                      "name": "{name}",
+                      "item": [
+                        {
+                          "name": "Crossplane Get an EnvironmentConfig",
+                          "id": "1941be36-32ed-4109-a904-48c7cc1eacfc",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/environmentconfigs/:name",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "apis",
+                                "apiextensions.crossplane.io",
+                                "v1",
+                                "environmentconfigs",
+                                ":name"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "3eea2711-53e9-42c8-9fa3-314027d29bfa",
+                                  "key": "name",
+                                  "value": "<string>",
+                                  "description": "(Required) Name of the Crossplane resource."
+                                }
+                              ]
+                            },
+                            "description": "Returns a specific EnvironmentConfig resource by name, including its data map of arbitrary configuration key-value pairs."
+                          },
+                          "response": [
+                            {
+                              "id": "af04842f-8a88-494f-8b67-ad8a3682efbc",
+                              "name": "Successfully retrieved the EnvironmentConfig.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/environmentconfigs/:name",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "apiextensions.crossplane.io",
+                                    "v1",
+                                    "environmentconfigs",
+                                    ":name"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"deserunt_efc\": \"<string>\",\n      \"ex0a\": \"<string>\",\n      \"exercitation_6a\": \"<string>\"\n    },\n    \"annotations\": {\n      \"adipisicingc0\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"data\": {\n    \"dolor_3\": 29332621\n  }\n}",
+                              "createdAt": "2026-07-28T01:26:37.000Z",
+                              "updatedAt": "2026-07-28T01:26:37.000Z",
+                              "uid": "35240-af04842f-8a88-494f-8b67-ad8a3682efbc"
+                            },
+                            {
+                              "id": "2f3cb72b-f397-431d-80fd-05cd302f0e64",
+                              "name": "Authentication credentials are missing or invalid.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/environmentconfigs/:name",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "apiextensions.crossplane.io",
+                                    "v1",
+                                    "environmentconfigs",
+                                    ":name"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                              "createdAt": "2026-07-28T01:26:37.000Z",
+                              "updatedAt": "2026-07-28T01:26:37.000Z",
+                              "uid": "35240-2f3cb72b-f397-431d-80fd-05cd302f0e64"
+                            },
+                            {
+                              "id": "29f46c02-47c1-4d88-ab3d-4cd8df875f2b",
+                              "name": "The requested resource was not found.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/environmentconfigs/:name",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "apiextensions.crossplane.io",
+                                    "v1",
+                                    "environmentconfigs",
+                                    ":name"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                              "createdAt": "2026-07-28T01:26:37.000Z",
+                              "updatedAt": "2026-07-28T01:26:37.000Z",
+                              "uid": "35240-29f46c02-47c1-4d88-ab3d-4cd8df875f2b"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T01:26:37.000Z",
+                          "updatedAt": "2026-07-28T01:26:37.000Z",
+                          "uid": "35240-1941be36-32ed-4109-a904-48c7cc1eacfc"
+                        },
+                        {
+                          "name": "Crossplane Delete an EnvironmentConfig",
+                          "id": "61ebb24c-b9a8-403a-b99a-0fc715b2d7b8",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/environmentconfigs/:name",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "apis",
+                                "apiextensions.crossplane.io",
+                                "v1",
+                                "environmentconfigs",
+                                ":name"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "d33e2555-719a-4aa5-905c-58f515bb07b9",
+                                  "key": "name",
+                                  "value": "<string>",
+                                  "description": "(Required) Name of the Crossplane resource."
+                                }
+                              ]
+                            },
+                            "description": "Deletes a specific EnvironmentConfig. Compositions referencing this config will fail to reconcile until the reference is removed or the config is recreated."
+                          },
+                          "response": [
+                            {
+                              "id": "eba9eb47-e58f-4c2e-b64c-d67abfddaced",
+                              "name": "EnvironmentConfig deletion initiated.",
+                              "originalRequest": {
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/environmentconfigs/:name",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "apiextensions.crossplane.io",
+                                    "v1",
+                                    "environmentconfigs",
+                                    ":name"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                              "createdAt": "2026-07-28T01:26:37.000Z",
+                              "updatedAt": "2026-07-28T01:26:37.000Z",
+                              "uid": "35240-eba9eb47-e58f-4c2e-b64c-d67abfddaced"
+                            },
+                            {
+                              "id": "9d230de0-a6df-4b98-88be-a7086ff40158",
+                              "name": "Authentication credentials are missing or invalid.",
+                              "originalRequest": {
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/environmentconfigs/:name",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "apiextensions.crossplane.io",
+                                    "v1",
+                                    "environmentconfigs",
+                                    ":name"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                              "createdAt": "2026-07-28T01:26:37.000Z",
+                              "updatedAt": "2026-07-28T01:26:37.000Z",
+                              "uid": "35240-9d230de0-a6df-4b98-88be-a7086ff40158"
+                            },
+                            {
+                              "id": "cbce05e3-4c09-4da2-b8df-f210a9b23acc",
+                              "name": "The requested resource was not found.",
+                              "originalRequest": {
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/environmentconfigs/:name",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "apiextensions.crossplane.io",
+                                    "v1",
+                                    "environmentconfigs",
+                                    ":name"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                              "createdAt": "2026-07-28T01:26:37.000Z",
+                              "updatedAt": "2026-07-28T01:26:37.000Z",
+                              "uid": "35240-cbce05e3-4c09-4da2-b8df-f210a9b23acc"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T01:26:37.000Z",
+                          "updatedAt": "2026-07-28T01:26:37.000Z",
+                          "uid": "35240-61ebb24c-b9a8-403a-b99a-0fc715b2d7b8"
+                        }
+                      ],
+                      "id": "92c15456-0bd8-4f05-8455-50708d8b3e0f",
+                      "createdAt": "2026-07-28T01:26:37.000Z",
+                      "updatedAt": "2026-07-28T01:26:37.000Z",
+                      "uid": "35240-92c15456-0bd8-4f05-8455-50708d8b3e0f"
+                    },
+                    {
+                      "name": "Crossplane List EnvironmentConfigs",
+                      "id": "28c7e3f2-cb87-4d7a-9ccd-bd4dfd3c6725",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/environmentconfigs?labelSelector=<string>&limit=<integer>&continue=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "apis",
+                            "apiextensions.crossplane.io",
+                            "v1",
+                            "environmentconfigs"
+                          ],
+                          "query": [
+                            {
+                              "description": "A selector to restrict the list of returned objects by their labels. Defaults to everything.",
+                              "key": "labelSelector",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Maximum number of items to return in a single response. The server may return fewer items than requested. Use the continue token for pagination.",
+                              "key": "limit",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time.",
+                              "key": "continue",
+                              "value": "<string>"
+                            }
+                          ]
+                        },
+                        "description": "Returns a list of all EnvironmentConfig resources. EnvironmentConfigs hold shared configuration data that can be patched into Compositions via environment patch types, enabling cluster-wide shared values."
+                      },
+                      "response": [
+                        {
+                          "id": "35151531-2a86-4a31-8778-4bb7551336e4",
+                          "name": "Successfully listed EnvironmentConfigs.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/environmentconfigs?labelSelector=<string>&limit=<integer>&continue=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "apis",
+                                "apiextensions.crossplane.io",
+                                "v1",
+                                "environmentconfigs"
+                              ],
+                              "query": [
+                                {
+                                  "description": "A selector to restrict the list of returned objects by their labels. Defaults to everything.",
+                                  "key": "labelSelector",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Maximum number of items to return in a single response. The server may return fewer items than requested. Use the continue token for pagination.",
+                                  "key": "limit",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time.",
+                                  "key": "continue",
+                                  "value": "<string>"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"items\": [\n    {\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\",\n      \"metadata\": {\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\",\n        \"labels\": {\n          \"minim_b\": \"<string>\",\n          \"ad_558\": \"<string>\"\n        },\n        \"annotations\": {\n          \"tempor_\": \"<string>\"\n        },\n        \"resourceVersion\": \"<string>\",\n        \"uid\": \"<string>\",\n        \"generation\": \"<integer>\",\n        \"creationTimestamp\": \"<dateTime>\",\n        \"deletionTimestamp\": \"<dateTime>\",\n        \"finalizers\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"data\": {\n        \"Duis_18\": 81250408.87451887,\n        \"Ut6b\": \"amet irure nulla\",\n        \"dolore_16\": -7667897\n      }\n    },\n    {\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\",\n      \"metadata\": {\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\",\n        \"labels\": {\n          \"Excepteur_fb\": \"<string>\",\n          \"cupidatat_9\": \"<string>\"\n        },\n        \"annotations\": {\n          \"amet513\": \"<string>\",\n          \"in_b\": \"<string>\"\n        },\n        \"resourceVersion\": \"<string>\",\n        \"uid\": \"<string>\",\n        \"generation\": \"<integer>\",\n        \"creationTimestamp\": \"<dateTime>\",\n        \"deletionTimestamp\": \"<dateTime>\",\n        \"finalizers\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"data\": {\n        \"enim__\": true,\n        \"eu9b\": \"fugiat Lorem\",\n        \"labore__a5\": -20254884.834546834\n      }\n    }\n  ],\n  \"metadata\": {\n    \"resourceVersion\": \"<string>\",\n    \"continue\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T01:26:37.000Z",
+                          "updatedAt": "2026-07-28T01:26:37.000Z",
+                          "uid": "35240-35151531-2a86-4a31-8778-4bb7551336e4"
+                        },
+                        {
+                          "id": "8f96d01a-042a-4a0d-aa9c-0e8b46c3858e",
+                          "name": "Authentication credentials are missing or invalid.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/environmentconfigs?labelSelector=<string>&limit=<integer>&continue=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "apis",
+                                "apiextensions.crossplane.io",
+                                "v1",
+                                "environmentconfigs"
+                              ],
+                              "query": [
+                                {
+                                  "description": "A selector to restrict the list of returned objects by their labels. Defaults to everything.",
+                                  "key": "labelSelector",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Maximum number of items to return in a single response. The server may return fewer items than requested. Use the continue token for pagination.",
+                                  "key": "limit",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time.",
+                                  "key": "continue",
+                                  "value": "<string>"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                          "createdAt": "2026-07-28T01:26:37.000Z",
+                          "updatedAt": "2026-07-28T01:26:37.000Z",
+                          "uid": "35240-8f96d01a-042a-4a0d-aa9c-0e8b46c3858e"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T01:26:37.000Z",
+                      "updatedAt": "2026-07-28T01:26:37.000Z",
+                      "uid": "35240-28c7e3f2-cb87-4d7a-9ccd-bd4dfd3c6725"
+                    },
+                    {
+                      "name": "Crossplane Create an EnvironmentConfig",
+                      "id": "64689dc6-269e-4082-80f0-884844caf5ec",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"deserunt_efc\": \"<string>\",\n      \"ex0a\": \"<string>\",\n      \"exercitation_6a\": \"<string>\"\n    },\n    \"annotations\": {\n      \"adipisicingc0\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"data\": {\n    \"dolor_3\": 29332621\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/environmentconfigs",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "apis",
+                            "apiextensions.crossplane.io",
+                            "v1",
+                            "environmentconfigs"
+                          ]
+                        },
+                        "description": "Creates a new EnvironmentConfig resource containing arbitrary key-value configuration data. Compositions can select and merge EnvironmentConfigs using label selectors."
+                      },
+                      "response": [
+                        {
+                          "id": "8f7190fb-d08c-4147-b1ec-7ce51de9f04d",
+                          "name": "EnvironmentConfig successfully created.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"deserunt_efc\": \"<string>\",\n      \"ex0a\": \"<string>\",\n      \"exercitation_6a\": \"<string>\"\n    },\n    \"annotations\": {\n      \"adipisicingc0\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"data\": {\n    \"dolor_3\": 29332621\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/environmentconfigs",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "apis",
+                                "apiextensions.crossplane.io",
+                                "v1",
+                                "environmentconfigs"
+                              ]
+                            }
+                          },
+                          "status": "Created",
+                          "code": 201,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"deserunt_efc\": \"<string>\",\n      \"ex0a\": \"<string>\",\n      \"exercitation_6a\": \"<string>\"\n    },\n    \"annotations\": {\n      \"adipisicingc0\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"data\": {\n    \"dolor_3\": 29332621\n  }\n}",
+                          "createdAt": "2026-07-28T01:26:37.000Z",
+                          "updatedAt": "2026-07-28T01:26:37.000Z",
+                          "uid": "35240-8f7190fb-d08c-4147-b1ec-7ce51de9f04d"
+                        },
+                        {
+                          "id": "56c0bf74-a3d8-448d-a17f-33daf81e9f28",
+                          "name": "The request was malformed or failed validation.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"deserunt_efc\": \"<string>\",\n      \"ex0a\": \"<string>\",\n      \"exercitation_6a\": \"<string>\"\n    },\n    \"annotations\": {\n      \"adipisicingc0\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"data\": {\n    \"dolor_3\": 29332621\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/environmentconfigs",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "apis",
+                                "apiextensions.crossplane.io",
+                                "v1",
+                                "environmentconfigs"
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                          "createdAt": "2026-07-28T01:26:37.000Z",
+                          "updatedAt": "2026-07-28T01:26:37.000Z",
+                          "uid": "35240-56c0bf74-a3d8-448d-a17f-33daf81e9f28"
+                        },
+                        {
+                          "id": "0b8081eb-ff4b-4b6c-af10-35d734443c81",
+                          "name": "Authentication credentials are missing or invalid.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"deserunt_efc\": \"<string>\",\n      \"ex0a\": \"<string>\",\n      \"exercitation_6a\": \"<string>\"\n    },\n    \"annotations\": {\n      \"adipisicingc0\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"data\": {\n    \"dolor_3\": 29332621\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/environmentconfigs",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "apis",
+                                "apiextensions.crossplane.io",
+                                "v1",
+                                "environmentconfigs"
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                          "createdAt": "2026-07-28T01:26:37.000Z",
+                          "updatedAt": "2026-07-28T01:26:37.000Z",
+                          "uid": "35240-0b8081eb-ff4b-4b6c-af10-35d734443c81"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T01:26:37.000Z",
+                      "updatedAt": "2026-07-28T01:26:37.000Z",
+                      "uid": "35240-64689dc6-269e-4082-80f0-884844caf5ec"
+                    }
+                  ],
+                  "id": "f0757081-9fec-48de-a9fc-21437b372032",
+                  "createdAt": "2026-07-28T01:26:37.000Z",
+                  "updatedAt": "2026-07-28T01:26:37.000Z",
+                  "uid": "35240-f0757081-9fec-48de-a9fc-21437b372032"
+                }
+              ],
+              "id": "06e9ed0a-c04d-4c04-8695-7de7ad533d3d",
+              "createdAt": "2026-07-28T01:26:37.000Z",
+              "updatedAt": "2026-07-28T01:26:37.000Z",
+              "uid": "35240-06e9ed0a-c04d-4c04-8695-7de7ad533d3d"
+            }
+          ],
+          "id": "89839435-6148-434d-ae51-11110aa660c9",
+          "createdAt": "2026-07-28T01:26:37.000Z",
+          "updatedAt": "2026-07-28T01:26:37.000Z",
+          "uid": "35240-89839435-6148-434d-ae51-11110aa660c9"
+        }
+      ],
+      "id": "b35dbf23-31f4-4d2b-8b35-6ddf420bd8bf",
+      "createdAt": "2026-07-28T01:26:37.000Z",
+      "updatedAt": "2026-07-28T01:26:37.000Z",
+      "uid": "35240-b35dbf23-31f4-4d2b-8b35-6ddf420bd8bf"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://kubernetes.default.svc"
+    }
+  ]
+}

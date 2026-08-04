@@ -1,0 +1,26 @@
+{
+  "provider": "crossplane",
+  "sources": [
+    "crossplane-compositeresourcedefinitions-api-openapi.yml",
+    "crossplane-compositions-api-openapi.yml",
+    "crossplane-configurations-api-openapi.yml",
+    "crossplane-deploymentruntimeconfigs-api-openapi.yml",
+    "crossplane-environmentconfigs-api-openapi.yml",
+    "crossplane-functions-api-openapi.yml",
+    "crossplane-providers-api-openapi.yml"
+  ],
+  "outputs": [
+    "crossplane-compositeresourcedefinitions-api-openapi.yml",
+    "crossplane-compositions-api-openapi.yml",
+    "crossplane-configurations-api-openapi.yml",
+    "crossplane-deploymentruntimeconfigs-api-openapi.yml",
+    "crossplane-environmentconfigs-api-openapi.yml",
+    "crossplane-functions-api-openapi.yml",
+    "crossplane-providers-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

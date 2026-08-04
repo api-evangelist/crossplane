@@ -1,0 +1,867 @@
+{
+  "info": {
+    "_postman_id": "dc5d6279-7790-43d3-a26e-32dcae64c889",
+    "name": "Crossplane Kubernetes CompositeResourceDefinitions DeploymentRuntimeConfigs API",
+    "description": "The Crossplane Kubernetes API extends the Kubernetes API server with custom resources for managing cloud infrastructure declaratively. Resources are organized into two main API groups: apiextensions.crossplane.io for composition primitives (Compositions, CompositeResourceDefinitions, EnvironmentConfigs) and pkg.crossplane.io for package management (Providers, Functions, Configurations and their revisions). All operations use standard Kubernetes REST conventions and are authenticated through the Kubernetes API server's authentication mechanisms.\n\nContact Support:\n Name: Crossplane Community",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:26:36.000Z",
+    "updatedAt": "2026-07-28T01:26:36.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-dc5d6279-7790-43d3-a26e-32dcae64c889"
+  },
+  "item": [
+    {
+      "name": "apis",
+      "item": [
+        {
+          "name": "pkg.crossplane.io",
+          "item": [
+            {
+              "name": "v1beta1",
+              "item": [
+                {
+                  "name": "deploymentruntimeconfigs",
+                  "item": [
+                    {
+                      "name": "{name}",
+                      "item": [
+                        {
+                          "name": "Crossplane Get a DeploymentRuntimeConfig",
+                          "id": "016b3c66-50f0-4f63-a0eb-fd971d9fde04",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1beta1/deploymentruntimeconfigs/:name",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "apis",
+                                "pkg.crossplane.io",
+                                "v1beta1",
+                                "deploymentruntimeconfigs",
+                                ":name"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "455a4b0b-4511-4048-946f-051f91cb1d5d",
+                                  "key": "name",
+                                  "value": "<string>",
+                                  "description": "(Required) Name of the Crossplane resource."
+                                }
+                              ]
+                            },
+                            "description": "Returns a specific DeploymentRuntimeConfig, including its deployment template and service account template overrides."
+                          },
+                          "response": [
+                            {
+                              "id": "296327a6-d24e-4cb3-bf89-e807fba795fc",
+                              "name": "Successfully retrieved the DeploymentRuntimeConfig.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1beta1/deploymentruntimeconfigs/:name",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "pkg.crossplane.io",
+                                    "v1beta1",
+                                    "deploymentruntimeconfigs",
+                                    ":name"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"mollit_2_\": \"<string>\",\n      \"consequatb40\": \"<string>\",\n      \"et_1\": \"<string>\"\n    },\n    \"annotations\": {\n      \"esse_8\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"spec\": {\n    \"deploymentTemplate\": {\n      \"metadata\": {},\n      \"spec\": {\n        \"replicas\": \"<integer>\",\n        \"template\": {}\n      }\n    },\n    \"serviceAccountTemplate\": {\n      \"metadata\": {\n        \"annotations\": {\n          \"anim_757\": \"<string>\",\n          \"sunt_69b\": \"<string>\",\n          \"culpa_94\": \"<string>\",\n          \"commodo1\": \"<string>\"\n        }\n      }\n    }\n  }\n}",
+                              "createdAt": "2026-07-28T01:26:36.000Z",
+                              "updatedAt": "2026-07-28T01:26:36.000Z",
+                              "uid": "35240-296327a6-d24e-4cb3-bf89-e807fba795fc"
+                            },
+                            {
+                              "id": "d07e16bb-b56a-4f02-b82f-a0cce737801f",
+                              "name": "Authentication credentials are missing or invalid.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1beta1/deploymentruntimeconfigs/:name",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "pkg.crossplane.io",
+                                    "v1beta1",
+                                    "deploymentruntimeconfigs",
+                                    ":name"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                              "createdAt": "2026-07-28T01:26:36.000Z",
+                              "updatedAt": "2026-07-28T01:26:36.000Z",
+                              "uid": "35240-d07e16bb-b56a-4f02-b82f-a0cce737801f"
+                            },
+                            {
+                              "id": "36b01351-86c2-4695-8fbd-b9826b7ad417",
+                              "name": "The requested resource was not found.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1beta1/deploymentruntimeconfigs/:name",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "pkg.crossplane.io",
+                                    "v1beta1",
+                                    "deploymentruntimeconfigs",
+                                    ":name"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                              "createdAt": "2026-07-28T01:26:36.000Z",
+                              "updatedAt": "2026-07-28T01:26:36.000Z",
+                              "uid": "35240-36b01351-86c2-4695-8fbd-b9826b7ad417"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T01:26:36.000Z",
+                          "updatedAt": "2026-07-28T01:26:36.000Z",
+                          "uid": "35240-016b3c66-50f0-4f63-a0eb-fd971d9fde04"
+                        },
+                        {
+                          "name": "Crossplane Delete a DeploymentRuntimeConfig",
+                          "id": "a72178d6-31e5-4e20-908f-c9bcc4752bf5",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1beta1/deploymentruntimeconfigs/:name",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "apis",
+                                "pkg.crossplane.io",
+                                "v1beta1",
+                                "deploymentruntimeconfigs",
+                                ":name"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "b5974060-c9d4-4b2a-82b3-a2abf8b08f88",
+                                  "key": "name",
+                                  "value": "<string>",
+                                  "description": "(Required) Name of the Crossplane resource."
+                                }
+                              ]
+                            },
+                            "description": "Deletes a DeploymentRuntimeConfig. Providers or Functions referencing this config via runtimeConfigRef will continue using the last applied configuration until they are updated."
+                          },
+                          "response": [
+                            {
+                              "id": "eec6c3af-c5da-4bd7-a65a-96628f686415",
+                              "name": "DeploymentRuntimeConfig deletion initiated.",
+                              "originalRequest": {
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1beta1/deploymentruntimeconfigs/:name",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "pkg.crossplane.io",
+                                    "v1beta1",
+                                    "deploymentruntimeconfigs",
+                                    ":name"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                              "createdAt": "2026-07-28T01:26:36.000Z",
+                              "updatedAt": "2026-07-28T01:26:36.000Z",
+                              "uid": "35240-eec6c3af-c5da-4bd7-a65a-96628f686415"
+                            },
+                            {
+                              "id": "121ca3de-62d2-4e16-8be7-1f8f91d094e5",
+                              "name": "Authentication credentials are missing or invalid.",
+                              "originalRequest": {
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1beta1/deploymentruntimeconfigs/:name",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "pkg.crossplane.io",
+                                    "v1beta1",
+                                    "deploymentruntimeconfigs",
+                                    ":name"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                              "createdAt": "2026-07-28T01:26:36.000Z",
+                              "updatedAt": "2026-07-28T01:26:36.000Z",
+                              "uid": "35240-121ca3de-62d2-4e16-8be7-1f8f91d094e5"
+                            },
+                            {
+                              "id": "c28ba599-84fb-441b-874b-af43d3bf36d2",
+                              "name": "The requested resource was not found.",
+                              "originalRequest": {
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1beta1/deploymentruntimeconfigs/:name",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "pkg.crossplane.io",
+                                    "v1beta1",
+                                    "deploymentruntimeconfigs",
+                                    ":name"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                              "createdAt": "2026-07-28T01:26:36.000Z",
+                              "updatedAt": "2026-07-28T01:26:36.000Z",
+                              "uid": "35240-c28ba599-84fb-441b-874b-af43d3bf36d2"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T01:26:36.000Z",
+                          "updatedAt": "2026-07-28T01:26:36.000Z",
+                          "uid": "35240-a72178d6-31e5-4e20-908f-c9bcc4752bf5"
+                        }
+                      ],
+                      "id": "9db05fa1-9ca7-44f5-b4fb-2712062e73c1",
+                      "createdAt": "2026-07-28T01:26:36.000Z",
+                      "updatedAt": "2026-07-28T01:26:36.000Z",
+                      "uid": "35240-9db05fa1-9ca7-44f5-b4fb-2712062e73c1"
+                    },
+                    {
+                      "name": "Crossplane List DeploymentRuntimeConfigs",
+                      "id": "c63e3ee1-5f01-4dc1-bb11-133baced206a",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1beta1/deploymentruntimeconfigs?labelSelector=<string>&limit=<integer>&continue=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "apis",
+                            "pkg.crossplane.io",
+                            "v1beta1",
+                            "deploymentruntimeconfigs"
+                          ],
+                          "query": [
+                            {
+                              "description": "A selector to restrict the list of returned objects by their labels. Defaults to everything.",
+                              "key": "labelSelector",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Maximum number of items to return in a single response. The server may return fewer items than requested. Use the continue token for pagination.",
+                              "key": "limit",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time.",
+                              "key": "continue",
+                              "value": "<string>"
+                            }
+                          ]
+                        },
+                        "description": "Returns a list of all DeploymentRuntimeConfig resources. These resources customize the Kubernetes Deployment and ServiceAccount used to run Provider and Function controller pods."
+                      },
+                      "response": [
+                        {
+                          "id": "b1b84128-5520-47e0-b91f-611f98ffcf9f",
+                          "name": "Successfully listed DeploymentRuntimeConfigs.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1beta1/deploymentruntimeconfigs?labelSelector=<string>&limit=<integer>&continue=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "apis",
+                                "pkg.crossplane.io",
+                                "v1beta1",
+                                "deploymentruntimeconfigs"
+                              ],
+                              "query": [
+                                {
+                                  "description": "A selector to restrict the list of returned objects by their labels. Defaults to everything.",
+                                  "key": "labelSelector",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Maximum number of items to return in a single response. The server may return fewer items than requested. Use the continue token for pagination.",
+                                  "key": "limit",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time.",
+                                  "key": "continue",
+                                  "value": "<string>"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"items\": [\n    {\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\",\n      \"metadata\": {\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\",\n        \"labels\": {\n          \"magna5\": \"<string>\"\n        },\n        \"annotations\": {\n          \"non_4\": \"<string>\",\n          \"exercitation_f4_\": \"<string>\"\n        },\n        \"resourceVersion\": \"<string>\",\n        \"uid\": \"<string>\",\n        \"generation\": \"<integer>\",\n        \"creationTimestamp\": \"<dateTime>\",\n        \"deletionTimestamp\": \"<dateTime>\",\n        \"finalizers\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"spec\": {\n        \"deploymentTemplate\": {\n          \"metadata\": {},\n          \"spec\": {\n            \"replicas\": \"<integer>\",\n            \"template\": {}\n          }\n        },\n        \"serviceAccountTemplate\": {\n          \"metadata\": {\n            \"annotations\": {\n              \"consectetur_9f\": \"<string>\"\n            }\n          }\n        }\n      }\n    },\n    {\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\",\n      \"metadata\": {\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\",\n        \"labels\": {\n          \"fugiat10d\": \"<string>\",\n          \"mollit9f\": \"<string>\"\n        },\n        \"annotations\": {\n          \"nulla_e\": \"<string>\"\n        },\n        \"resourceVersion\": \"<string>\",\n        \"uid\": \"<string>\",\n        \"generation\": \"<integer>\",\n        \"creationTimestamp\": \"<dateTime>\",\n        \"deletionTimestamp\": \"<dateTime>\",\n        \"finalizers\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"spec\": {\n        \"deploymentTemplate\": {\n          \"metadata\": {},\n          \"spec\": {\n            \"replicas\": \"<integer>\",\n            \"template\": {}\n          }\n        },\n        \"serviceAccountTemplate\": {\n          \"metadata\": {\n            \"annotations\": {\n              \"sitd_\": \"<string>\",\n              \"officia_20\": \"<string>\",\n              \"none4c\": \"<string>\"\n            }\n          }\n        }\n      }\n    }\n  ],\n  \"metadata\": {\n    \"resourceVersion\": \"<string>\",\n    \"continue\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T01:26:36.000Z",
+                          "updatedAt": "2026-07-28T01:26:36.000Z",
+                          "uid": "35240-b1b84128-5520-47e0-b91f-611f98ffcf9f"
+                        },
+                        {
+                          "id": "db5b9b29-0af4-4b99-9cf0-5e3413a1f4a9",
+                          "name": "Authentication credentials are missing or invalid.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1beta1/deploymentruntimeconfigs?labelSelector=<string>&limit=<integer>&continue=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "apis",
+                                "pkg.crossplane.io",
+                                "v1beta1",
+                                "deploymentruntimeconfigs"
+                              ],
+                              "query": [
+                                {
+                                  "description": "A selector to restrict the list of returned objects by their labels. Defaults to everything.",
+                                  "key": "labelSelector",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Maximum number of items to return in a single response. The server may return fewer items than requested. Use the continue token for pagination.",
+                                  "key": "limit",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time.",
+                                  "key": "continue",
+                                  "value": "<string>"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                          "createdAt": "2026-07-28T01:26:36.000Z",
+                          "updatedAt": "2026-07-28T01:26:36.000Z",
+                          "uid": "35240-db5b9b29-0af4-4b99-9cf0-5e3413a1f4a9"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T01:26:36.000Z",
+                      "updatedAt": "2026-07-28T01:26:36.000Z",
+                      "uid": "35240-c63e3ee1-5f01-4dc1-bb11-133baced206a"
+                    },
+                    {
+                      "name": "Crossplane Create a DeploymentRuntimeConfig",
+                      "id": "7d64e424-a8f4-46d4-885b-0bb5b2870f32",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"mollit_2_\": \"<string>\",\n      \"consequatb40\": \"<string>\",\n      \"et_1\": \"<string>\"\n    },\n    \"annotations\": {\n      \"esse_8\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"spec\": {\n    \"deploymentTemplate\": {\n      \"metadata\": {},\n      \"spec\": {\n        \"replicas\": \"<integer>\",\n        \"template\": {}\n      }\n    },\n    \"serviceAccountTemplate\": {\n      \"metadata\": {\n        \"annotations\": {\n          \"anim_757\": \"<string>\",\n          \"sunt_69b\": \"<string>\",\n          \"culpa_94\": \"<string>\",\n          \"commodo1\": \"<string>\"\n        }\n      }\n    }\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1beta1/deploymentruntimeconfigs",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "apis",
+                            "pkg.crossplane.io",
+                            "v1beta1",
+                            "deploymentruntimeconfigs"
+                          ]
+                        },
+                        "description": "Creates a DeploymentRuntimeConfig to customize how Crossplane deploys Provider or Function pods. Providers and Functions reference this resource via runtimeConfigRef in their spec."
+                      },
+                      "response": [
+                        {
+                          "id": "78a46b95-2c96-4199-89c4-878fcf792ba9",
+                          "name": "DeploymentRuntimeConfig successfully created.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"mollit_2_\": \"<string>\",\n      \"consequatb40\": \"<string>\",\n      \"et_1\": \"<string>\"\n    },\n    \"annotations\": {\n      \"esse_8\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"spec\": {\n    \"deploymentTemplate\": {\n      \"metadata\": {},\n      \"spec\": {\n        \"replicas\": \"<integer>\",\n        \"template\": {}\n      }\n    },\n    \"serviceAccountTemplate\": {\n      \"metadata\": {\n        \"annotations\": {\n          \"anim_757\": \"<string>\",\n          \"sunt_69b\": \"<string>\",\n          \"culpa_94\": \"<string>\",\n          \"commodo1\": \"<string>\"\n        }\n      }\n    }\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1beta1/deploymentruntimeconfigs",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "apis",
+                                "pkg.crossplane.io",
+                                "v1beta1",
+                                "deploymentruntimeconfigs"
+                              ]
+                            }
+                          },
+                          "status": "Created",
+                          "code": 201,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"mollit_2_\": \"<string>\",\n      \"consequatb40\": \"<string>\",\n      \"et_1\": \"<string>\"\n    },\n    \"annotations\": {\n      \"esse_8\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"spec\": {\n    \"deploymentTemplate\": {\n      \"metadata\": {},\n      \"spec\": {\n        \"replicas\": \"<integer>\",\n        \"template\": {}\n      }\n    },\n    \"serviceAccountTemplate\": {\n      \"metadata\": {\n        \"annotations\": {\n          \"anim_757\": \"<string>\",\n          \"sunt_69b\": \"<string>\",\n          \"culpa_94\": \"<string>\",\n          \"commodo1\": \"<string>\"\n        }\n      }\n    }\n  }\n}",
+                          "createdAt": "2026-07-28T01:26:36.000Z",
+                          "updatedAt": "2026-07-28T01:26:36.000Z",
+                          "uid": "35240-78a46b95-2c96-4199-89c4-878fcf792ba9"
+                        },
+                        {
+                          "id": "4dec2d7c-1ee9-45f8-9ba9-4dfb82e12d66",
+                          "name": "The request was malformed or failed validation.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"mollit_2_\": \"<string>\",\n      \"consequatb40\": \"<string>\",\n      \"et_1\": \"<string>\"\n    },\n    \"annotations\": {\n      \"esse_8\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"spec\": {\n    \"deploymentTemplate\": {\n      \"metadata\": {},\n      \"spec\": {\n        \"replicas\": \"<integer>\",\n        \"template\": {}\n      }\n    },\n    \"serviceAccountTemplate\": {\n      \"metadata\": {\n        \"annotations\": {\n          \"anim_757\": \"<string>\",\n          \"sunt_69b\": \"<string>\",\n          \"culpa_94\": \"<string>\",\n          \"commodo1\": \"<string>\"\n        }\n      }\n    }\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1beta1/deploymentruntimeconfigs",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "apis",
+                                "pkg.crossplane.io",
+                                "v1beta1",
+                                "deploymentruntimeconfigs"
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                          "createdAt": "2026-07-28T01:26:36.000Z",
+                          "updatedAt": "2026-07-28T01:26:36.000Z",
+                          "uid": "35240-4dec2d7c-1ee9-45f8-9ba9-4dfb82e12d66"
+                        },
+                        {
+                          "id": "6820d0a0-d0d7-40fb-8f5d-332966042745",
+                          "name": "Authentication credentials are missing or invalid.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"mollit_2_\": \"<string>\",\n      \"consequatb40\": \"<string>\",\n      \"et_1\": \"<string>\"\n    },\n    \"annotations\": {\n      \"esse_8\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"spec\": {\n    \"deploymentTemplate\": {\n      \"metadata\": {},\n      \"spec\": {\n        \"replicas\": \"<integer>\",\n        \"template\": {}\n      }\n    },\n    \"serviceAccountTemplate\": {\n      \"metadata\": {\n        \"annotations\": {\n          \"anim_757\": \"<string>\",\n          \"sunt_69b\": \"<string>\",\n          \"culpa_94\": \"<string>\",\n          \"commodo1\": \"<string>\"\n        }\n      }\n    }\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1beta1/deploymentruntimeconfigs",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "apis",
+                                "pkg.crossplane.io",
+                                "v1beta1",
+                                "deploymentruntimeconfigs"
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                          "createdAt": "2026-07-28T01:26:36.000Z",
+                          "updatedAt": "2026-07-28T01:26:36.000Z",
+                          "uid": "35240-6820d0a0-d0d7-40fb-8f5d-332966042745"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T01:26:36.000Z",
+                      "updatedAt": "2026-07-28T01:26:36.000Z",
+                      "uid": "35240-7d64e424-a8f4-46d4-885b-0bb5b2870f32"
+                    }
+                  ],
+                  "id": "c20161ac-02c8-49e2-8a78-37f06459f37e",
+                  "createdAt": "2026-07-28T01:26:36.000Z",
+                  "updatedAt": "2026-07-28T01:26:36.000Z",
+                  "uid": "35240-c20161ac-02c8-49e2-8a78-37f06459f37e"
+                }
+              ],
+              "id": "8329faa3-70e7-4e25-a5af-c2c6e95cea01",
+              "createdAt": "2026-07-28T01:26:36.000Z",
+              "updatedAt": "2026-07-28T01:26:36.000Z",
+              "uid": "35240-8329faa3-70e7-4e25-a5af-c2c6e95cea01"
+            }
+          ],
+          "id": "2339c3c7-fb75-4e47-ab4e-bfc21d659611",
+          "createdAt": "2026-07-28T01:26:36.000Z",
+          "updatedAt": "2026-07-28T01:26:36.000Z",
+          "uid": "35240-2339c3c7-fb75-4e47-ab4e-bfc21d659611"
+        }
+      ],
+      "id": "25aad3fd-32f1-4ec4-a766-86636e09f8b4",
+      "createdAt": "2026-07-28T01:26:36.000Z",
+      "updatedAt": "2026-07-28T01:26:36.000Z",
+      "uid": "35240-25aad3fd-32f1-4ec4-a766-86636e09f8b4"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://kubernetes.default.svc"
+    }
+  ]
+}

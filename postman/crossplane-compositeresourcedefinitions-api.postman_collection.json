@@ -1,0 +1,1243 @@
+{
+  "info": {
+    "_postman_id": "da724cd8-2995-4ebb-8644-e6d8d70059e7",
+    "name": "Crossplane Kubernetes CompositeResourceDefinitions API",
+    "description": "The Crossplane Kubernetes API extends the Kubernetes API server with custom resources for managing cloud infrastructure declaratively. Resources are organized into two main API groups: apiextensions.crossplane.io for composition primitives (Compositions, CompositeResourceDefinitions, EnvironmentConfigs) and pkg.crossplane.io for package management (Providers, Functions, Configurations and their revisions). All operations use standard Kubernetes REST conventions and are authenticated through the Kubernetes API server's authentication mechanisms.\n\nContact Support:\n Name: Crossplane Community",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:26:31.000Z",
+    "updatedAt": "2026-07-28T01:26:31.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-da724cd8-2995-4ebb-8644-e6d8d70059e7"
+  },
+  "item": [
+    {
+      "name": "apis",
+      "item": [
+        {
+          "name": "apiextensions.crossplane.io",
+          "item": [
+            {
+              "name": "v1",
+              "item": [
+                {
+                  "name": "compositeresourcedefinitions",
+                  "item": [
+                    {
+                      "name": "{name}",
+                      "item": [
+                        {
+                          "name": "Crossplane Get a CompositeResourceDefinition",
+                          "id": "21688fd9-5f78-4906-9b2e-1d6d9761406d",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions/:name",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "apis",
+                                "apiextensions.crossplane.io",
+                                "v1",
+                                "compositeresourcedefinitions",
+                                ":name"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "ab4425ae-3a6c-427f-bb16-988a429468ec",
+                                  "key": "name",
+                                  "value": "<string>",
+                                  "description": "(Required) Name of the Crossplane resource."
+                                }
+                              ]
+                            },
+                            "description": "Returns details of a specific CompositeResourceDefinition, including its version schemas, claim configuration, and status conditions reflecting whether the CRDs are established."
+                          },
+                          "response": [
+                            {
+                              "id": "678e319d-da03-4178-a950-0a80d90f34db",
+                              "name": "Successfully retrieved the CompositeResourceDefinition.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions/:name",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "apiextensions.crossplane.io",
+                                    "v1",
+                                    "compositeresourcedefinitions",
+                                    ":name"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"cupidatata6\": \"<string>\",\n      \"magna_f\": \"<string>\"\n    },\n    \"annotations\": {\n      \"deserunt_06a\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"spec\": {\n    \"group\": \"<string>\",\n    \"names\": {\n      \"kind\": \"<string>\",\n      \"plural\": \"<string>\",\n      \"singular\": \"<string>\",\n      \"shortNames\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"categories\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"claimNames\": {\n      \"kind\": \"<string>\",\n      \"plural\": \"<string>\"\n    },\n    \"connectionSecretKeys\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"defaultCompositionRef\": {\n      \"name\": \"<string>\"\n    },\n    \"enforcedCompositionRef\": {\n      \"name\": \"<string>\"\n    }\n  },\n  \"status\": {\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                              "createdAt": "2026-07-28T01:26:32.000Z",
+                              "updatedAt": "2026-07-28T01:26:32.000Z",
+                              "uid": "35240-678e319d-da03-4178-a950-0a80d90f34db"
+                            },
+                            {
+                              "id": "1f1534b0-d450-4625-8f6d-8f0635c4404c",
+                              "name": "Authentication credentials are missing or invalid.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions/:name",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "apiextensions.crossplane.io",
+                                    "v1",
+                                    "compositeresourcedefinitions",
+                                    ":name"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                              "createdAt": "2026-07-28T01:26:32.000Z",
+                              "updatedAt": "2026-07-28T01:26:32.000Z",
+                              "uid": "35240-1f1534b0-d450-4625-8f6d-8f0635c4404c"
+                            },
+                            {
+                              "id": "7d0e53ab-2fcf-435d-9b09-1a8d2e2ce02f",
+                              "name": "The requested resource was not found.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions/:name",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "apiextensions.crossplane.io",
+                                    "v1",
+                                    "compositeresourcedefinitions",
+                                    ":name"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                              "createdAt": "2026-07-28T01:26:32.000Z",
+                              "updatedAt": "2026-07-28T01:26:32.000Z",
+                              "uid": "35240-7d0e53ab-2fcf-435d-9b09-1a8d2e2ce02f"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T01:26:32.000Z",
+                          "updatedAt": "2026-07-28T01:26:32.000Z",
+                          "uid": "35240-21688fd9-5f78-4906-9b2e-1d6d9761406d"
+                        },
+                        {
+                          "name": "Crossplane Replace a CompositeResourceDefinition",
+                          "id": "fdf89066-5e7a-412e-b4c9-afb1f26da17d",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"cupidatata6\": \"<string>\",\n      \"magna_f\": \"<string>\"\n    },\n    \"annotations\": {\n      \"deserunt_06a\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"spec\": {\n    \"group\": \"<string>\",\n    \"names\": {\n      \"kind\": \"<string>\",\n      \"plural\": \"<string>\",\n      \"singular\": \"<string>\",\n      \"shortNames\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"categories\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"claimNames\": {\n      \"kind\": \"<string>\",\n      \"plural\": \"<string>\"\n    },\n    \"connectionSecretKeys\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"defaultCompositionRef\": {\n      \"name\": \"<string>\"\n    },\n    \"enforcedCompositionRef\": {\n      \"name\": \"<string>\"\n    }\n  },\n  \"status\": {\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions/:name",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "apis",
+                                "apiextensions.crossplane.io",
+                                "v1",
+                                "compositeresourcedefinitions",
+                                ":name"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "3b4ffb0c-936e-4e60-acbf-9748599b55d1",
+                                  "key": "name",
+                                  "value": "<string>",
+                                  "description": "(Required) Name of the Crossplane resource."
+                                }
+                              ]
+                            },
+                            "description": "Replaces a CompositeResourceDefinition. Crossplane will reconcile the new schema, updating existing CRDs and triggering re-composition of existing composite resources as needed."
+                          },
+                          "response": [
+                            {
+                              "id": "906f2d5b-695a-4a86-ae4e-f96d24f894f2",
+                              "name": "CompositeResourceDefinition successfully replaced.",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"cupidatata6\": \"<string>\",\n      \"magna_f\": \"<string>\"\n    },\n    \"annotations\": {\n      \"deserunt_06a\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"spec\": {\n    \"group\": \"<string>\",\n    \"names\": {\n      \"kind\": \"<string>\",\n      \"plural\": \"<string>\",\n      \"singular\": \"<string>\",\n      \"shortNames\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"categories\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"claimNames\": {\n      \"kind\": \"<string>\",\n      \"plural\": \"<string>\"\n    },\n    \"connectionSecretKeys\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"defaultCompositionRef\": {\n      \"name\": \"<string>\"\n    },\n    \"enforcedCompositionRef\": {\n      \"name\": \"<string>\"\n    }\n  },\n  \"status\": {\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions/:name",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "apiextensions.crossplane.io",
+                                    "v1",
+                                    "compositeresourcedefinitions",
+                                    ":name"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"cupidatata6\": \"<string>\",\n      \"magna_f\": \"<string>\"\n    },\n    \"annotations\": {\n      \"deserunt_06a\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"spec\": {\n    \"group\": \"<string>\",\n    \"names\": {\n      \"kind\": \"<string>\",\n      \"plural\": \"<string>\",\n      \"singular\": \"<string>\",\n      \"shortNames\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"categories\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"claimNames\": {\n      \"kind\": \"<string>\",\n      \"plural\": \"<string>\"\n    },\n    \"connectionSecretKeys\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"defaultCompositionRef\": {\n      \"name\": \"<string>\"\n    },\n    \"enforcedCompositionRef\": {\n      \"name\": \"<string>\"\n    }\n  },\n  \"status\": {\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                              "createdAt": "2026-07-28T01:26:32.000Z",
+                              "updatedAt": "2026-07-28T01:26:32.000Z",
+                              "uid": "35240-906f2d5b-695a-4a86-ae4e-f96d24f894f2"
+                            },
+                            {
+                              "id": "01c09742-a88e-497f-b6c6-4748be50dbf8",
+                              "name": "The request was malformed or failed validation.",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"cupidatata6\": \"<string>\",\n      \"magna_f\": \"<string>\"\n    },\n    \"annotations\": {\n      \"deserunt_06a\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"spec\": {\n    \"group\": \"<string>\",\n    \"names\": {\n      \"kind\": \"<string>\",\n      \"plural\": \"<string>\",\n      \"singular\": \"<string>\",\n      \"shortNames\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"categories\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"claimNames\": {\n      \"kind\": \"<string>\",\n      \"plural\": \"<string>\"\n    },\n    \"connectionSecretKeys\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"defaultCompositionRef\": {\n      \"name\": \"<string>\"\n    },\n    \"enforcedCompositionRef\": {\n      \"name\": \"<string>\"\n    }\n  },\n  \"status\": {\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions/:name",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "apiextensions.crossplane.io",
+                                    "v1",
+                                    "compositeresourcedefinitions",
+                                    ":name"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Bad Request",
+                              "code": 400,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                              "createdAt": "2026-07-28T01:26:32.000Z",
+                              "updatedAt": "2026-07-28T01:26:32.000Z",
+                              "uid": "35240-01c09742-a88e-497f-b6c6-4748be50dbf8"
+                            },
+                            {
+                              "id": "b4517e54-a911-426b-9d13-d2677626d58b",
+                              "name": "Authentication credentials are missing or invalid.",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"cupidatata6\": \"<string>\",\n      \"magna_f\": \"<string>\"\n    },\n    \"annotations\": {\n      \"deserunt_06a\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"spec\": {\n    \"group\": \"<string>\",\n    \"names\": {\n      \"kind\": \"<string>\",\n      \"plural\": \"<string>\",\n      \"singular\": \"<string>\",\n      \"shortNames\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"categories\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"claimNames\": {\n      \"kind\": \"<string>\",\n      \"plural\": \"<string>\"\n    },\n    \"connectionSecretKeys\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"defaultCompositionRef\": {\n      \"name\": \"<string>\"\n    },\n    \"enforcedCompositionRef\": {\n      \"name\": \"<string>\"\n    }\n  },\n  \"status\": {\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions/:name",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "apiextensions.crossplane.io",
+                                    "v1",
+                                    "compositeresourcedefinitions",
+                                    ":name"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                              "createdAt": "2026-07-28T01:26:32.000Z",
+                              "updatedAt": "2026-07-28T01:26:32.000Z",
+                              "uid": "35240-b4517e54-a911-426b-9d13-d2677626d58b"
+                            },
+                            {
+                              "id": "659aa83a-78ea-468b-8a40-e14612104104",
+                              "name": "The requested resource was not found.",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"cupidatata6\": \"<string>\",\n      \"magna_f\": \"<string>\"\n    },\n    \"annotations\": {\n      \"deserunt_06a\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"spec\": {\n    \"group\": \"<string>\",\n    \"names\": {\n      \"kind\": \"<string>\",\n      \"plural\": \"<string>\",\n      \"singular\": \"<string>\",\n      \"shortNames\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"categories\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"claimNames\": {\n      \"kind\": \"<string>\",\n      \"plural\": \"<string>\"\n    },\n    \"connectionSecretKeys\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"defaultCompositionRef\": {\n      \"name\": \"<string>\"\n    },\n    \"enforcedCompositionRef\": {\n      \"name\": \"<string>\"\n    }\n  },\n  \"status\": {\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions/:name",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "apiextensions.crossplane.io",
+                                    "v1",
+                                    "compositeresourcedefinitions",
+                                    ":name"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                              "createdAt": "2026-07-28T01:26:32.000Z",
+                              "updatedAt": "2026-07-28T01:26:32.000Z",
+                              "uid": "35240-659aa83a-78ea-468b-8a40-e14612104104"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T01:26:32.000Z",
+                          "updatedAt": "2026-07-28T01:26:32.000Z",
+                          "uid": "35240-fdf89066-5e7a-412e-b4c9-afb1f26da17d"
+                        },
+                        {
+                          "name": "Crossplane Delete a CompositeResourceDefinition",
+                          "id": "5b15cffc-a5fc-4d3e-9fab-5f21e1210686",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions/:name",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "apis",
+                                "apiextensions.crossplane.io",
+                                "v1",
+                                "compositeresourcedefinitions",
+                                ":name"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "56127bf2-6ab7-408e-b985-883b493c1eba",
+                                  "key": "name",
+                                  "value": "<string>",
+                                  "description": "(Required) Name of the Crossplane resource."
+                                }
+                              ]
+                            },
+                            "description": "Deletes a CompositeResourceDefinition. Crossplane will remove the associated CRDs and all existing composite resources of that type if no finalizers prevent deletion."
+                          },
+                          "response": [
+                            {
+                              "id": "38c4b826-917d-45e1-90b5-03ca49b27aa5",
+                              "name": "CompositeResourceDefinition deletion initiated.",
+                              "originalRequest": {
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions/:name",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "apiextensions.crossplane.io",
+                                    "v1",
+                                    "compositeresourcedefinitions",
+                                    ":name"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                              "createdAt": "2026-07-28T01:26:32.000Z",
+                              "updatedAt": "2026-07-28T01:26:32.000Z",
+                              "uid": "35240-38c4b826-917d-45e1-90b5-03ca49b27aa5"
+                            },
+                            {
+                              "id": "32b328b8-1f84-45ad-919b-5ad20f86c434",
+                              "name": "Authentication credentials are missing or invalid.",
+                              "originalRequest": {
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions/:name",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "apiextensions.crossplane.io",
+                                    "v1",
+                                    "compositeresourcedefinitions",
+                                    ":name"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                              "createdAt": "2026-07-28T01:26:32.000Z",
+                              "updatedAt": "2026-07-28T01:26:32.000Z",
+                              "uid": "35240-32b328b8-1f84-45ad-919b-5ad20f86c434"
+                            },
+                            {
+                              "id": "3d5ad98d-b179-40c8-9142-7cafd554e2e4",
+                              "name": "The requested resource was not found.",
+                              "originalRequest": {
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions/:name",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "apiextensions.crossplane.io",
+                                    "v1",
+                                    "compositeresourcedefinitions",
+                                    ":name"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                              "createdAt": "2026-07-28T01:26:32.000Z",
+                              "updatedAt": "2026-07-28T01:26:32.000Z",
+                              "uid": "35240-3d5ad98d-b179-40c8-9142-7cafd554e2e4"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T01:26:32.000Z",
+                          "updatedAt": "2026-07-28T01:26:32.000Z",
+                          "uid": "35240-5b15cffc-a5fc-4d3e-9fab-5f21e1210686"
+                        }
+                      ],
+                      "id": "798c36b4-001c-4b62-aa11-d85881b9b7eb",
+                      "createdAt": "2026-07-28T01:26:32.000Z",
+                      "updatedAt": "2026-07-28T01:26:32.000Z",
+                      "uid": "35240-798c36b4-001c-4b62-aa11-d85881b9b7eb"
+                    },
+                    {
+                      "name": "Crossplane List CompositeResourceDefinitions",
+                      "id": "08944f23-e041-41f5-9d57-40220ddf7549",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions?labelSelector=<string>&limit=<integer>&continue=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "apis",
+                            "apiextensions.crossplane.io",
+                            "v1",
+                            "compositeresourcedefinitions"
+                          ],
+                          "query": [
+                            {
+                              "description": "A selector to restrict the list of returned objects by their labels. Defaults to everything.",
+                              "key": "labelSelector",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Maximum number of items to return in a single response. The server may return fewer items than requested. Use the continue token for pagination.",
+                              "key": "limit",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time.",
+                              "key": "continue",
+                              "value": "<string>"
+                            }
+                          ]
+                        },
+                        "description": "Returns a list of all CompositeResourceDefinition (XRD) resources. Each XRD defines the schema for a new composite resource type and optionally a claim type that will be installed as Kubernetes CRDs."
+                      },
+                      "response": [
+                        {
+                          "id": "f18e001a-ebb8-461b-a4aa-b3bd8711660b",
+                          "name": "Successfully listed CompositeResourceDefinitions.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions?labelSelector=<string>&limit=<integer>&continue=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "apis",
+                                "apiextensions.crossplane.io",
+                                "v1",
+                                "compositeresourcedefinitions"
+                              ],
+                              "query": [
+                                {
+                                  "description": "A selector to restrict the list of returned objects by their labels. Defaults to everything.",
+                                  "key": "labelSelector",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Maximum number of items to return in a single response. The server may return fewer items than requested. Use the continue token for pagination.",
+                                  "key": "limit",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time.",
+                                  "key": "continue",
+                                  "value": "<string>"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"items\": [\n    {\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\",\n      \"metadata\": {\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\",\n        \"labels\": {\n          \"do1\": \"<string>\"\n        },\n        \"annotations\": {\n          \"laboris__2d\": \"<string>\",\n          \"eu2_1\": \"<string>\"\n        },\n        \"resourceVersion\": \"<string>\",\n        \"uid\": \"<string>\",\n        \"generation\": \"<integer>\",\n        \"creationTimestamp\": \"<dateTime>\",\n        \"deletionTimestamp\": \"<dateTime>\",\n        \"finalizers\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"spec\": {\n        \"group\": \"<string>\",\n        \"names\": {\n          \"kind\": \"<string>\",\n          \"plural\": \"<string>\",\n          \"singular\": \"<string>\",\n          \"shortNames\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"categories\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        \"claimNames\": {\n          \"kind\": \"<string>\",\n          \"plural\": \"<string>\"\n        },\n        \"connectionSecretKeys\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"defaultCompositionRef\": {\n          \"name\": \"<string>\"\n        },\n        \"enforcedCompositionRef\": {\n          \"name\": \"<string>\"\n        }\n      },\n      \"status\": {\n        \"conditions\": [\n          {\n            \"type\": \"<string>\",\n            \"status\": \"False\",\n            \"reason\": \"<string>\",\n            \"message\": \"<string>\",\n            \"lastTransitionTime\": \"<dateTime>\"\n          },\n          {\n            \"type\": \"<string>\",\n            \"status\": \"True\",\n            \"reason\": \"<string>\",\n            \"message\": \"<string>\",\n            \"lastTransitionTime\": \"<dateTime>\"\n          }\n        ]\n      }\n    },\n    {\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\",\n      \"metadata\": {\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\",\n        \"labels\": {\n          \"ad19\": \"<string>\",\n          \"reprehenderit623\": \"<string>\"\n        },\n        \"annotations\": {\n          \"Duisb79\": \"<string>\"\n        },\n        \"resourceVersion\": \"<string>\",\n        \"uid\": \"<string>\",\n        \"generation\": \"<integer>\",\n        \"creationTimestamp\": \"<dateTime>\",\n        \"deletionTimestamp\": \"<dateTime>\",\n        \"finalizers\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"spec\": {\n        \"group\": \"<string>\",\n        \"names\": {\n          \"kind\": \"<string>\",\n          \"plural\": \"<string>\",\n          \"singular\": \"<string>\",\n          \"shortNames\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"categories\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        \"claimNames\": {\n          \"kind\": \"<string>\",\n          \"plural\": \"<string>\"\n        },\n        \"connectionSecretKeys\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"defaultCompositionRef\": {\n          \"name\": \"<string>\"\n        },\n        \"enforcedCompositionRef\": {\n          \"name\": \"<string>\"\n        }\n      },\n      \"status\": {\n        \"conditions\": [\n          {\n            \"type\": \"<string>\",\n            \"status\": \"Unknown\",\n            \"reason\": \"<string>\",\n            \"message\": \"<string>\",\n            \"lastTransitionTime\": \"<dateTime>\"\n          },\n          {\n            \"type\": \"<string>\",\n            \"status\": \"True\",\n            \"reason\": \"<string>\",\n            \"message\": \"<string>\",\n            \"lastTransitionTime\": \"<dateTime>\"\n          }\n        ]\n      }\n    }\n  ],\n  \"metadata\": {\n    \"resourceVersion\": \"<string>\",\n    \"continue\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T01:26:32.000Z",
+                          "updatedAt": "2026-07-28T01:26:32.000Z",
+                          "uid": "35240-f18e001a-ebb8-461b-a4aa-b3bd8711660b"
+                        },
+                        {
+                          "id": "0910b19a-5a65-4312-82b4-73e6f3964d4e",
+                          "name": "Authentication credentials are missing or invalid.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions?labelSelector=<string>&limit=<integer>&continue=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "apis",
+                                "apiextensions.crossplane.io",
+                                "v1",
+                                "compositeresourcedefinitions"
+                              ],
+                              "query": [
+                                {
+                                  "description": "A selector to restrict the list of returned objects by their labels. Defaults to everything.",
+                                  "key": "labelSelector",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Maximum number of items to return in a single response. The server may return fewer items than requested. Use the continue token for pagination.",
+                                  "key": "limit",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time.",
+                                  "key": "continue",
+                                  "value": "<string>"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                          "createdAt": "2026-07-28T01:26:32.000Z",
+                          "updatedAt": "2026-07-28T01:26:32.000Z",
+                          "uid": "35240-0910b19a-5a65-4312-82b4-73e6f3964d4e"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T01:26:32.000Z",
+                      "updatedAt": "2026-07-28T01:26:32.000Z",
+                      "uid": "35240-08944f23-e041-41f5-9d57-40220ddf7549"
+                    },
+                    {
+                      "name": "Crossplane Create a CompositeResourceDefinition",
+                      "id": "bb3b2252-1243-455e-ab62-4a4c3a44ed00",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"cupidatata6\": \"<string>\",\n      \"magna_f\": \"<string>\"\n    },\n    \"annotations\": {\n      \"deserunt_06a\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"spec\": {\n    \"group\": \"<string>\",\n    \"names\": {\n      \"kind\": \"<string>\",\n      \"plural\": \"<string>\",\n      \"singular\": \"<string>\",\n      \"shortNames\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"categories\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"claimNames\": {\n      \"kind\": \"<string>\",\n      \"plural\": \"<string>\"\n    },\n    \"connectionSecretKeys\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"defaultCompositionRef\": {\n      \"name\": \"<string>\"\n    },\n    \"enforcedCompositionRef\": {\n      \"name\": \"<string>\"\n    }\n  },\n  \"status\": {\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "apis",
+                            "apiextensions.crossplane.io",
+                            "v1",
+                            "compositeresourcedefinitions"
+                          ]
+                        },
+                        "description": "Creates a new CompositeResourceDefinition. Upon creation, Crossplane installs corresponding CRDs and begins serving the new composite resource API. If claimNames are specified, a namespaced claim CRD is also installed."
+                      },
+                      "response": [
+                        {
+                          "id": "a824385b-6b52-4181-825b-a5e0822de1da",
+                          "name": "CompositeResourceDefinition successfully created.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"cupidatata6\": \"<string>\",\n      \"magna_f\": \"<string>\"\n    },\n    \"annotations\": {\n      \"deserunt_06a\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"spec\": {\n    \"group\": \"<string>\",\n    \"names\": {\n      \"kind\": \"<string>\",\n      \"plural\": \"<string>\",\n      \"singular\": \"<string>\",\n      \"shortNames\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"categories\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"claimNames\": {\n      \"kind\": \"<string>\",\n      \"plural\": \"<string>\"\n    },\n    \"connectionSecretKeys\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"defaultCompositionRef\": {\n      \"name\": \"<string>\"\n    },\n    \"enforcedCompositionRef\": {\n      \"name\": \"<string>\"\n    }\n  },\n  \"status\": {\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "apis",
+                                "apiextensions.crossplane.io",
+                                "v1",
+                                "compositeresourcedefinitions"
+                              ]
+                            }
+                          },
+                          "status": "Created",
+                          "code": 201,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"cupidatata6\": \"<string>\",\n      \"magna_f\": \"<string>\"\n    },\n    \"annotations\": {\n      \"deserunt_06a\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"spec\": {\n    \"group\": \"<string>\",\n    \"names\": {\n      \"kind\": \"<string>\",\n      \"plural\": \"<string>\",\n      \"singular\": \"<string>\",\n      \"shortNames\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"categories\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"claimNames\": {\n      \"kind\": \"<string>\",\n      \"plural\": \"<string>\"\n    },\n    \"connectionSecretKeys\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"defaultCompositionRef\": {\n      \"name\": \"<string>\"\n    },\n    \"enforcedCompositionRef\": {\n      \"name\": \"<string>\"\n    }\n  },\n  \"status\": {\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                          "createdAt": "2026-07-28T01:26:32.000Z",
+                          "updatedAt": "2026-07-28T01:26:32.000Z",
+                          "uid": "35240-a824385b-6b52-4181-825b-a5e0822de1da"
+                        },
+                        {
+                          "id": "40bdee09-f4d8-4a81-a25f-f338b573e0f3",
+                          "name": "The request was malformed or failed validation.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"cupidatata6\": \"<string>\",\n      \"magna_f\": \"<string>\"\n    },\n    \"annotations\": {\n      \"deserunt_06a\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"spec\": {\n    \"group\": \"<string>\",\n    \"names\": {\n      \"kind\": \"<string>\",\n      \"plural\": \"<string>\",\n      \"singular\": \"<string>\",\n      \"shortNames\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"categories\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"claimNames\": {\n      \"kind\": \"<string>\",\n      \"plural\": \"<string>\"\n    },\n    \"connectionSecretKeys\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"defaultCompositionRef\": {\n      \"name\": \"<string>\"\n    },\n    \"enforcedCompositionRef\": {\n      \"name\": \"<string>\"\n    }\n  },\n  \"status\": {\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "apis",
+                                "apiextensions.crossplane.io",
+                                "v1",
+                                "compositeresourcedefinitions"
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                          "createdAt": "2026-07-28T01:26:32.000Z",
+                          "updatedAt": "2026-07-28T01:26:32.000Z",
+                          "uid": "35240-40bdee09-f4d8-4a81-a25f-f338b573e0f3"
+                        },
+                        {
+                          "id": "b7696f6b-c7e8-481a-b3ad-5634ee9c08f4",
+                          "name": "Authentication credentials are missing or invalid.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"cupidatata6\": \"<string>\",\n      \"magna_f\": \"<string>\"\n    },\n    \"annotations\": {\n      \"deserunt_06a\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"spec\": {\n    \"group\": \"<string>\",\n    \"names\": {\n      \"kind\": \"<string>\",\n      \"plural\": \"<string>\",\n      \"singular\": \"<string>\",\n      \"shortNames\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"categories\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"claimNames\": {\n      \"kind\": \"<string>\",\n      \"plural\": \"<string>\"\n    },\n    \"connectionSecretKeys\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"defaultCompositionRef\": {\n      \"name\": \"<string>\"\n    },\n    \"enforcedCompositionRef\": {\n      \"name\": \"<string>\"\n    }\n  },\n  \"status\": {\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "apis",
+                                "apiextensions.crossplane.io",
+                                "v1",
+                                "compositeresourcedefinitions"
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                          "createdAt": "2026-07-28T01:26:32.000Z",
+                          "updatedAt": "2026-07-28T01:26:32.000Z",
+                          "uid": "35240-b7696f6b-c7e8-481a-b3ad-5634ee9c08f4"
+                        },
+                        {
+                          "id": "e72d5f44-3331-4e9b-90ea-3827067e11e5",
+                          "name": "A resource with this name already exists.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"cupidatata6\": \"<string>\",\n      \"magna_f\": \"<string>\"\n    },\n    \"annotations\": {\n      \"deserunt_06a\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"spec\": {\n    \"group\": \"<string>\",\n    \"names\": {\n      \"kind\": \"<string>\",\n      \"plural\": \"<string>\",\n      \"singular\": \"<string>\",\n      \"shortNames\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"categories\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"claimNames\": {\n      \"kind\": \"<string>\",\n      \"plural\": \"<string>\"\n    },\n    \"connectionSecretKeys\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"defaultCompositionRef\": {\n      \"name\": \"<string>\"\n    },\n    \"enforcedCompositionRef\": {\n      \"name\": \"<string>\"\n    }\n  },\n  \"status\": {\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "apis",
+                                "apiextensions.crossplane.io",
+                                "v1",
+                                "compositeresourcedefinitions"
+                              ]
+                            }
+                          },
+                          "status": "Conflict",
+                          "code": 409,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                          "createdAt": "2026-07-28T01:26:32.000Z",
+                          "updatedAt": "2026-07-28T01:26:32.000Z",
+                          "uid": "35240-e72d5f44-3331-4e9b-90ea-3827067e11e5"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T01:26:32.000Z",
+                      "updatedAt": "2026-07-28T01:26:32.000Z",
+                      "uid": "35240-bb3b2252-1243-455e-ab62-4a4c3a44ed00"
+                    }
+                  ],
+                  "id": "2306f819-3540-48d7-b357-53bb30758875",
+                  "createdAt": "2026-07-28T01:26:32.000Z",
+                  "updatedAt": "2026-07-28T01:26:32.000Z",
+                  "uid": "35240-2306f819-3540-48d7-b357-53bb30758875"
+                }
+              ],
+              "id": "9c899392-ab91-4555-ae54-6821e11fe7ac",
+              "createdAt": "2026-07-28T01:26:32.000Z",
+              "updatedAt": "2026-07-28T01:26:32.000Z",
+              "uid": "35240-9c899392-ab91-4555-ae54-6821e11fe7ac"
+            }
+          ],
+          "id": "5fe9e71d-cd3f-4f38-b353-1b39a17d3ac0",
+          "createdAt": "2026-07-28T01:26:32.000Z",
+          "updatedAt": "2026-07-28T01:26:32.000Z",
+          "uid": "35240-5fe9e71d-cd3f-4f38-b353-1b39a17d3ac0"
+        }
+      ],
+      "id": "4d4f2a7f-073f-4723-94bc-fdca32ca8e83",
+      "createdAt": "2026-07-28T01:26:32.000Z",
+      "updatedAt": "2026-07-28T01:26:32.000Z",
+      "uid": "35240-4d4f2a7f-073f-4723-94bc-fdca32ca8e83"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://kubernetes.default.svc"
+    }
+  ]
+}

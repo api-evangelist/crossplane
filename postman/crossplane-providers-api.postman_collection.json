@@ -1,0 +1,1243 @@
+{
+  "info": {
+    "_postman_id": "655e4451-b21d-4f36-b6d5-475ae545b37f",
+    "name": "Crossplane Kubernetes CompositeResourceDefinitions Providers API",
+    "description": "The Crossplane Kubernetes API extends the Kubernetes API server with custom resources for managing cloud infrastructure declaratively. Resources are organized into two main API groups: apiextensions.crossplane.io for composition primitives (Compositions, CompositeResourceDefinitions, EnvironmentConfigs) and pkg.crossplane.io for package management (Providers, Functions, Configurations and their revisions). All operations use standard Kubernetes REST conventions and are authenticated through the Kubernetes API server's authentication mechanisms.\n\nContact Support:\n Name: Crossplane Community",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:26:39.000Z",
+    "updatedAt": "2026-07-28T01:26:39.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-655e4451-b21d-4f36-b6d5-475ae545b37f"
+  },
+  "item": [
+    {
+      "name": "apis",
+      "item": [
+        {
+          "name": "pkg.crossplane.io",
+          "item": [
+            {
+              "name": "v1",
+              "item": [
+                {
+                  "name": "providers",
+                  "item": [
+                    {
+                      "name": "{name}",
+                      "item": [
+                        {
+                          "name": "Crossplane Get a Provider",
+                          "id": "d3b60221-5e55-41a7-a025-eb80d94976a7",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1/providers/:name",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "apis",
+                                "pkg.crossplane.io",
+                                "v1",
+                                "providers",
+                                ":name"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "66172912-bf91-42c5-9739-132b0c5224b9",
+                                  "key": "name",
+                                  "value": "<string>",
+                                  "description": "(Required) Name of the Crossplane resource."
+                                }
+                              ]
+                            },
+                            "description": "Returns details of a specific Provider, including its package reference, revision activation policy, and status conditions reflecting whether the provider is healthy and all CRDs are installed."
+                          },
+                          "response": [
+                            {
+                              "id": "fe1039d6-cdfa-496e-8001-59f42c8c883f",
+                              "name": "Successfully retrieved the Provider.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1/providers/:name",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "pkg.crossplane.io",
+                                    "v1",
+                                    "providers",
+                                    ":name"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"inbf\": \"<string>\"\n    },\n    \"annotations\": {\n      \"est68_\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"spec\": {\n    \"package\": \"<string>\",\n    \"packagePullPolicy\": \"Always\",\n    \"packagePullSecrets\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"revisionActivationPolicy\": \"Automatic\",\n    \"revisionHistoryLimit\": \"<integer>\",\n    \"runtimeConfigRef\": {\n      \"name\": \"<string>\",\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\"\n    }\n  },\n  \"status\": {\n    \"currentRevision\": \"<string>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                              "createdAt": "2026-07-28T01:26:39.000Z",
+                              "updatedAt": "2026-07-28T01:26:39.000Z",
+                              "uid": "35240-fe1039d6-cdfa-496e-8001-59f42c8c883f"
+                            },
+                            {
+                              "id": "c31a4caa-7c7e-43c1-a319-f77df768a423",
+                              "name": "Authentication credentials are missing or invalid.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1/providers/:name",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "pkg.crossplane.io",
+                                    "v1",
+                                    "providers",
+                                    ":name"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                              "createdAt": "2026-07-28T01:26:39.000Z",
+                              "updatedAt": "2026-07-28T01:26:39.000Z",
+                              "uid": "35240-c31a4caa-7c7e-43c1-a319-f77df768a423"
+                            },
+                            {
+                              "id": "8f2015e8-d879-4f68-9c2b-ff2096284911",
+                              "name": "The requested resource was not found.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1/providers/:name",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "pkg.crossplane.io",
+                                    "v1",
+                                    "providers",
+                                    ":name"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                              "createdAt": "2026-07-28T01:26:39.000Z",
+                              "updatedAt": "2026-07-28T01:26:39.000Z",
+                              "uid": "35240-8f2015e8-d879-4f68-9c2b-ff2096284911"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T01:26:39.000Z",
+                          "updatedAt": "2026-07-28T01:26:39.000Z",
+                          "uid": "35240-d3b60221-5e55-41a7-a025-eb80d94976a7"
+                        },
+                        {
+                          "name": "Crossplane Update a Provider",
+                          "id": "d08a7f42-4d4e-4378-93a0-f3e9d9e01008",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"inbf\": \"<string>\"\n    },\n    \"annotations\": {\n      \"est68_\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"spec\": {\n    \"package\": \"<string>\",\n    \"packagePullPolicy\": \"Always\",\n    \"packagePullSecrets\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"revisionActivationPolicy\": \"Automatic\",\n    \"revisionHistoryLimit\": \"<integer>\",\n    \"runtimeConfigRef\": {\n      \"name\": \"<string>\",\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\"\n    }\n  },\n  \"status\": {\n    \"currentRevision\": \"<string>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1/providers/:name",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "apis",
+                                "pkg.crossplane.io",
+                                "v1",
+                                "providers",
+                                ":name"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "65c0b6b1-99c6-4ec4-9f65-76edd22c47a4",
+                                  "key": "name",
+                                  "value": "<string>",
+                                  "description": "(Required) Name of the Crossplane resource."
+                                }
+                              ]
+                            },
+                            "description": "Replaces a Provider resource, typically to update the package image reference to a new version. Crossplane creates a new ProviderRevision and activates it according to the revisionActivationPolicy."
+                          },
+                          "response": [
+                            {
+                              "id": "cdb8e429-2357-4bcc-8671-5982d1cbde98",
+                              "name": "Provider successfully updated.",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"inbf\": \"<string>\"\n    },\n    \"annotations\": {\n      \"est68_\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"spec\": {\n    \"package\": \"<string>\",\n    \"packagePullPolicy\": \"Always\",\n    \"packagePullSecrets\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"revisionActivationPolicy\": \"Automatic\",\n    \"revisionHistoryLimit\": \"<integer>\",\n    \"runtimeConfigRef\": {\n      \"name\": \"<string>\",\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\"\n    }\n  },\n  \"status\": {\n    \"currentRevision\": \"<string>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1/providers/:name",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "pkg.crossplane.io",
+                                    "v1",
+                                    "providers",
+                                    ":name"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"inbf\": \"<string>\"\n    },\n    \"annotations\": {\n      \"est68_\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"spec\": {\n    \"package\": \"<string>\",\n    \"packagePullPolicy\": \"Always\",\n    \"packagePullSecrets\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"revisionActivationPolicy\": \"Automatic\",\n    \"revisionHistoryLimit\": \"<integer>\",\n    \"runtimeConfigRef\": {\n      \"name\": \"<string>\",\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\"\n    }\n  },\n  \"status\": {\n    \"currentRevision\": \"<string>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                              "createdAt": "2026-07-28T01:26:39.000Z",
+                              "updatedAt": "2026-07-28T01:26:39.000Z",
+                              "uid": "35240-cdb8e429-2357-4bcc-8671-5982d1cbde98"
+                            },
+                            {
+                              "id": "c184b646-0ecd-43ed-9cc1-619264bc7d97",
+                              "name": "The request was malformed or failed validation.",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"inbf\": \"<string>\"\n    },\n    \"annotations\": {\n      \"est68_\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"spec\": {\n    \"package\": \"<string>\",\n    \"packagePullPolicy\": \"Always\",\n    \"packagePullSecrets\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"revisionActivationPolicy\": \"Automatic\",\n    \"revisionHistoryLimit\": \"<integer>\",\n    \"runtimeConfigRef\": {\n      \"name\": \"<string>\",\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\"\n    }\n  },\n  \"status\": {\n    \"currentRevision\": \"<string>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1/providers/:name",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "pkg.crossplane.io",
+                                    "v1",
+                                    "providers",
+                                    ":name"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Bad Request",
+                              "code": 400,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                              "createdAt": "2026-07-28T01:26:39.000Z",
+                              "updatedAt": "2026-07-28T01:26:39.000Z",
+                              "uid": "35240-c184b646-0ecd-43ed-9cc1-619264bc7d97"
+                            },
+                            {
+                              "id": "3fe37bfd-e801-4fad-b2e0-6850077e417e",
+                              "name": "Authentication credentials are missing or invalid.",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"inbf\": \"<string>\"\n    },\n    \"annotations\": {\n      \"est68_\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"spec\": {\n    \"package\": \"<string>\",\n    \"packagePullPolicy\": \"Always\",\n    \"packagePullSecrets\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"revisionActivationPolicy\": \"Automatic\",\n    \"revisionHistoryLimit\": \"<integer>\",\n    \"runtimeConfigRef\": {\n      \"name\": \"<string>\",\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\"\n    }\n  },\n  \"status\": {\n    \"currentRevision\": \"<string>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1/providers/:name",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "pkg.crossplane.io",
+                                    "v1",
+                                    "providers",
+                                    ":name"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                              "createdAt": "2026-07-28T01:26:39.000Z",
+                              "updatedAt": "2026-07-28T01:26:39.000Z",
+                              "uid": "35240-3fe37bfd-e801-4fad-b2e0-6850077e417e"
+                            },
+                            {
+                              "id": "19e115d5-ad07-45c4-a87b-bc0a561dd832",
+                              "name": "The requested resource was not found.",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"inbf\": \"<string>\"\n    },\n    \"annotations\": {\n      \"est68_\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"spec\": {\n    \"package\": \"<string>\",\n    \"packagePullPolicy\": \"Always\",\n    \"packagePullSecrets\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"revisionActivationPolicy\": \"Automatic\",\n    \"revisionHistoryLimit\": \"<integer>\",\n    \"runtimeConfigRef\": {\n      \"name\": \"<string>\",\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\"\n    }\n  },\n  \"status\": {\n    \"currentRevision\": \"<string>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1/providers/:name",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "pkg.crossplane.io",
+                                    "v1",
+                                    "providers",
+                                    ":name"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                              "createdAt": "2026-07-28T01:26:39.000Z",
+                              "updatedAt": "2026-07-28T01:26:39.000Z",
+                              "uid": "35240-19e115d5-ad07-45c4-a87b-bc0a561dd832"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T01:26:39.000Z",
+                          "updatedAt": "2026-07-28T01:26:39.000Z",
+                          "uid": "35240-d08a7f42-4d4e-4378-93a0-f3e9d9e01008"
+                        },
+                        {
+                          "name": "Crossplane Uninstall a Provider",
+                          "id": "721da603-fbc8-46e5-a62a-0570eaa2e63a",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1/providers/:name",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "apis",
+                                "pkg.crossplane.io",
+                                "v1",
+                                "providers",
+                                ":name"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "4a116c6d-bd9c-4726-b201-61fd32011592",
+                                  "key": "name",
+                                  "value": "<string>",
+                                  "description": "(Required) Name of the Crossplane resource."
+                                }
+                              ]
+                            },
+                            "description": "Removes a Provider installation. Crossplane will delete the provider controller and CRDs. Existing managed resources will be orphaned unless deleted first."
+                          },
+                          "response": [
+                            {
+                              "id": "1cfbb0a2-b4d9-47f1-8b22-6521cf21dc1a",
+                              "name": "Provider uninstallation initiated.",
+                              "originalRequest": {
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1/providers/:name",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "pkg.crossplane.io",
+                                    "v1",
+                                    "providers",
+                                    ":name"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                              "createdAt": "2026-07-28T01:26:39.000Z",
+                              "updatedAt": "2026-07-28T01:26:39.000Z",
+                              "uid": "35240-1cfbb0a2-b4d9-47f1-8b22-6521cf21dc1a"
+                            },
+                            {
+                              "id": "2d34618c-fa67-42a7-be4f-a3c5204fde89",
+                              "name": "Authentication credentials are missing or invalid.",
+                              "originalRequest": {
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1/providers/:name",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "pkg.crossplane.io",
+                                    "v1",
+                                    "providers",
+                                    ":name"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                              "createdAt": "2026-07-28T01:26:39.000Z",
+                              "updatedAt": "2026-07-28T01:26:39.000Z",
+                              "uid": "35240-2d34618c-fa67-42a7-be4f-a3c5204fde89"
+                            },
+                            {
+                              "id": "ae72f491-1c19-4e10-ace7-b3b30dda0965",
+                              "name": "The requested resource was not found.",
+                              "originalRequest": {
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1/providers/:name",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "pkg.crossplane.io",
+                                    "v1",
+                                    "providers",
+                                    ":name"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                              "createdAt": "2026-07-28T01:26:39.000Z",
+                              "updatedAt": "2026-07-28T01:26:39.000Z",
+                              "uid": "35240-ae72f491-1c19-4e10-ace7-b3b30dda0965"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T01:26:39.000Z",
+                          "updatedAt": "2026-07-28T01:26:39.000Z",
+                          "uid": "35240-721da603-fbc8-46e5-a62a-0570eaa2e63a"
+                        }
+                      ],
+                      "id": "470823d1-3926-4f49-b53d-c105fbab3e58",
+                      "createdAt": "2026-07-28T01:26:39.000Z",
+                      "updatedAt": "2026-07-28T01:26:39.000Z",
+                      "uid": "35240-470823d1-3926-4f49-b53d-c105fbab3e58"
+                    },
+                    {
+                      "name": "Crossplane List Providers",
+                      "id": "2a062b19-98a7-42da-a523-4f2733a93a48",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1/providers?labelSelector=<string>&limit=<integer>&continue=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "apis",
+                            "pkg.crossplane.io",
+                            "v1",
+                            "providers"
+                          ],
+                          "query": [
+                            {
+                              "description": "A selector to restrict the list of returned objects by their labels. Defaults to everything.",
+                              "key": "labelSelector",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Maximum number of items to return in a single response. The server may return fewer items than requested. Use the continue token for pagination.",
+                              "key": "limit",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time.",
+                              "key": "continue",
+                              "value": "<string>"
+                            }
+                          ]
+                        },
+                        "description": "Returns a list of all Provider package installations. Each Provider installs a set of managed resource CRDs and a controller that reconciles those resources against a specific infrastructure platform."
+                      },
+                      "response": [
+                        {
+                          "id": "613208c5-1611-4dc0-af9a-2575613ffaa9",
+                          "name": "Successfully listed Providers.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1/providers?labelSelector=<string>&limit=<integer>&continue=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "apis",
+                                "pkg.crossplane.io",
+                                "v1",
+                                "providers"
+                              ],
+                              "query": [
+                                {
+                                  "description": "A selector to restrict the list of returned objects by their labels. Defaults to everything.",
+                                  "key": "labelSelector",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Maximum number of items to return in a single response. The server may return fewer items than requested. Use the continue token for pagination.",
+                                  "key": "limit",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time.",
+                                  "key": "continue",
+                                  "value": "<string>"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"items\": [\n    {\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\",\n      \"metadata\": {\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\",\n        \"labels\": {\n          \"labore_0\": \"<string>\",\n          \"qui_3\": \"<string>\"\n        },\n        \"annotations\": {\n          \"tempor4e\": \"<string>\"\n        },\n        \"resourceVersion\": \"<string>\",\n        \"uid\": \"<string>\",\n        \"generation\": \"<integer>\",\n        \"creationTimestamp\": \"<dateTime>\",\n        \"deletionTimestamp\": \"<dateTime>\",\n        \"finalizers\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"spec\": {\n        \"package\": \"<string>\",\n        \"packagePullPolicy\": \"IfNotPresent\",\n        \"packagePullSecrets\": [\n          {\n            \"name\": \"<string>\"\n          },\n          {\n            \"name\": \"<string>\"\n          }\n        ],\n        \"revisionActivationPolicy\": \"Manual\",\n        \"revisionHistoryLimit\": \"<integer>\",\n        \"runtimeConfigRef\": {\n          \"name\": \"<string>\",\n          \"apiVersion\": \"<string>\",\n          \"kind\": \"<string>\"\n        }\n      },\n      \"status\": {\n        \"currentRevision\": \"<string>\",\n        \"conditions\": [\n          {\n            \"type\": \"<string>\",\n            \"status\": \"True\",\n            \"reason\": \"<string>\",\n            \"message\": \"<string>\",\n            \"lastTransitionTime\": \"<dateTime>\"\n          },\n          {\n            \"type\": \"<string>\",\n            \"status\": \"False\",\n            \"reason\": \"<string>\",\n            \"message\": \"<string>\",\n            \"lastTransitionTime\": \"<dateTime>\"\n          }\n        ]\n      }\n    },\n    {\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\",\n      \"metadata\": {\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\",\n        \"labels\": {\n          \"dof17\": \"<string>\",\n          \"estb\": \"<string>\"\n        },\n        \"annotations\": {\n          \"quis_c\": \"<string>\"\n        },\n        \"resourceVersion\": \"<string>\",\n        \"uid\": \"<string>\",\n        \"generation\": \"<integer>\",\n        \"creationTimestamp\": \"<dateTime>\",\n        \"deletionTimestamp\": \"<dateTime>\",\n        \"finalizers\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"spec\": {\n        \"package\": \"<string>\",\n        \"packagePullPolicy\": \"Always\",\n        \"packagePullSecrets\": [\n          {\n            \"name\": \"<string>\"\n          },\n          {\n            \"name\": \"<string>\"\n          }\n        ],\n        \"revisionActivationPolicy\": \"Manual\",\n        \"revisionHistoryLimit\": \"<integer>\",\n        \"runtimeConfigRef\": {\n          \"name\": \"<string>\",\n          \"apiVersion\": \"<string>\",\n          \"kind\": \"<string>\"\n        }\n      },\n      \"status\": {\n        \"currentRevision\": \"<string>\",\n        \"conditions\": [\n          {\n            \"type\": \"<string>\",\n            \"status\": \"False\",\n            \"reason\": \"<string>\",\n            \"message\": \"<string>\",\n            \"lastTransitionTime\": \"<dateTime>\"\n          },\n          {\n            \"type\": \"<string>\",\n            \"status\": \"False\",\n            \"reason\": \"<string>\",\n            \"message\": \"<string>\",\n            \"lastTransitionTime\": \"<dateTime>\"\n          }\n        ]\n      }\n    }\n  ],\n  \"metadata\": {\n    \"resourceVersion\": \"<string>\",\n    \"continue\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T01:26:39.000Z",
+                          "updatedAt": "2026-07-28T01:26:39.000Z",
+                          "uid": "35240-613208c5-1611-4dc0-af9a-2575613ffaa9"
+                        },
+                        {
+                          "id": "d6891556-4026-47d8-b5cf-632c941b4399",
+                          "name": "Authentication credentials are missing or invalid.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1/providers?labelSelector=<string>&limit=<integer>&continue=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "apis",
+                                "pkg.crossplane.io",
+                                "v1",
+                                "providers"
+                              ],
+                              "query": [
+                                {
+                                  "description": "A selector to restrict the list of returned objects by their labels. Defaults to everything.",
+                                  "key": "labelSelector",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Maximum number of items to return in a single response. The server may return fewer items than requested. Use the continue token for pagination.",
+                                  "key": "limit",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time.",
+                                  "key": "continue",
+                                  "value": "<string>"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                          "createdAt": "2026-07-28T01:26:39.000Z",
+                          "updatedAt": "2026-07-28T01:26:39.000Z",
+                          "uid": "35240-d6891556-4026-47d8-b5cf-632c941b4399"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T01:26:39.000Z",
+                      "updatedAt": "2026-07-28T01:26:39.000Z",
+                      "uid": "35240-2a062b19-98a7-42da-a523-4f2733a93a48"
+                    },
+                    {
+                      "name": "Crossplane Install a Provider",
+                      "id": "ac61be25-e0b6-4f88-b40a-5a9a20396135",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"inbf\": \"<string>\"\n    },\n    \"annotations\": {\n      \"est68_\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"spec\": {\n    \"package\": \"<string>\",\n    \"packagePullPolicy\": \"Always\",\n    \"packagePullSecrets\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"revisionActivationPolicy\": \"Automatic\",\n    \"revisionHistoryLimit\": \"<integer>\",\n    \"runtimeConfigRef\": {\n      \"name\": \"<string>\",\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\"\n    }\n  },\n  \"status\": {\n    \"currentRevision\": \"<string>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1/providers",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "apis",
+                            "pkg.crossplane.io",
+                            "v1",
+                            "providers"
+                          ]
+                        },
+                        "description": "Installs a new Provider by referencing an OCI image containing the provider package. Crossplane fetches the package, installs its CRDs, and starts the provider controller deployment."
+                      },
+                      "response": [
+                        {
+                          "id": "ac9e9218-bc7c-4303-970c-b3080acaf07c",
+                          "name": "Provider installation initiated.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"inbf\": \"<string>\"\n    },\n    \"annotations\": {\n      \"est68_\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"spec\": {\n    \"package\": \"<string>\",\n    \"packagePullPolicy\": \"Always\",\n    \"packagePullSecrets\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"revisionActivationPolicy\": \"Automatic\",\n    \"revisionHistoryLimit\": \"<integer>\",\n    \"runtimeConfigRef\": {\n      \"name\": \"<string>\",\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\"\n    }\n  },\n  \"status\": {\n    \"currentRevision\": \"<string>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1/providers",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "apis",
+                                "pkg.crossplane.io",
+                                "v1",
+                                "providers"
+                              ]
+                            }
+                          },
+                          "status": "Created",
+                          "code": 201,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"inbf\": \"<string>\"\n    },\n    \"annotations\": {\n      \"est68_\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"spec\": {\n    \"package\": \"<string>\",\n    \"packagePullPolicy\": \"Always\",\n    \"packagePullSecrets\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"revisionActivationPolicy\": \"Automatic\",\n    \"revisionHistoryLimit\": \"<integer>\",\n    \"runtimeConfigRef\": {\n      \"name\": \"<string>\",\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\"\n    }\n  },\n  \"status\": {\n    \"currentRevision\": \"<string>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                          "createdAt": "2026-07-28T01:26:39.000Z",
+                          "updatedAt": "2026-07-28T01:26:39.000Z",
+                          "uid": "35240-ac9e9218-bc7c-4303-970c-b3080acaf07c"
+                        },
+                        {
+                          "id": "e61e81c5-3977-4ffe-ac04-1bf1c14ad1bc",
+                          "name": "The request was malformed or failed validation.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"inbf\": \"<string>\"\n    },\n    \"annotations\": {\n      \"est68_\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"spec\": {\n    \"package\": \"<string>\",\n    \"packagePullPolicy\": \"Always\",\n    \"packagePullSecrets\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"revisionActivationPolicy\": \"Automatic\",\n    \"revisionHistoryLimit\": \"<integer>\",\n    \"runtimeConfigRef\": {\n      \"name\": \"<string>\",\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\"\n    }\n  },\n  \"status\": {\n    \"currentRevision\": \"<string>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1/providers",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "apis",
+                                "pkg.crossplane.io",
+                                "v1",
+                                "providers"
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                          "createdAt": "2026-07-28T01:26:39.000Z",
+                          "updatedAt": "2026-07-28T01:26:39.000Z",
+                          "uid": "35240-e61e81c5-3977-4ffe-ac04-1bf1c14ad1bc"
+                        },
+                        {
+                          "id": "1e0493c2-5bb7-46ff-a1f5-f0ae6e57b724",
+                          "name": "Authentication credentials are missing or invalid.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"inbf\": \"<string>\"\n    },\n    \"annotations\": {\n      \"est68_\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"spec\": {\n    \"package\": \"<string>\",\n    \"packagePullPolicy\": \"Always\",\n    \"packagePullSecrets\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"revisionActivationPolicy\": \"Automatic\",\n    \"revisionHistoryLimit\": \"<integer>\",\n    \"runtimeConfigRef\": {\n      \"name\": \"<string>\",\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\"\n    }\n  },\n  \"status\": {\n    \"currentRevision\": \"<string>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1/providers",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "apis",
+                                "pkg.crossplane.io",
+                                "v1",
+                                "providers"
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                          "createdAt": "2026-07-28T01:26:39.000Z",
+                          "updatedAt": "2026-07-28T01:26:39.000Z",
+                          "uid": "35240-1e0493c2-5bb7-46ff-a1f5-f0ae6e57b724"
+                        },
+                        {
+                          "id": "946810b8-1af9-4352-abfe-acd0049f1ad8",
+                          "name": "A resource with this name already exists.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"inbf\": \"<string>\"\n    },\n    \"annotations\": {\n      \"est68_\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"finalizers\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"spec\": {\n    \"package\": \"<string>\",\n    \"packagePullPolicy\": \"Always\",\n    \"packagePullSecrets\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"revisionActivationPolicy\": \"Automatic\",\n    \"revisionHistoryLimit\": \"<integer>\",\n    \"runtimeConfigRef\": {\n      \"name\": \"<string>\",\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\"\n    }\n  },\n  \"status\": {\n    \"currentRevision\": \"<string>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/apis/pkg.crossplane.io/v1/providers",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "apis",
+                                "pkg.crossplane.io",
+                                "v1",
+                                "providers"
+                              ]
+                            }
+                          },
+                          "status": "Conflict",
+                          "code": 409,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                          "createdAt": "2026-07-28T01:26:39.000Z",
+                          "updatedAt": "2026-07-28T01:26:39.000Z",
+                          "uid": "35240-946810b8-1af9-4352-abfe-acd0049f1ad8"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T01:26:39.000Z",
+                      "updatedAt": "2026-07-28T01:26:39.000Z",
+                      "uid": "35240-ac61be25-e0b6-4f88-b40a-5a9a20396135"
+                    }
+                  ],
+                  "id": "d7e3326e-5394-4baa-bdbc-e1cae3817cca",
+                  "createdAt": "2026-07-28T01:26:39.000Z",
+                  "updatedAt": "2026-07-28T01:26:39.000Z",
+                  "uid": "35240-d7e3326e-5394-4baa-bdbc-e1cae3817cca"
+                }
+              ],
+              "id": "7de047c5-d843-4996-b694-a38694f0fdbf",
+              "createdAt": "2026-07-28T01:26:39.000Z",
+              "updatedAt": "2026-07-28T01:26:39.000Z",
+              "uid": "35240-7de047c5-d843-4996-b694-a38694f0fdbf"
+            }
+          ],
+          "id": "a2470078-aa1c-4a57-a781-e71887d3debf",
+          "createdAt": "2026-07-28T01:26:39.000Z",
+          "updatedAt": "2026-07-28T01:26:39.000Z",
+          "uid": "35240-a2470078-aa1c-4a57-a781-e71887d3debf"
+        }
+      ],
+      "id": "86862c47-b92e-412a-86c5-d0e248141f0a",
+      "createdAt": "2026-07-28T01:26:39.000Z",
+      "updatedAt": "2026-07-28T01:26:39.000Z",
+      "uid": "35240-86862c47-b92e-412a-86c5-d0e248141f0a"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://kubernetes.default.svc"
+    }
+  ]
+}
