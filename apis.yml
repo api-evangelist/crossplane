@@ -64,8 +64,6 @@ apis:
     url: https://docs.crossplane.io/latest/get-started/get-started-with-composition/
   - type: Rules
     url: rules/crossplane-kubernetes-api-rules.yml
-  - type: Capabilities
-    url: capabilities/crossplane-kubernetes-api-capabilities.yml
   - type: JSONSchema
     url: json-schema/crossplane-composition-schema.json
   - type: JSONSchema
@@ -97,8 +95,6 @@ apis:
     url: https://docs.crossplane.io/latest/get-started/get-started-with-composition/
   - type: Rules
     url: rules/crossplane-kubernetes-api-rules.yml
-  - type: Capabilities
-    url: capabilities/crossplane-kubernetes-api-capabilities.yml
   - type: JSONSchema
     url: json-schema/crossplane-composition-schema.json
   - type: JSONSchema
@@ -129,8 +125,6 @@ apis:
     url: https://docs.crossplane.io/latest/get-started/get-started-with-composition/
   - type: Rules
     url: rules/crossplane-kubernetes-api-rules.yml
-  - type: Capabilities
-    url: capabilities/crossplane-kubernetes-api-capabilities.yml
   - type: JSONSchema
     url: json-schema/crossplane-composition-schema.json
   - type: JSONSchema
@@ -161,8 +155,6 @@ apis:
     url: https://docs.crossplane.io/latest/get-started/get-started-with-composition/
   - type: Rules
     url: rules/crossplane-kubernetes-api-rules.yml
-  - type: Capabilities
-    url: capabilities/crossplane-kubernetes-api-capabilities.yml
   - type: JSONSchema
     url: json-schema/crossplane-composition-schema.json
   - type: JSONSchema
@@ -193,8 +185,6 @@ apis:
     url: https://docs.crossplane.io/latest/get-started/get-started-with-composition/
   - type: Rules
     url: rules/crossplane-kubernetes-api-rules.yml
-  - type: Capabilities
-    url: capabilities/crossplane-kubernetes-api-capabilities.yml
   - type: JSONSchema
     url: json-schema/crossplane-composition-schema.json
   - type: JSONSchema
@@ -225,8 +215,6 @@ apis:
     url: https://docs.crossplane.io/latest/get-started/get-started-with-composition/
   - type: Rules
     url: rules/crossplane-kubernetes-api-rules.yml
-  - type: Capabilities
-    url: capabilities/crossplane-kubernetes-api-capabilities.yml
   - type: JSONSchema
     url: json-schema/crossplane-composition-schema.json
   - type: JSONSchema
@@ -257,8 +245,6 @@ apis:
     url: https://docs.crossplane.io/latest/get-started/get-started-with-composition/
   - type: Rules
     url: rules/crossplane-kubernetes-api-rules.yml
-  - type: Capabilities
-    url: capabilities/crossplane-kubernetes-api-capabilities.yml
   - type: JSONSchema
     url: json-schema/crossplane-composition-schema.json
   - type: JSONSchema
@@ -270,6 +256,14 @@ apis:
   - type: ChangeLog
     url: https://github.com/crossplane/crossplane/releases
 common:
+  - type: IssueTracker
+    url: https://github.com/crossplane/crossplane/issues
+  - type: SecurityPolicy
+    url: https://github.com/crossplane/crossplane/blob/main/SECURITY.md
+  - type: CodeOfConduct
+    url: https://github.com/crossplane/crossplane/blob/main/CODE_OF_CONDUCT.md
+  - type: ContributionGuide
+    url: https://github.com/crossplane/crossplane/blob/main/CONTRIBUTING.md
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/crossplane/overview
   - type: AgenticAccess
