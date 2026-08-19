@@ -1,0 +1,131 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Crossplane Kubernetes CompositeResourceDefinitions API",
+    "version": "2.2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "CompositeResourceDefinitions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Crossplane List CompositeResourceDefinitions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions",
+            "params": [
+              {
+                "name": "labelSelector",
+                "value": "",
+                "type": "query",
+                "description": "A selector to restrict the list of returned objects by their labels. Defaults to everything."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in a single response. The server may return fewer items than requested. Use the continue token for pagination."
+              },
+              {
+                "name": "continue",
+                "value": "",
+                "type": "query",
+                "description": "Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time."
+              }
+            ]
+          },
+          "docs": "Returns a list of all CompositeResourceDefinition (XRD) resources. Each XRD defines the schema for a new composite resource type and optionally a claim type that will be installed as Kubernetes CRDs."
+        },
+        {
+          "info": {
+            "name": "Crossplane Create a CompositeResourceDefinition",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kubernetes.default.svc/apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new CompositeResourceDefinition. Upon creation, Crossplane installs corresponding CRDs and begins serving the new composite resource API. If claimNames are specified, a namespaced claim CRD is also installed."
+        },
+        {
+          "info": {
+            "name": "Crossplane Get a CompositeResourceDefinition",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Crossplane resource."
+              }
+            ]
+          },
+          "docs": "Returns details of a specific CompositeResourceDefinition, including its version schemas, claim configuration, and status conditions reflecting whether the CRDs are established."
+        },
+        {
+          "info": {
+            "name": "Crossplane Replace a CompositeResourceDefinition",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://kubernetes.default.svc/apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Crossplane resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replaces a CompositeResourceDefinition. Crossplane will reconcile the new schema, updating existing CRDs and triggering re-composition of existing composite resources as needed."
+        },
+        {
+          "info": {
+            "name": "Crossplane Delete a CompositeResourceDefinition",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://kubernetes.default.svc/apis/apiextensions.crossplane.io/v1/compositeresourcedefinitions/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Crossplane resource."
+              }
+            ]
+          },
+          "docs": "Deletes a CompositeResourceDefinition. Crossplane will remove the associated CRDs and all existing composite resources of that type if no finalizers prevent deletion."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

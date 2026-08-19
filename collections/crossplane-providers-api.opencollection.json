@@ -1,0 +1,131 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Crossplane Kubernetes CompositeResourceDefinitions Providers API",
+    "version": "2.2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Providers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Crossplane List Providers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/pkg.crossplane.io/v1/providers",
+            "params": [
+              {
+                "name": "labelSelector",
+                "value": "",
+                "type": "query",
+                "description": "A selector to restrict the list of returned objects by their labels. Defaults to everything."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in a single response. The server may return fewer items than requested. Use the continue token for pagination."
+              },
+              {
+                "name": "continue",
+                "value": "",
+                "type": "query",
+                "description": "Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time."
+              }
+            ]
+          },
+          "docs": "Returns a list of all Provider package installations. Each Provider installs a set of managed resource CRDs and a controller that reconciles those resources against a specific infrastructure platform."
+        },
+        {
+          "info": {
+            "name": "Crossplane Install a Provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kubernetes.default.svc/apis/pkg.crossplane.io/v1/providers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Installs a new Provider by referencing an OCI image containing the provider package. Crossplane fetches the package, installs its CRDs, and starts the provider controller deployment."
+        },
+        {
+          "info": {
+            "name": "Crossplane Get a Provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/pkg.crossplane.io/v1/providers/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Crossplane resource."
+              }
+            ]
+          },
+          "docs": "Returns details of a specific Provider, including its package reference, revision activation policy, and status conditions reflecting whether the provider is healthy and all CRDs are installed."
+        },
+        {
+          "info": {
+            "name": "Crossplane Update a Provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://kubernetes.default.svc/apis/pkg.crossplane.io/v1/providers/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Crossplane resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replaces a Provider resource, typically to update the package image reference to a new version. Crossplane creates a new ProviderRevision and activates it according to the revisionActivationPolicy."
+        },
+        {
+          "info": {
+            "name": "Crossplane Uninstall a Provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://kubernetes.default.svc/apis/pkg.crossplane.io/v1/providers/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Crossplane resource."
+              }
+            ]
+          },
+          "docs": "Removes a Provider installation. Crossplane will delete the provider controller and CRDs. Existing managed resources will be orphaned unless deleted first."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
