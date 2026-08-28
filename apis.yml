@@ -8,6 +8,18 @@ description: >-
   EnvironmentConfigs, allowing platform teams to author self-service platform APIs that compose managed resources across
   AWS, GCP, Azure, and other providers using Kubernetes-style declarative configuration.
 url: https://raw.githubusercontent.com/api-evangelist/crossplane/refs/heads/main/apis.yml
+deliveryModel:
+  model: unknown
+  open_source: unknown
+  commercial: false
+  callable_host: false
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - openapi
+  - repository-unlicensed
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
