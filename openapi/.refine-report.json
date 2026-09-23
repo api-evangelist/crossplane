@@ -1,13 +1,7 @@
 {
   "provider": "crossplane",
   "sources": [
-    "crossplane-compositeresourcedefinitions-api-openapi.yml",
-    "crossplane-compositions-api-openapi.yml",
-    "crossplane-configurations-api-openapi.yml",
-    "crossplane-deploymentruntimeconfigs-api-openapi.yml",
-    "crossplane-environmentconfigs-api-openapi.yml",
-    "crossplane-functions-api-openapi.yml",
-    "crossplane-providers-api-openapi.yml"
+    "_original/crossplane-kubernetes-api-openapi.yml"
   ],
   "outputs": [
     "crossplane-compositeresourcedefinitions-api-openapi.yml",
@@ -21,6 +15,18 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "crossplane-kubernetes-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "crossplane-compositeresourcedefinitions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "crossplane-compositions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "crossplane-configurations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "crossplane-deploymentruntimeconfigs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "crossplane-environmentconfigs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "crossplane-functions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "crossplane-providers-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
