@@ -9,16 +9,21 @@ description: >-
   AWS, GCP, Azure, and other providers using Kubernetes-style declarative configuration.
 url: https://raw.githubusercontent.com/api-evangelist/crossplane/refs/heads/main/apis.yml
 deliveryModel:
-  model: unknown
-  open_source: unknown
+  model: self-hosted
+  license: Apache-2.0
+  license_evidence:
+    repo: crossplane/crossplane
+    spdx: Apache-2.0
+    stars: 12107
+  open_source: true
   commercial: false
   callable_host: false
-  label: Delivery model not determined — needs a product licence on record
-  confidence: low
+  label: Self-hosted open source · you run it yourself
+  confidence: medium
   source:
   - openapi
-  - repository-unlicensed
-  generated: '2026-08-28'
+  - repository-license
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: freemium
@@ -46,7 +51,7 @@ tags:
   - Infrastructure as Code
   - Kubernetes
   - Multi-Cloud
-  - Open-Source
+  - Open Source
   - Platform Engineering
   - Providers
 tags_raw:
@@ -63,6 +68,7 @@ tags_raw:
   - Open Source
   - Platform Engineering
   - Providers
+  - Open-Source
 created: '2025-01-01'
 modified: '2026-05-19'
 specificationVersion: '0.23'

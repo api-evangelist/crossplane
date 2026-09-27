@@ -129,21 +129,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   parameters:
-    labelSelector:
-      name: labelSelector
-      in: query
-      required: false
-      description: A selector to restrict the list of returned objects by their labels. Defaults to everything.
-      schema:
-        type: string
-    limit:
-      name: limit
-      in: query
-      required: false
-      description: Maximum number of items to return in a single response. The server may return fewer items than requested. Use the continue token for pagination.
-      schema:
-        type: integer
-        minimum: 1
     continueToken:
       name: continue
       in: query
@@ -158,84 +143,66 @@ components:
       description: Name of the Crossplane resource.
       schema:
         type: string
-  responses:
-    BadRequest:
-      description: The request was malformed or failed validation.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Status'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Status'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Status'
-    Conflict:
-      description: A resource with this name already exists.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Status'
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of items to return in a single response. The server may return fewer items than requested. Use the continue token for pagination.
+      schema:
+        type: integer
+        minimum: 1
+    labelSelector:
+      name: labelSelector
+      in: query
+      required: false
+      description: A selector to restrict the list of returned objects by their labels. Defaults to everything.
+      schema:
+        type: string
   schemas:
-    CompositeResourceDefinitionList:
+    ObjectMeta:
       type: object
-      description: A list of CompositeResourceDefinition resources.
+      description: Standard Kubernetes object metadata.
       required:
-      - apiVersion
-      - kind
-      - items
+      - name
       properties:
-        apiVersion:
+        name:
           type: string
-          description: API version for the list resource.
-        kind:
+          description: Unique name of the resource within its scope.
+        namespace:
           type: string
-          const: CompositeResourceDefinitionList
-          description: List kind identifier.
-        metadata:
+          description: Namespace of the resource. Crossplane core resources are cluster-scoped and do not use namespace.
+        labels:
           type: object
-          properties:
-            resourceVersion:
-              type: string
-              description: Resource version of the list.
-            continue:
-              type: string
-              description: Continuation token for pagination.
-        items:
-          type: array
-          description: List of CompositeResourceDefinition resources.
-          items:
-            $ref: '#/components/schemas/CompositeResourceDefinition'
-    Status:
-      type: object
-      description: A Kubernetes API Status response used for errors and operation results.
-      properties:
-        apiVersion:
+          description: Key-value pairs for organizing and selecting resources.
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          description: Non-identifying metadata attached to the resource.
+          additionalProperties:
+            type: string
+        resourceVersion:
           type: string
-          description: API version of the Status object.
-        kind:
+          description: Opaque string that identifies the version of the resource for optimistic concurrency.
+        uid:
           type: string
-          const: Status
-          description: Always Status.
-        status:
-          type: string
-          description: Status of the operation, Success or Failure.
-        message:
-          type: string
-          description: Human-readable description of the status.
-        reason:
-          type: string
-          description: Machine-readable reason for the status, such as NotFound or AlreadyExists.
-        code:
+          description: Unique identifier for the resource assigned by the API server.
+        generation:
           type: integer
-          description: HTTP status code corresponding to this status.
+          description: Sequence number for changes to the spec. Incremented by the API server on spec changes.
+        creationTimestamp:
+          type: string
+          format: date-time
+          description: Timestamp when the resource was created.
+        deletionTimestamp:
+          type: string
+          format: date-time
+          description: Timestamp after which the resource will be deleted, set when deletion is requested.
+        finalizers:
+          type: array
+          description: Finalizers that must be cleared before the object is deleted.
+          items:
+            type: string
     CompositeResourceDefinition:
       type: object
       description: A Crossplane CompositeResourceDefinition (XRD) that extends the Kubernetes API with a new composite resource type. Creating an XRD causes Crossplane to install corresponding CRDs and begin serving the new API. Optionally defines a namespace-scoped claim type.
@@ -364,50 +331,83 @@ components:
           type: string
           format: date-time
           description: Timestamp of the last transition for this condition.
-    ObjectMeta:
+    CompositeResourceDefinitionList:
       type: object
-      description: Standard Kubernetes object metadata.
+      description: A list of CompositeResourceDefinition resources.
       required:
-      - name
+      - apiVersion
+      - kind
+      - items
       properties:
-        name:
+        apiVersion:
           type: string
-          description: Unique name of the resource within its scope.
-        namespace:
+          description: API version for the list resource.
+        kind:
           type: string
-          description: Namespace of the resource. Crossplane core resources are cluster-scoped and do not use namespace.
-        labels:
+          const: CompositeResourceDefinitionList
+          description: List kind identifier.
+        metadata:
           type: object
-          description: Key-value pairs for organizing and selecting resources.
-          additionalProperties:
-            type: string
-        annotations:
-          type: object
-          description: Non-identifying metadata attached to the resource.
-          additionalProperties:
-            type: string
-        resourceVersion:
-          type: string
-          description: Opaque string that identifies the version of the resource for optimistic concurrency.
-        uid:
-          type: string
-          description: Unique identifier for the resource assigned by the API server.
-        generation:
-          type: integer
-          description: Sequence number for changes to the spec. Incremented by the API server on spec changes.
-        creationTimestamp:
-          type: string
-          format: date-time
-          description: Timestamp when the resource was created.
-        deletionTimestamp:
-          type: string
-          format: date-time
-          description: Timestamp after which the resource will be deleted, set when deletion is requested.
-        finalizers:
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Continuation token for pagination.
+        items:
           type: array
-          description: Finalizers that must be cleared before the object is deleted.
+          description: List of CompositeResourceDefinition resources.
           items:
-            type: string
+            $ref: '#/components/schemas/CompositeResourceDefinition'
+    Status:
+      type: object
+      description: A Kubernetes API Status response used for errors and operation results.
+      properties:
+        apiVersion:
+          type: string
+          description: API version of the Status object.
+        kind:
+          type: string
+          const: Status
+          description: Always Status.
+        status:
+          type: string
+          description: Status of the operation, Success or Failure.
+        message:
+          type: string
+          description: Human-readable description of the status.
+        reason:
+          type: string
+          description: Machine-readable reason for the status, such as NotFound or AlreadyExists.
+        code:
+          type: integer
+          description: HTTP status code corresponding to this status.
+  responses:
+    BadRequest:
+      description: The request was malformed or failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    Conflict:
+      description: A resource with this name already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
   securitySchemes:
     bearerAuth:
       type: http
