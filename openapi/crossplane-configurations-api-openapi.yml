@@ -102,29 +102,33 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    Configuration:
+    Condition:
       type: object
-      description: A Crossplane Configuration package that bundles Compositions and CompositeResourceDefinitions into a versioned, distributable OCI image for sharing platform APIs across control planes.
+      description: A status condition for a Crossplane resource.
       required:
-      - apiVersion
-      - kind
-      - metadata
-      - spec
+      - type
+      - status
       properties:
-        apiVersion:
+        type:
           type: string
-          const: pkg.crossplane.io/v1
-          description: API version for the Configuration resource.
-        kind:
-          type: string
-          const: Configuration
-          description: Resource kind identifier.
-        metadata:
-          $ref: '#/components/schemas/ObjectMeta'
-        spec:
-          $ref: '#/components/schemas/PackageSpec'
+          description: Type of condition, such as Ready, Synced, or Healthy.
         status:
-          $ref: '#/components/schemas/PackageStatus'
+          type: string
+          enum:
+          - 'True'
+          - 'False'
+          - Unknown
+          description: Status of the condition.
+        reason:
+          type: string
+          description: Machine-readable reason for the condition's last transition.
+        message:
+          type: string
+          description: Human-readable message describing the current condition state.
+        lastTransitionTime:
+          type: string
+          format: date-time
+          description: Timestamp of the last transition for this condition.
     ObjectMeta:
       type: object
       description: Standard Kubernetes object metadata.
@@ -169,33 +173,64 @@ components:
           description: Finalizers that must be cleared before the object is deleted.
           items:
             type: string
-    Condition:
+    PackageStatus:
       type: object
-      description: A status condition for a Crossplane resource.
-      required:
-      - type
-      - status
+      description: Common status fields for Crossplane package resources.
       properties:
-        type:
+        currentRevision:
           type: string
-          description: Type of condition, such as Ready, Synced, or Healthy.
+          description: Name of the currently active package revision.
+        conditions:
+          type: array
+          description: Status conditions for the package.
+          items:
+            $ref: '#/components/schemas/Condition'
+    Configuration:
+      type: object
+      description: A Crossplane Configuration package that bundles Compositions and CompositeResourceDefinitions into a versioned, distributable OCI image for sharing platform APIs across control planes.
+      required:
+      - apiVersion
+      - kind
+      - metadata
+      - spec
+      properties:
+        apiVersion:
+          type: string
+          const: pkg.crossplane.io/v1
+          description: API version for the Configuration resource.
+        kind:
+          type: string
+          const: Configuration
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          $ref: '#/components/schemas/PackageSpec'
+        status:
+          $ref: '#/components/schemas/PackageStatus'
+    Status:
+      type: object
+      description: A Kubernetes API Status response used for errors and operation results.
+      properties:
+        apiVersion:
+          type: string
+          description: API version of the Status object.
+        kind:
+          type: string
+          const: Status
+          description: Always Status.
         status:
           type: string
-          enum:
-          - 'True'
-          - 'False'
-          - Unknown
-          description: Status of the condition.
-        reason:
-          type: string
-          description: Machine-readable reason for the condition's last transition.
+          description: Status of the operation, Success or Failure.
         message:
           type: string
-          description: Human-readable message describing the current condition state.
-        lastTransitionTime:
+          description: Human-readable description of the status.
+        reason:
           type: string
-          format: date-time
-          description: Timestamp of the last transition for this condition.
+          description: Machine-readable reason for the status, such as NotFound or AlreadyExists.
+        code:
+          type: integer
+          description: HTTP status code corresponding to this status.
     PackageSpec:
       type: object
       description: Common specification fields for Crossplane package resources (Provider, Function, Configuration).
@@ -248,41 +283,6 @@ components:
             kind:
               type: string
               description: Kind of the referenced resource.
-    Status:
-      type: object
-      description: A Kubernetes API Status response used for errors and operation results.
-      properties:
-        apiVersion:
-          type: string
-          description: API version of the Status object.
-        kind:
-          type: string
-          const: Status
-          description: Always Status.
-        status:
-          type: string
-          description: Status of the operation, Success or Failure.
-        message:
-          type: string
-          description: Human-readable description of the status.
-        reason:
-          type: string
-          description: Machine-readable reason for the status, such as NotFound or AlreadyExists.
-        code:
-          type: integer
-          description: HTTP status code corresponding to this status.
-    PackageStatus:
-      type: object
-      description: Common status fields for Crossplane package resources.
-      properties:
-        currentRevision:
-          type: string
-          description: Name of the currently active package revision.
-        conditions:
-          type: array
-          description: Status conditions for the package.
-          items:
-            $ref: '#/components/schemas/Condition'
     ConfigurationList:
       type: object
       description: A list of Configuration resources.
@@ -313,20 +313,6 @@ components:
           items:
             $ref: '#/components/schemas/Configuration'
   parameters:
-    continueToken:
-      name: continue
-      in: query
-      required: false
-      description: Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time.
-      schema:
-        type: string
-    name:
-      name: name
-      in: path
-      required: true
-      description: Name of the Crossplane resource.
-      schema:
-        type: string
     limit:
       name: limit
       in: query
@@ -335,6 +321,20 @@ components:
       schema:
         type: integer
         minimum: 1
+    name:
+      name: name
+      in: path
+      required: true
+      description: Name of the Crossplane resource.
+      schema:
+        type: string
+    continueToken:
+      name: continue
+      in: query
+      required: false
+      description: Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time.
+      schema:
+        type: string
     labelSelector:
       name: labelSelector
       in: query

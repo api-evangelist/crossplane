@@ -99,6 +99,36 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of items to return in a single response. The server may return fewer items than requested. Use the continue token for pagination.
+      schema:
+        type: integer
+        minimum: 1
+    name:
+      name: name
+      in: path
+      required: true
+      description: Name of the Crossplane resource.
+      schema:
+        type: string
+    continueToken:
+      name: continue
+      in: query
+      required: false
+      description: Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time.
+      schema:
+        type: string
+    labelSelector:
+      name: labelSelector
+      in: query
+      required: false
+      description: A selector to restrict the list of returned objects by their labels. Defaults to everything.
+      schema:
+        type: string
   schemas:
     EnvironmentConfig:
       type: object
@@ -218,36 +248,6 @@ components:
         code:
           type: integer
           description: HTTP status code corresponding to this status.
-  parameters:
-    continueToken:
-      name: continue
-      in: query
-      required: false
-      description: Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time.
-      schema:
-        type: string
-    name:
-      name: name
-      in: path
-      required: true
-      description: Name of the Crossplane resource.
-      schema:
-        type: string
-    limit:
-      name: limit
-      in: query
-      required: false
-      description: Maximum number of items to return in a single response. The server may return fewer items than requested. Use the continue token for pagination.
-      schema:
-        type: integer
-        minimum: 1
-    labelSelector:
-      name: labelSelector
-      in: query
-      required: false
-      description: A selector to restrict the list of returned objects by their labels. Defaults to everything.
-      schema:
-        type: string
   responses:
     BadRequest:
       description: The request was malformed or failed validation.
@@ -255,14 +255,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Status'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
+    NotFound:
+      description: The requested resource was not found.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Status'
-    NotFound:
-      description: The requested resource was not found.
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
       content:
         application/json:
           schema:

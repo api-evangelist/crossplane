@@ -102,58 +102,33 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    Function:
+    Condition:
       type: object
-      description: A Crossplane Composition Function package. Functions implement the Composition Function gRPC protocol and are invoked as steps in a Composition pipeline to template composed resources.
+      description: A status condition for a Crossplane resource.
       required:
-      - apiVersion
-      - kind
-      - metadata
-      - spec
+      - type
+      - status
       properties:
-        apiVersion:
+        type:
           type: string
-          const: pkg.crossplane.io/v1
-          description: API version for the Function resource.
-        kind:
-          type: string
-          const: Function
-          description: Resource kind identifier.
-        metadata:
-          $ref: '#/components/schemas/ObjectMeta'
-        spec:
-          $ref: '#/components/schemas/PackageSpec'
+          description: Type of condition, such as Ready, Synced, or Healthy.
         status:
-          $ref: '#/components/schemas/PackageStatus'
-    FunctionList:
-      type: object
-      description: A list of Function resources.
-      required:
-      - apiVersion
-      - kind
-      - items
-      properties:
-        apiVersion:
           type: string
-          description: API version for the list resource.
-        kind:
+          enum:
+          - 'True'
+          - 'False'
+          - Unknown
+          description: Status of the condition.
+        reason:
           type: string
-          const: FunctionList
-          description: List kind identifier.
-        metadata:
-          type: object
-          properties:
-            resourceVersion:
-              type: string
-              description: Resource version of the list.
-            continue:
-              type: string
-              description: Continuation token for pagination.
-        items:
-          type: array
-          description: List of Function resources.
-          items:
-            $ref: '#/components/schemas/Function'
+          description: Machine-readable reason for the condition's last transition.
+        message:
+          type: string
+          description: Human-readable message describing the current condition state.
+        lastTransitionTime:
+          type: string
+          format: date-time
+          description: Timestamp of the last transition for this condition.
     ObjectMeta:
       type: object
       description: Standard Kubernetes object metadata.
@@ -198,33 +173,47 @@ components:
           description: Finalizers that must be cleared before the object is deleted.
           items:
             type: string
-    Condition:
+    PackageStatus:
       type: object
-      description: A status condition for a Crossplane resource.
-      required:
-      - type
-      - status
+      description: Common status fields for Crossplane package resources.
       properties:
-        type:
+        currentRevision:
           type: string
-          description: Type of condition, such as Ready, Synced, or Healthy.
-        status:
+          description: Name of the currently active package revision.
+        conditions:
+          type: array
+          description: Status conditions for the package.
+          items:
+            $ref: '#/components/schemas/Condition'
+    FunctionList:
+      type: object
+      description: A list of Function resources.
+      required:
+      - apiVersion
+      - kind
+      - items
+      properties:
+        apiVersion:
           type: string
-          enum:
-          - 'True'
-          - 'False'
-          - Unknown
-          description: Status of the condition.
-        reason:
+          description: API version for the list resource.
+        kind:
           type: string
-          description: Machine-readable reason for the condition's last transition.
-        message:
-          type: string
-          description: Human-readable message describing the current condition state.
-        lastTransitionTime:
-          type: string
-          format: date-time
-          description: Timestamp of the last transition for this condition.
+          const: FunctionList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Continuation token for pagination.
+        items:
+          type: array
+          description: List of Function resources.
+          items:
+            $ref: '#/components/schemas/Function'
     Status:
       type: object
       description: A Kubernetes API Status response used for errors and operation results.
@@ -300,33 +289,30 @@ components:
             kind:
               type: string
               description: Kind of the referenced resource.
-    PackageStatus:
+    Function:
       type: object
-      description: Common status fields for Crossplane package resources.
+      description: A Crossplane Composition Function package. Functions implement the Composition Function gRPC protocol and are invoked as steps in a Composition pipeline to template composed resources.
+      required:
+      - apiVersion
+      - kind
+      - metadata
+      - spec
       properties:
-        currentRevision:
+        apiVersion:
           type: string
-          description: Name of the currently active package revision.
-        conditions:
-          type: array
-          description: Status conditions for the package.
-          items:
-            $ref: '#/components/schemas/Condition'
+          const: pkg.crossplane.io/v1
+          description: API version for the Function resource.
+        kind:
+          type: string
+          const: Function
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          $ref: '#/components/schemas/PackageSpec'
+        status:
+          $ref: '#/components/schemas/PackageStatus'
   parameters:
-    continueToken:
-      name: continue
-      in: query
-      required: false
-      description: Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time.
-      schema:
-        type: string
-    name:
-      name: name
-      in: path
-      required: true
-      description: Name of the Crossplane resource.
-      schema:
-        type: string
     limit:
       name: limit
       in: query
@@ -335,6 +321,20 @@ components:
       schema:
         type: integer
         minimum: 1
+    name:
+      name: name
+      in: path
+      required: true
+      description: Name of the Crossplane resource.
+      schema:
+        type: string
+    continueToken:
+      name: continue
+      in: query
+      required: false
+      description: Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time.
+      schema:
+        type: string
     labelSelector:
       name: labelSelector
       in: query
@@ -349,14 +349,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Status'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
+    NotFound:
+      description: The requested resource was not found.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Status'
-    NotFound:
-      description: The requested resource was not found.
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
       content:
         application/json:
           schema:

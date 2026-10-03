@@ -100,20 +100,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   parameters:
-    continueToken:
-      name: continue
-      in: query
-      required: false
-      description: Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time.
-      schema:
-        type: string
-    name:
-      name: name
-      in: path
-      required: true
-      description: Name of the Crossplane resource.
-      schema:
-        type: string
     limit:
       name: limit
       in: query
@@ -122,6 +108,20 @@ components:
       schema:
         type: integer
         minimum: 1
+    name:
+      name: name
+      in: path
+      required: true
+      description: Name of the Crossplane resource.
+      schema:
+        type: string
+    continueToken:
+      name: continue
+      in: query
+      required: false
+      description: Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time.
+      schema:
+        type: string
     labelSelector:
       name: labelSelector
       in: query
@@ -174,58 +174,6 @@ components:
           description: Finalizers that must be cleared before the object is deleted.
           items:
             type: string
-    Status:
-      type: object
-      description: A Kubernetes API Status response used for errors and operation results.
-      properties:
-        apiVersion:
-          type: string
-          description: API version of the Status object.
-        kind:
-          type: string
-          const: Status
-          description: Always Status.
-        status:
-          type: string
-          description: Status of the operation, Success or Failure.
-        message:
-          type: string
-          description: Human-readable description of the status.
-        reason:
-          type: string
-          description: Machine-readable reason for the status, such as NotFound or AlreadyExists.
-        code:
-          type: integer
-          description: HTTP status code corresponding to this status.
-    DeploymentRuntimeConfigList:
-      type: object
-      description: A list of DeploymentRuntimeConfig resources.
-      required:
-      - apiVersion
-      - kind
-      - items
-      properties:
-        apiVersion:
-          type: string
-          description: API version for the list resource.
-        kind:
-          type: string
-          const: DeploymentRuntimeConfigList
-          description: List kind identifier.
-        metadata:
-          type: object
-          properties:
-            resourceVersion:
-              type: string
-              description: Resource version of the list.
-            continue:
-              type: string
-              description: Continuation token for pagination.
-        items:
-          type: array
-          description: List of DeploymentRuntimeConfig resources.
-          items:
-            $ref: '#/components/schemas/DeploymentRuntimeConfig'
     DeploymentRuntimeConfig:
       type: object
       description: A DeploymentRuntimeConfig customizes the Kubernetes Deployment and ServiceAccount that Crossplane creates to run a Provider or Function. Use it to set resource limits, add annotations for workload identity, or configure custom tolerations and node selectors.
@@ -279,6 +227,58 @@ components:
                       description: Annotations to apply to the ServiceAccount, such as IAM role ARN mappings.
                       additionalProperties:
                         type: string
+    Status:
+      type: object
+      description: A Kubernetes API Status response used for errors and operation results.
+      properties:
+        apiVersion:
+          type: string
+          description: API version of the Status object.
+        kind:
+          type: string
+          const: Status
+          description: Always Status.
+        status:
+          type: string
+          description: Status of the operation, Success or Failure.
+        message:
+          type: string
+          description: Human-readable description of the status.
+        reason:
+          type: string
+          description: Machine-readable reason for the status, such as NotFound or AlreadyExists.
+        code:
+          type: integer
+          description: HTTP status code corresponding to this status.
+    DeploymentRuntimeConfigList:
+      type: object
+      description: A list of DeploymentRuntimeConfig resources.
+      required:
+      - apiVersion
+      - kind
+      - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list resource.
+        kind:
+          type: string
+          const: DeploymentRuntimeConfigList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Continuation token for pagination.
+        items:
+          type: array
+          description: List of DeploymentRuntimeConfig resources.
+          items:
+            $ref: '#/components/schemas/DeploymentRuntimeConfig'
   responses:
     BadRequest:
       description: The request was malformed or failed validation.
@@ -286,14 +286,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Status'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
+    NotFound:
+      description: The requested resource was not found.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Status'
-    NotFound:
-      description: The requested resource was not found.
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
       content:
         application/json:
           schema:
