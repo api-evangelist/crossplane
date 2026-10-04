@@ -1,0 +1,49 @@
+slug: crossplane
+provider: Crossplane
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 3
+edges:
+- tag: CompositeResourceDefinitions
+  spec_file: crossplane-compositeresourcedefinitions-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: '"The Crossplane Kubernetes API extends the Kubernetes API server with custom resources for
+    managing cloud infrastructure declaratively." — "createCompositeResourceDefinition  Crossplane Create
+    a CompositeResourceDefinition"'
+  reason: XRDs declare the self-service infrastructure APIs a platform team exposes; the surface governs
+    declarative cloud infrastructure provisioning, which fits IT Infrastructure Management. Confidence
+    capped because it could also be read as internal-developer-platform tooling (BC-4200.70).
+- tag: Compositions
+  spec_file: crossplane-compositions-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: '"createComposition  Crossplane Create a Composition" within an API "for managing cloud infrastructure
+    declaratively"'
+  reason: Compositions define how a composite claim is rendered into concrete cloud resources — infrastructure
+    provisioning templates. Mapped to IT Infrastructure Management; some ambiguity with developer-platform
+    tooling keeps confidence at 0.7.
+- tag: Providers
+  spec_file: crossplane-providers-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: POST /apis/pkg.crossplane.io/v1/providers  createProvider  Crossplane Install a Provider;
+    'custom resources for managing cloud infrastructure declaratively'
+  reason: Crossplane Providers are packages that let the control plane provision cloud infrastructure
+    (compute, storage, network) declaratively. Install/update/uninstall of these providers is IT infrastructure/cloud
+    management. 'Providers' here is not a supplier/vendor homograph.

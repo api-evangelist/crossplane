@@ -289,6 +289,9 @@ apis:
   - type: ChangeLog
     url: https://github.com/crossplane/crossplane/releases
 common:
+  - type: CapabilityMap
+    url: capabilities/crossplane-capability-edges.yml
+    name: Crossplane Business Capability Map
   - type: IssueTracker
     url: https://github.com/crossplane/crossplane/issues
   - type: SecurityPolicy
