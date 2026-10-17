@@ -130,8 +130,8 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   responses:
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
+    BadRequest:
+      description: The request was malformed or failed validation.
       content:
         application/json:
           schema:
@@ -142,8 +142,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Status'
-    BadRequest:
-      description: The request was malformed or failed validation.
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
       content:
         application/json:
           schema:
@@ -162,6 +162,20 @@ components:
       description: Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time.
       schema:
         type: string
+    fieldSelector:
+      name: fieldSelector
+      in: query
+      required: false
+      description: A selector to restrict the list of returned objects by their fields.
+      schema:
+        type: string
+    name:
+      name: name
+      in: path
+      required: true
+      description: Name of the Crossplane resource.
+      schema:
+        type: string
     limit:
       name: limit
       in: query
@@ -170,13 +184,6 @@ components:
       schema:
         type: integer
         minimum: 1
-    name:
-      name: name
-      in: path
-      required: true
-      description: Name of the Crossplane resource.
-      schema:
-        type: string
     labelSelector:
       name: labelSelector
       in: query
@@ -184,66 +191,7 @@ components:
       description: A selector to restrict the list of returned objects by their labels. Defaults to everything.
       schema:
         type: string
-    fieldSelector:
-      name: fieldSelector
-      in: query
-      required: false
-      description: A selector to restrict the list of returned objects by their fields.
-      schema:
-        type: string
   schemas:
-    Status:
-      type: object
-      description: A Kubernetes API Status response used for errors and operation results.
-      properties:
-        apiVersion:
-          type: string
-          description: API version of the Status object.
-        kind:
-          type: string
-          const: Status
-          description: Always Status.
-        status:
-          type: string
-          description: Status of the operation, Success or Failure.
-        message:
-          type: string
-          description: Human-readable description of the status.
-        reason:
-          type: string
-          description: Machine-readable reason for the status, such as NotFound or AlreadyExists.
-        code:
-          type: integer
-          description: HTTP status code corresponding to this status.
-    CompositionList:
-      type: object
-      description: A list of Composition resources.
-      required:
-      - apiVersion
-      - kind
-      - items
-      properties:
-        apiVersion:
-          type: string
-          description: API version for the list resource.
-        kind:
-          type: string
-          const: CompositionList
-          description: List kind identifier.
-        metadata:
-          type: object
-          properties:
-            resourceVersion:
-              type: string
-              description: Resource version of the list.
-            continue:
-              type: string
-              description: Continuation token for pagination.
-        items:
-          type: array
-          description: List of Composition resources.
-          items:
-            $ref: '#/components/schemas/Composition'
     Composition:
       type: object
       description: A Crossplane Composition that defines how to translate a composite resource into a set of composed managed resources or a pipeline of Composition Functions. Compositions act as templates that are selected by composite resources based on compositeTypeRef matching.
@@ -319,6 +267,58 @@ components:
               description: Status conditions for the Composition.
               items:
                 $ref: '#/components/schemas/Condition'
+    Status:
+      type: object
+      description: A Kubernetes API Status response used for errors and operation results.
+      properties:
+        apiVersion:
+          type: string
+          description: API version of the Status object.
+        kind:
+          type: string
+          const: Status
+          description: Always Status.
+        status:
+          type: string
+          description: Status of the operation, Success or Failure.
+        message:
+          type: string
+          description: Human-readable description of the status.
+        reason:
+          type: string
+          description: Machine-readable reason for the status, such as NotFound or AlreadyExists.
+        code:
+          type: integer
+          description: HTTP status code corresponding to this status.
+    CompositionList:
+      type: object
+      description: A list of Composition resources.
+      required:
+      - apiVersion
+      - kind
+      - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list resource.
+        kind:
+          type: string
+          const: CompositionList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Continuation token for pagination.
+        items:
+          type: array
+          description: List of Composition resources.
+          items:
+            $ref: '#/components/schemas/Composition'
     Condition:
       type: object
       description: A status condition for a Crossplane resource.

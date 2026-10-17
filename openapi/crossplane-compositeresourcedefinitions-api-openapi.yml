@@ -129,8 +129,8 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   responses:
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
+    BadRequest:
+      description: The request was malformed or failed validation.
       content:
         application/json:
           schema:
@@ -141,14 +141,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Status'
-    BadRequest:
-      description: The request was malformed or failed validation.
+    Conflict:
+      description: A resource with this name already exists.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Status'
-    Conflict:
-      description: A resource with this name already exists.
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
       content:
         application/json:
           schema:
@@ -161,6 +161,13 @@ components:
       description: Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time.
       schema:
         type: string
+    name:
+      name: name
+      in: path
+      required: true
+      description: Name of the Crossplane resource.
+      schema:
+        type: string
     limit:
       name: limit
       in: query
@@ -169,13 +176,6 @@ components:
       schema:
         type: integer
         minimum: 1
-    name:
-      name: name
-      in: path
-      required: true
-      description: Name of the Crossplane resource.
-      schema:
-        type: string
     labelSelector:
       name: labelSelector
       in: query
@@ -184,35 +184,6 @@ components:
       schema:
         type: string
   schemas:
-    CompositeResourceDefinitionList:
-      type: object
-      description: A list of CompositeResourceDefinition resources.
-      required:
-      - apiVersion
-      - kind
-      - items
-      properties:
-        apiVersion:
-          type: string
-          description: API version for the list resource.
-        kind:
-          type: string
-          const: CompositeResourceDefinitionList
-          description: List kind identifier.
-        metadata:
-          type: object
-          properties:
-            resourceVersion:
-              type: string
-              description: Resource version of the list.
-            continue:
-              type: string
-              description: Continuation token for pagination.
-        items:
-          type: array
-          description: List of CompositeResourceDefinition resources.
-          items:
-            $ref: '#/components/schemas/CompositeResourceDefinition'
     Status:
       type: object
       description: A Kubernetes API Status response used for errors and operation results.
@@ -236,33 +207,6 @@ components:
         code:
           type: integer
           description: HTTP status code corresponding to this status.
-    Condition:
-      type: object
-      description: A status condition for a Crossplane resource.
-      required:
-      - type
-      - status
-      properties:
-        type:
-          type: string
-          description: Type of condition, such as Ready, Synced, or Healthy.
-        status:
-          type: string
-          enum:
-          - 'True'
-          - 'False'
-          - Unknown
-          description: Status of the condition.
-        reason:
-          type: string
-          description: Machine-readable reason for the condition's last transition.
-        message:
-          type: string
-          description: Human-readable message describing the current condition state.
-        lastTransitionTime:
-          type: string
-          format: date-time
-          description: Timestamp of the last transition for this condition.
     ObjectMeta:
       type: object
       description: Standard Kubernetes object metadata.
@@ -408,6 +352,62 @@ components:
               description: Status conditions including Established and Offered.
               items:
                 $ref: '#/components/schemas/Condition'
+    CompositeResourceDefinitionList:
+      type: object
+      description: A list of CompositeResourceDefinition resources.
+      required:
+      - apiVersion
+      - kind
+      - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list resource.
+        kind:
+          type: string
+          const: CompositeResourceDefinitionList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Continuation token for pagination.
+        items:
+          type: array
+          description: List of CompositeResourceDefinition resources.
+          items:
+            $ref: '#/components/schemas/CompositeResourceDefinition'
+    Condition:
+      type: object
+      description: A status condition for a Crossplane resource.
+      required:
+      - type
+      - status
+      properties:
+        type:
+          type: string
+          description: Type of condition, such as Ready, Synced, or Healthy.
+        status:
+          type: string
+          enum:
+          - 'True'
+          - 'False'
+          - Unknown
+          description: Status of the condition.
+        reason:
+          type: string
+          description: Machine-readable reason for the condition's last transition.
+        message:
+          type: string
+          description: Human-readable message describing the current condition state.
+        lastTransitionTime:
+          type: string
+          format: date-time
+          description: Timestamp of the last transition for this condition.
   securitySchemes:
     bearerAuth:
       type: http

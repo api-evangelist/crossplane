@@ -100,8 +100,8 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   responses:
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
+    BadRequest:
+      description: The request was malformed or failed validation.
       content:
         application/json:
           schema:
@@ -112,8 +112,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Status'
-    BadRequest:
-      description: The request was malformed or failed validation.
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
       content:
         application/json:
           schema:
@@ -124,6 +124,13 @@ components:
       in: query
       required: false
       description: Token returned by a previous list call to retrieve the next page of results. This token encodes list position and expiration time.
+      schema:
+        type: string
+    name:
+      name: name
+      in: path
+      required: true
+      description: Name of the Crossplane resource.
       schema:
         type: string
     limit:
@@ -141,14 +148,36 @@ components:
       description: A selector to restrict the list of returned objects by their labels. Defaults to everything.
       schema:
         type: string
-    name:
-      name: name
-      in: path
-      required: true
-      description: Name of the Crossplane resource.
-      schema:
-        type: string
   schemas:
+    EnvironmentConfigList:
+      type: object
+      description: A list of EnvironmentConfig resources.
+      required:
+      - apiVersion
+      - kind
+      - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list resource.
+        kind:
+          type: string
+          const: EnvironmentConfigList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Continuation token for pagination.
+        items:
+          type: array
+          description: List of EnvironmentConfig resources.
+          items:
+            $ref: '#/components/schemas/EnvironmentConfig'
     Status:
       type: object
       description: A Kubernetes API Status response used for errors and operation results.
@@ -216,35 +245,6 @@ components:
           description: Finalizers that must be cleared before the object is deleted.
           items:
             type: string
-    EnvironmentConfigList:
-      type: object
-      description: A list of EnvironmentConfig resources.
-      required:
-      - apiVersion
-      - kind
-      - items
-      properties:
-        apiVersion:
-          type: string
-          description: API version for the list resource.
-        kind:
-          type: string
-          const: EnvironmentConfigList
-          description: List kind identifier.
-        metadata:
-          type: object
-          properties:
-            resourceVersion:
-              type: string
-              description: Resource version of the list.
-            continue:
-              type: string
-              description: Continuation token for pagination.
-        items:
-          type: array
-          description: List of EnvironmentConfig resources.
-          items:
-            $ref: '#/components/schemas/EnvironmentConfig'
     EnvironmentConfig:
       type: object
       description: A Crossplane EnvironmentConfig that stores arbitrary key-value configuration data for use as shared environment data in Compositions. EnvironmentConfigs are selected by Compositions using label selectors and merged into an in-memory environment used during patching.
