@@ -39,3 +39,33 @@
     detected: '2026-10-19'
   status: not-a-workflow
   arazzo: null
+- slug: crossplane-winget-windows-package-manager
+  label: winget (Windows Package Manager)
+  partner_name: winget (Windows Package Manager)
+  category: official CLI (winget (Windows Package Manager))
+  type: register
+  channel: package-registry
+  evidence: https://github.com/microsoft/winget-pkgs/tree/master/manifests/c/Crossplane/CrossplaneCli
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: winget (Windows Package Manager) (public package index)
+    spec_file: null
+    packages:
+    - name: Crossplane.CrossplaneCli
+      kind: manifest
+      version: 2.4.2
+      released: '2026-09-22'
+      lapsed: false
+      page: https://github.com/microsoft/winget-pkgs/tree/master/manifests/c/Crossplane/CrossplaneCli
+      cli: 'winget: CLI for the Crossplane - The Cloud Native Control Plane'
+      repo_leg: domain:crossplane.io
+      publisher_leg: artifact-domain:crossplane.io
+      matched_by: domain
+    current: true
+    signal_note: 'the provider''s own command-line tool on a package manager: distribution, not an integration;
+      lapsed = no release in 24 months or deprecated / disabled by the manager'
+    detected_by: sweep-official-clis.py
+    detected: '2026-10-20'
+  status: not-a-workflow
+  arazzo: null
