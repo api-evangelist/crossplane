@@ -1,4 +1,4 @@
-# Crossplane (crossplane)
+# Crossplane
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,92 +66,166 @@
 
 Crossplane is a graduated CNCF open-source Kubernetes add-on that transforms a cluster into a universal control plane for cloud infrastructure, services, and applications. Crossplane introduces custom resources including CompositeResourceDefinitions (XRDs), Compositions, Claims, Providers, ProviderConfigs, Configurations, Functions, and EnvironmentConfigs, allowing platform teams to author self-service platform APIs that compose managed resources across AWS, GCP, Azure, and other providers using Kubernetes-style declarative configuration.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/crossplane/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/crossplane/refs/heads/main/apis.yml)
+**Areas:** Apache 2.0 · CNCF · Cloud-Native · COMPOSITION · Control Plane · Custom Resource Definitions · Graduated · Infrastructure as Code · Kubernetes · Multi-Cloud · Open Source · Platform Engineering
 
-## Scope
+## Crossplane on APIs.io
 
-- **Type:** Index
-- **Position:** Provider
-- **Access:** Public
+Everything profiled for Crossplane is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/crossplane/](https://apis.io/providers/crossplane/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (7)
 
-- Apache 2.0
-- CNCF
-- Cloud Native
-- Composition
-- Control Plane
-- Custom Resource Definitions
-- Graduated
-- Infrastructure as Code
-- Kubernetes
-- Multi-Cloud
-- Open Source
-- Platform Engineering
-- Providers
+- [Crossplane CompositeResourceDefinitions API](https://apis.io/apis/crossplane/crossplane-compositeresourcedefinitions-api/) — CompositeResourceDefinitions (XRDs) extend the Kubernetes API with new custom resource types. An XRD defines the schema and API surface for a composite…
+- [Crossplane Compositions API](https://apis.io/apis/crossplane/crossplane-compositions-api/) — Compositions define how to compose a set of managed resources or Composition Functions into a higher-level composite resource. A Composition acts as a…
+- [Crossplane Configurations API](https://apis.io/apis/crossplane/crossplane-configurations-api/) — Configurations are Crossplane packages that bundle Compositions and CompositeResourceDefinitions together into a distributable unit that can be installed…
+- [Crossplane DeploymentRuntimeConfigs API](https://apis.io/apis/crossplane/crossplane-deploymentruntimeconfigs-api/) — DeploymentRuntimeConfigs customize the runtime behavior of Provider and Function deployments, including replica counts, resource limits, service account…
+- [Crossplane EnvironmentConfigs API](https://apis.io/apis/crossplane/crossplane-environmentconfigs-api/) — EnvironmentConfigs provide shared configuration data that can be referenced by Compositions via environment patches, enabling reusable configuration across…
+- [Crossplane Functions API](https://apis.io/apis/crossplane/crossplane-functions-api/) — Functions are Crossplane packages that contain Composition Functions, which are OCI container images invoked during composition to perform advanced resource…
+- [Crossplane Providers API](https://apis.io/apis/crossplane/crossplane-providers-api/) — Providers are Crossplane packages that install controllers and CRDs for managing resources on a specific infrastructure platform such as AWS, GCP, or Azure.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2025-01-01
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Agentic access (1)
 
-### Crossplane Kubernetes API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-The Crossplane Kubernetes API extends the Kubernetes API server with custom resources for managing cloud infrastructure declaratively. Resources are organized into two main API groups: apiextensions.crossplane.io for composition primitives (Compositions, CompositeResourceDefinitions, EnvironmentConfigs, DeploymentRuntimeConfigs) and pkg.crossplane.io for package management (Providers, Functions, Configurations and their revisions). All operations use standard Kubernetes REST conventions and are authenticated through the Kubernetes API server's authentication mechanisms.
+- [Crossplane Agentic Access](https://apis.io/agentic-access/crossplane/crossplane-agentic-access/)
 
-- **Human URL:** [https://docs.crossplane.io/latest/api/](https://docs.crossplane.io/latest/api/)
-- **Base URL:** `https://kubernetes.default.svc`
+#### JSON Schema (3)
 
-#### Tags
+The data models the API reads and writes.
 
-- Composition
-- Control Plane
-- Custom Resources
-- Infrastructure as Code
-- Kubernetes
-- Multi-Cloud
-- Platform Engineering
+- [Crossplane Composition](https://apis.io/schemas/crossplane/crossplane-composition/)
+- [Crossplane Provider Configuration](https://apis.io/schemas/crossplane/crossplane-provider/)
+- [Crossplane CompositeResourceDefinition (XRD)](https://apis.io/schemas/crossplane/crossplane-xrd/)
 
-#### Properties
+#### JSON-LD (1)
 
-- [Documentation](https://docs.crossplane.io/latest/)
-- [Reference](https://docs.crossplane.io/latest/api/)
-- [Getting Started](https://docs.crossplane.io/latest/get-started/get-started-with-composition/)
-- [OpenAPI](openapi/crossplane-kubernetes-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/crossplane-kubernetes-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/crossplane-kubernetes-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Rules](rules/crossplane-kubernetes-api-rules.yml)
-- [Capabilities](capabilities/crossplane-kubernetes-api-capabilities.yml)
-- [JSON Schema](json-schema/crossplane-composition-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/crossplane-xrd-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/crossplane-provider-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON-LD](json-ld/crossplane-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [Changelog](https://github.com/crossplane/crossplane/releases)
+Linked-data contexts for the provider's vocabulary.
 
-## Common Properties
+- [Crossplane Context](https://apis.io/jsonld/crossplane/crossplane-context/)
 
-- [LinkedIn](https://www.linkedin.com/company/crossplane)
-- [JSON Schema](json-schema/crossplane-composition-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/crossplane-xrd-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/crossplane-provider-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON-LD](json-ld/crossplane-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [Vocabulary](vocabulary/crossplane-vocabulary.yml)
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [Crossplane Vocabulary](https://apis.io/vocabularies/crossplane/crossplane-vocabulary/)
+
+#### Collections (15)
+
+Postman and Open Collection request collections.
+
+- [Crossplane Kubernetes CompositeResourceDefinitions API](https://apis.io/collections/crossplane/open-crossplane-compositeresourcedefinitions-api/)
+- [Crossplane Kubernetes CompositeResourceDefinitions Compositions API](https://apis.io/collections/crossplane/open-crossplane-compositions-api/)
+- [Crossplane Kubernetes CompositeResourceDefinitions Configurations API](https://apis.io/collections/crossplane/open-crossplane-configurations-api/)
+- [Crossplane Kubernetes CompositeResourceDefinitions DeploymentRuntimeConfigs API](https://apis.io/collections/crossplane/open-crossplane-deploymentruntimeconfigs-api/)
+- [Crossplane Kubernetes CompositeResourceDefinitions EnvironmentConfigs API](https://apis.io/collections/crossplane/open-crossplane-environmentconfigs-api/)
+- [Crossplane Kubernetes CompositeResourceDefinitions Functions API](https://apis.io/collections/crossplane/open-crossplane-functions-api/)
+- [Crossplane Kubernetes API](https://apis.io/collections/crossplane/open-crossplane-kubernetes-api/)
+- [Crossplane Kubernetes CompositeResourceDefinitions Providers API](https://apis.io/collections/crossplane/open-crossplane-providers-api/)
+- [Crossplane Kubernetes CompositeResourceDefinitions API](https://apis.io/collections/crossplane/postman-crossplane-compositeresourcedefinitions-api/)
+- [Crossplane Kubernetes CompositeResourceDefinitions Compositions API](https://apis.io/collections/crossplane/postman-crossplane-compositions-api/)
+- [Crossplane Kubernetes CompositeResourceDefinitions Configurations API](https://apis.io/collections/crossplane/postman-crossplane-configurations-api/)
+- [Crossplane Kubernetes CompositeResourceDefinitions DeploymentRuntimeConfigs API](https://apis.io/collections/crossplane/postman-crossplane-deploymentruntimeconfigs-api/)
+- [Crossplane Kubernetes CompositeResourceDefinitions EnvironmentConfigs API](https://apis.io/collections/crossplane/postman-crossplane-environmentconfigs-api/)
+- [Crossplane Kubernetes CompositeResourceDefinitions Functions API](https://apis.io/collections/crossplane/postman-crossplane-functions-api/)
+- [Crossplane Kubernetes CompositeResourceDefinitions Providers API](https://apis.io/collections/crossplane/postman-crossplane-providers-api/)
+
+#### Governance rules (2)
+
+Spectral rulesets for the provider's contracts.
+
+- [Crossplane — jsonschema rules](https://apis.io/rules/crossplane/crossplane-jsonschema-spectral-rules/)
+- [Crossplane — kubernetes api rules](https://apis.io/rules/crossplane/crossplane-kubernetes-api-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Crossplane Authentication](https://apis.io/security/crossplane/crossplane-authentication/)
+- [Crossplane Domain Security](https://apis.io/security/crossplane/crossplane-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Crossplane Plans Pricing](https://apis.io/plans/crossplane/crossplane-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Crossplane Rate Limits](https://apis.io/rate-limits/crossplane/crossplane-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Crossplane Finops](https://apis.io/finops/crossplane/crossplane-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://www.crossplane.io/)
 - [Documentation](https://docs.crossplane.io/latest/)
-- [Getting Started](https://docs.crossplane.io/latest/get-started/get-started-with-composition/)
-- [Reference](https://docs.crossplane.io/latest/api/)
-- [Blog](https://blog.crossplane.io/)
-- [GitHub Organization](https://github.com/crossplane)
-- [GitHub Repository](https://github.com/crossplane/crossplane)
+- [Getting started](https://docs.crossplane.io/latest/get-started/get-started-with-composition/)
 - [Changelog](https://github.com/crossplane/crossplane/releases)
-- [Community](https://docs.crossplane.io/latest/learn/)
-- [Contributing](https://docs.crossplane.io/contribute/contribute/)
-- [License](https://github.com/crossplane/crossplane/blob/main/LICENSE)
-- [C N C F](https://www.cncf.io/projects/crossplane/)
+- [Blog](https://blog.crossplane.io/)
+- [GitHub](https://github.com/crossplane)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 45.8** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 66.7 |
+| Contract governance | 27.3 |
+| Operational transparency | 36.8 |
+| Developer ergonomics | 36.9 |
+| Access clarity | 7.9 |
+
+**Agent readiness 22.4** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | paginated |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 16.7** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/crossplane/](https://apis.io/providers/crossplane/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Crossplane: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/crossplane/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
